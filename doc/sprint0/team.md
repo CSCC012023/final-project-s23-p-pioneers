@@ -5,5 +5,5 @@
 | Dhruvin Patel        | 1008154934 | dhruvin.patel@mail.utoronto.ca | Email/Discord         | Dhruvin Patel        |
 | Vedat Alp Goktepe    | 1007798661 | vedat.goktepe@mail.utoronto.ca | Email/Discord         | Vedat Alp Goktepe    |
 | Vikram Chandra Narra | 1007846048 | vikram.narra@mail.utoronto.ca  | Email/Discord         | Vikram Chandra Narra |
-| Andrew Aucie         | ---------- | andrew.aucie@mail.utoronto.ca  | Email/Discord         | Andrew Aucie         | 
+| Andrew Aucie         | 1008157076 | andrew.aucie@mail.utoronto.ca  | Email/Discord         | Andrew Aucie         | 
 | Ashwin Mallik        | 1008329729 | ashwin.mallik@mail.utoronto.ca | Email/Discord         | Ashwin Mallik        |
