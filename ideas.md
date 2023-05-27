@@ -1,5 +1,3 @@
 Coding LinkedIn (Better CSM Portal)
 
-Tutor App
-
-Code Review - Deepcode
+Course Planner (Big Boy Version)
