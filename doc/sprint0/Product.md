@@ -6,9 +6,10 @@ From an applicant's perspective, CoBuild offers a seamless user experience by en
 ## Our Target Audience
 CoBuild caters to two primary target audiences: software recruiters and software applicants. By utilizing CoBuild, software recruiters can significantly expedite the recruitment process, providing them with a competitive edge in acquiring top talent. This is particularly beneficial for software applicants who often experience frustration due to lengthy and complex recruitment procedures. CoBuild aims to streamline the hiring process, enabling applicants to have a smoother and more efficient experience from application submission to interview stages. By connecting these two key demographics, CoBuild enhances the overall efficiency and effectiveness of software recruitment, benefiting both recruiters and applicants alike.
 
-![Recruiter Persona](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png](https://github.com/CSCC012023/final-project-s23-p-pioneers/blob/main/doc/sprint0/recruiterPersona.png)
-![Applicant Persona](https://github.com/CSCC012023/final-project-s23-p-pioneers/blob/main/doc/sprint0/applicantPersona.png)
 
+Recruiter Persona          |  Applicant Persona
+:-------------------------:|:-------------------------:
+![Recruiter Persona](https://github.com/CSCC012023/final-project-s23-p-pioneers/blob/main/doc/sprint0/recruiterPersona.png)  | ![Applicant Persona](https://github.com/CSCC012023/final-project-s23-p-pioneers/blob/main/doc/sprint0/applicantPersona.png)
 
 ## Why Choose Our Product
 By choosing CoBuild for job recruitment, users unlock a comprehensive and cutting-edge solution that revolutionizes their hiring process. Our product provides a streamlined and efficient experience, saving users valuable time and effort by automating screening. With advanced assessment tools, recruiters gain the ability to make informed decisions when selecting candidates, greatly increasing the likelihood of successful hires.
