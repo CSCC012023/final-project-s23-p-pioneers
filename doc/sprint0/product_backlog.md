@@ -1,4 +1,4 @@
-User Stories:
+## User Stories:
 
 1. As a user, I should be able to create an account so that I can access the platform.
 2. As a user, I should be able to upload PDF documents of my transcript, resume, and cover letters so that I can provide them to potential employers.
@@ -21,7 +21,7 @@ User Stories:
 19. As a recruiter, I should be able to view the number of submissions and candidate details for each posting so that I can evaluate the interest and qualifications of applicants.
 20. As a user/recruiter, I should be able to give feedback about the website so that I can provide suggestions for improvement.
 
-Admin Stories:
+## Admin Stories:
 
 21. As an admin, I should be able to let employers, recruiters, and companies post job postings and display them so that I can facilitate the recruitment process.
 22. As an admin, I should be able to remove/edit job postings so that I can manage the content and ensure accuracy.
