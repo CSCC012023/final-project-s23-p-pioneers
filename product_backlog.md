@@ -22,4 +22,4 @@ User Stories:
 
 Admin Stories:
 21. As an admin, I should be able to let employers, recruiters, and companies post job postings and display them to facilitate the recruitment process.
-22.  As an admin, I should be able to remove/edit job postings to manage the content and ensure accuracy.
+22. As an admin, I should be able to remove/edit job postings to manage the content and ensure accuracy.
