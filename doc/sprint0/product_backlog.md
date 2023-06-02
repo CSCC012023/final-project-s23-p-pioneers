@@ -8,7 +8,7 @@ User Stories:
 6. As a user, I should be able to sort job postings by date, relevancy, deadline, etc. so that I can find the most suitable opportunities.
 7. As a user, I should be able to apply to job postings so that I can express my interest in the positions.
 8. As a user, I should be able to attempt the respective coding assessments for job postings so that employers can evaluate my technical skills.
-9. As a user, I should be able to bookmark job postings to a bookmark tab so that I can view later and keep track of interesting opportunities.
+9. As a user, I should be able to bookmark job postings to a bookmark tab so that I can view them later and keep track of interesting opportunities.
 10. As a user, I should be able to see a job posting feed relevant to my preferences so that I can discover new job opportunities easily.
 11. As a user, I should be able to view a tab with all available job postings so that I can explore the complete range of opportunities.
 12. As a user, I should be able to view a tab with all job postings I've applied to so that I can keep track of my applications.
