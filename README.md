@@ -3,12 +3,12 @@
 
 # CoBuild
 
-![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/104747956/7529ed71-458a-47c1-950e-d321ed298066)
-
-
 ### Brief Description
 
 CoBuild is a full-fledged job board web application designed to enhance the job application process by providing a unique approach to candidate assessment. By leveraging the power of LeetCode questions and job posting descriptions, CoBuild enables users to solve coding problems directly related to specific job postings. This allows candidates to gauge their skills and compare their performance against other applicants, gaining valuable insights and boosting their chances of success.
+
+![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/104747956/972eee3e-5fdf-4c4c-a202-bfc81d509d18)
+
 
 ### Motivation
 
