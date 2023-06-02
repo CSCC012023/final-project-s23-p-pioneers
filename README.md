@@ -34,7 +34,18 @@ Once you have the prerequisites in place, follow these steps to build and run th
 We welcome contributions to CoBuild and appreciate your interest in improving the application. Here are some guidelines for contributing:
 
   Git Flow: CoBuild follows the Feature Branch workflow. When contributing, create a new branch for your feature or bug fix. <br>
-  Branch Naming: Please use descriptive and meaningful names for your branches, summarizing the purpose of your changes. <br>
+  
+  #### Branch Naming: Please use descriptive and meaningful names for your branches, summarizing the purpose of your changes. <br>
+      1. Main Branch: This branch typically holds the stable and production-ready code. It is often named "main" or "master" branch, depending on the version control system being used.
+
+      2. Developmental Branch: This branch serves as a staging area for ongoing development work. It may be named "development" or "dev" branch.
+
+      3. Setup Branch: This branch is created for initial setup or configuration changes. It can be named "setup" or "configuration" branch.
+
+      4. Feature Branches: These branches are created for developing new features. Each feature can have its own branch, ideally with a descriptive name reflecting the feature being worked on. For example, a feature branch for adding user authentication could be named "feature/authentication".
+
+      5. Bug Fix Branches: Similar to feature branches, bug fix branches are created to address specific issues or bugs. These branches can be named with a prefix like "bugfix/" followed by a descriptive name or reference to the bug being fixed. For instance, a bug fix branch for resolving a login issue could be named "bugfix/login-issue".
+      
   Issue Tracking: We use GitHub Issues to track bugs, feature requests, and other tasks. Please check the existing issues or create a new one before starting your work. <br>
   Pull Requests: Once you have completed your changes, submit a pull request against the main branch. Our team will review your changes and provide feedback before merging. <br>
 
