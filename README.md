@@ -1,18 +1,18 @@
 # final-project-s23-p-pioneers
 
 
-# CoBuild
+# CoBuild: The Ultimate Developer Job Board!
 
 ### Brief Description
 
-CoBuild is a full-fledged job board web application designed to enhance the job application process by providing a unique approach to candidate assessment. By leveraging the power of LeetCode questions and job posting descriptions, CoBuild enables users to solve coding problems directly related to specific job postings. This allows candidates to gauge their skills and compare their performance against other applicants, gaining valuable insights and boosting their chances of success.
+CoBuild is a comprehensive web application for developers that serves as a robust job board. Its primary goal is to revolutionize the job application process by introducing an innovative approach to candidate assessment. CoBuild achieves this by integrating coding assessment questions and job posting descriptions, empowering users to tackle coding problems directly aligned with specific job opportunities. By providing this feature, candidates can accurately evaluate their skills, benchmark their performance against other applicants, and gain valuable insights to enhance their chances of achieving success. Additionally, CoBuild caters to recruiters by presenting a curated selection of qualified candidates who possess the ideal skills and qualifications to fulfill the specific requirements of their projects or products.
 
 ![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/104747956/972eee3e-5fdf-4c4c-a202-bfc81d509d18)
 
 
 ### Motivation
 
-The motivation behind CoBuild stems from the recognition of the challenges faced by job seekers in the competitive employment landscape. Traditional job boards often lack interactivity and fail to provide meaningful feedback on candidates' technical skills. CoBuild aims to bridge this gap by combining the familiarity of job postings with the rigor of LeetCode-style coding challenges. This unique approach helps candidates better understand the requirements of potential employers and empowers them to improve their skills accordingly.
+The motivation behind CoBuild stems from the recognition of the challenges faced by job seekers in the competitive employment landscape. Traditional job boards often lack interactivity and fail to provide meaningful feedback on candidates' technical skills. CoBuild aims to bridge this gap by combining the familiarity of job postings with the rigor of coding challenges. This unique approach helps candidates better understand the requirements of potential employers and empowers them to improve their skills accordingly.
 Installation
 
 To run CoBuild, please ensure that you have the following tools/programs installed:
