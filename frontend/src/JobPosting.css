@@ -1,11 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
 :root {
     --bg-color: #1f242d;
     --second-bg-color: #323946;
     --text-color: #fff;
     --main-color: #0ef;
 }
+
+#more {
+    /* font-size: 2.5rem; */
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10%;
+}
+
 
 .job-posting-container {
     width: 400px;
@@ -61,6 +81,7 @@
 
 
 .projects {
+    padding: 10rem 9% 2rem;
     margin-top: 20px; /* Add margin-top for spacing */
     padding-top: 20px; /* Add padding-top for spacing */
 }

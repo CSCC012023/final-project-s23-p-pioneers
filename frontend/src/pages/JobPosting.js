@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RxOpenInNewWindow } from 'react-icons/rx';
 import '../JobPosting.css'; // Import custom CSS file for styling
-import girlImage from '/Users/minjun/Desktop/C01Project/final-project-s23-p-pioneers/frontend/assets/images/girl.jpg';
+// import girlImage from 'https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279';
 
 
 function JobPosting() {
@@ -129,10 +129,12 @@ function JobPosting() {
         </form>
       </div>
 
+      <div id="more">More from this company</div>
+
       <div className="projects">
         <div className="projects-container">
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>Meta</h3>
               <p></p>
@@ -146,7 +148,7 @@ function JobPosting() {
           </div>
 
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>Google</h3>
               <p></p>
@@ -160,7 +162,7 @@ function JobPosting() {
           </div>
 
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>Google</h3>
               <p></p>
@@ -174,7 +176,7 @@ function JobPosting() {
           </div>
 
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>FaceBook</h3>
               <p></p>
@@ -188,7 +190,7 @@ function JobPosting() {
           </div>
 
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>Microsoft</h3>
               <p></p>
@@ -202,7 +204,7 @@ function JobPosting() {
           </div>
 
           <div className="portfolio-box">
-            <img src={girlImage} alt="" />
+            <img src="https://cdn.shopify.com/s/files/1/0578/3696/1997/t/9/assets/lofiboy.gif?v=103461765217895835051680702279" alt="" />
             <div className="portfolio-layer">
               <h3>Google</h3>
               <p></p>
