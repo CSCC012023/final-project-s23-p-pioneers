@@ -2,6 +2,7 @@ import './App.css';
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import JobPosting from './pages/JobPosting'
+import React from 'react';
 
 import { Routes, Route } from "react-router-dom"
 
