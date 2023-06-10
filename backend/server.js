@@ -26,6 +26,7 @@ app.listen(8000, () => {
 })
 
 const userSchema = new mongoose.Schema({
+    name: String,
     username: String,
     email: String,
     password: String,
@@ -36,10 +37,12 @@ const User = mongoose.model('User', userSchema);
 
 // API endpoint to handle the POST request
 app.post('/signup', (req, res) => {
-const { username, email, password } = req.body;
+    console.log(req)
+const { name, username, email, password } = req.body;
 
 // Create a new user instance
 const newUser = new User({
+    name,
     username,
     email,
     password,

@@ -55,7 +55,7 @@ function Login() {
   
     return (
       <div>
-        <h2>Sign Up</h2>
+        <h2>Login</h2>
         <div>
           <label htmlFor="username">Username:</label>
           <input
@@ -86,7 +86,7 @@ function Login() {
             required
           />
         </div>
-        <button onClick={handleSubmit}>Sign Up</button>
+        <button onClick={handleSubmit}>Login</button>
       </div>
     );
 }
