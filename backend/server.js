@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors');
 const app = express();
+const createPostApi = require('./API/createPost');
 
 app.use(cors())
 app.use(express.json()); // Add this line to parse JSON payloads
@@ -24,12 +25,13 @@ connect();
 app.listen(8000, () => {
     console.log("Server started on port 8000")
 })
+app.post("/createpost", createPostApi);
 
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-  });
+});
   
   // Create the user model
 const User = mongoose.model('User', userSchema);
@@ -56,3 +58,4 @@ newUser.save()
     res.status(500).json({ error: 'An error occurred while saving the user' });
     });
 });
+
