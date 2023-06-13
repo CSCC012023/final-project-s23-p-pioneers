@@ -133,7 +133,7 @@
     Your mark: 0
 
     
-  product.md Total Mark: 27 / 36
+  product.md Total Mark: 29 / 36
 
 ---
 ## Product Backlog.md (Max 8 marks) 
@@ -244,4 +244,4 @@
  Presentation quality Total Mark: 3 / 3
 
 ## Total Mark  
-48 / 57
+50 / 57
