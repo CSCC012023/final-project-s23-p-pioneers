@@ -67,7 +67,7 @@ function SignUp() {
       email,
       username,
       password,
-      formData
+      formData,
     };
 
     fetch("http://localhost:8000/signup", {
@@ -190,6 +190,8 @@ function SignUp() {
           </div>
         </div>
         <button
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           style={{
             display: "flex",
             flexDirection: "row",
@@ -205,6 +207,10 @@ function SignUp() {
             order: "3",
             flexGrow: "0",
             color: "#FFFFFF",
+            marginRight: "20px",
+            fontWeight: "600",
+            transition: "ease 0.3s",
+            border: isHovered ? "3px solid #FFFFFF" : "3px solid #A259FF",
           }}
         >
           Sign In
@@ -378,6 +384,15 @@ function SignUp() {
                   alignSelf: "stretch",
                   flexGrow: "0",
                   color: "2B2B2B",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
                 }}
                 type="name"
                 id="name"
@@ -386,7 +401,7 @@ function SignUp() {
                 required
                 placeholder="Name"
               />
-  <input
+              <input
                 style={{
                   boxSizing: "border-box",
                   display: "flex",
@@ -404,6 +419,15 @@ function SignUp() {
                   alignSelf: "stretch",
                   flexGrow: "0",
                   color: "2B2B2B",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
                 }}
                 type="email"
                 id="email"
@@ -430,6 +454,15 @@ function SignUp() {
                   alignSelf: "stretch",
                   flexGrow: "0",
                   color: "2B2B2B",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
                 }}
                 type="text"
                 id="username"
@@ -457,6 +490,15 @@ function SignUp() {
                   alignSelf: "stretch",
                   flexGrow: "0",
                   color: "2B2B2B",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
                 }}
                 type="password"
                 id="password"
@@ -484,6 +526,15 @@ function SignUp() {
                   alignSelf: "stretch",
                   flexGrow: "0",
                   color: "2B2B2B",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
                 }}
                 type="password"
                 id="cpass"
@@ -524,6 +575,8 @@ function SignUp() {
                       background: "#F3F0FF",
                       border: "1px dashed #C1B2FA",
                       borderRadius: "8px",
+                      transition: "transform 0.3s ease",
+                      transform: "scale(1)",
                       /* Inside auto layout */
                       flex: "none",
                       order: "0",
@@ -534,7 +587,14 @@ function SignUp() {
                       justifyContent: "center",
                       color: "#7A5FEC",
                       WebkitTextStrokeWidth: "1px",
-
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.animation = "circle 1s infinite linear";
+                      e.target.style.transform = "scale(1.05)"; // Increase the scale on hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.animation = "none";
+                      e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
                     }}
                   >
                     Import Files
@@ -639,31 +699,36 @@ function SignUp() {
                   </div>
                 </div>
                 <button
-  onClick={handleSubmit}
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
-  style={{
-    boxSizing: "border-box",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    padding: "16px 20px",
-    gap: "12px",
-    width: "330px",
-    height: "46px",
-    background: isHovered ? "#FFFFFF" : "#A259FF",
-    color: isHovered ? "#A259FF" : "#FFFFFF",
-    border: "1px solid #858584",
-    borderRadius: "20px",
-    flex: "none",
-    order: "0",
-    alignSelf: "stretch",
-    flexGrow: "0",
-    transition: "background-color 0.3s, color 0.3s",
-  }}
->
-  Sign Up
-</button>
+                  onClick={handleSubmit}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={{
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center", // Add this line for center alignment
+                    padding: "16px 20px",
+                    gap: "12px",
+                    width: "330px",
+                    height: "46px",
+                    background: isHovered ? "#FFFFFF" : "#A259FF",
+                    color: isHovered ? "#A259FF" : "#FFFFFF",
+                    border: "3px solid #A259FF",
+                    // border: isHovered
+                    //   ? "3px solid #A259FF"
+                    //   : "3px solid #FFFFFF",
+                    borderRadius: "20px",
+                    flex: "none",
+                    order: "0",
+                    alignSelf: "stretch",
+                    flexGrow: "0",
+                    transition: "background-color 0.3s ease, color 0.3s ease",
+                    fontWeight: "bold", // Add this line for bold text
+                  }}
+                >
+                  Sign Up
+                </button>
               </div>
             </div>
           </div>
