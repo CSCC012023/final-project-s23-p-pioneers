@@ -9,6 +9,7 @@
 // export default Signup
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function SignUp() {
@@ -189,32 +190,34 @@ function SignUp() {
             </p>
           </div>
         </div>
-        <button
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "0px 30px",
-            gap: "12px",
-            width: "114px",
-            height: "60px",
-            background: "#A259FF",
-            borderRadius: "20px",
-            flex: "none",
-            order: "3",
-            flexGrow: "0",
-            color: "#FFFFFF",
-            marginRight: "20px",
-            fontWeight: "600",
-            transition: "ease 0.3s",
-            border: isHovered ? "3px solid #FFFFFF" : "3px solid #A259FF",
-          }}
-        >
-          Sign In
-        </button>
+        <Link to={"/login"}>
+          <button
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 30px",
+              gap: "12px",
+              width: "114px",
+              height: "60px",
+              background: "#A259FF",
+              borderRadius: "20px",
+              flex: "none",
+              order: "3",
+              flexGrow: "0",
+              color: "#FFFFFF",
+              marginRight: "20px",
+              fontWeight: "600",
+              transition: "ease 0.3s",
+              border: isHovered ? "3px solid #FFFFFF" : "3px solid #A259FF",
+            }}
+          >
+            Sign In
+          </button>
+        </Link>
       </nav>
       <body>
         <div
