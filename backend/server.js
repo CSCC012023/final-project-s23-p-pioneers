@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const userLogin = require("./API/loginUser");
+const signUpRequest = require("./API/signUp.js");
 
 app.use(cors());
 app.use(express.json()); // Add this line to parse JSON payloads
@@ -23,5 +24,5 @@ connect();
 app.listen(8000, () => {
   console.log("Server started on port 8000");
 });
-
 app.post("/login", userLogin);
+app.post("/signup", signUpRequest);
