@@ -1,10 +1,11 @@
 import './App.css';
-import Login from './pages/Login'
-import Signup from './pages/Signup'
 import JobPosting from './pages/JobPosting'
 import Jobs from './pages/Jobs'
 import { Routes, Route } from "react-router-dom"
 
+import { RequireAuth } from "react-auth-kit";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 
       </Routes>
     </div>
-  )
+  );
 }
 
 export default App;
