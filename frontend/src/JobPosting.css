@@ -12,7 +12,7 @@
 }
 
 :root {
-    --bg-color: #1f242d;
+    --bg-color: #2B2B2B;
     --second-bg-color: #323946;
     --text-color: #fff;
     --main-color: #0ef;
@@ -34,6 +34,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f7f7f7;
+    margin-top: 20px;
   }
   
   .job-form {
@@ -79,79 +80,56 @@
     background-color: #2B2B2B;
   }
 
-
-.projects {
-    padding: 10rem 9% 2rem;
-    margin-top: 20px; /* Add margin-top for spacing */
-    padding-top: 20px; /* Add padding-top for spacing */
-}
-
-.projects h2 {
-    margin-bottom: 4rem;
-
-}
-
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  .more-company-container {
+    display: flex;
     align-items: center;
-    gap: 2.5rem;
-}
-
-.projects-container .portfolio-box {
-    position: relative;
-    border-radius: 2rem;
-    box-shadow: 0 0 1rem var(--bg-color);
-    overflow: hidden;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .more-company-text {
+    color: #fff;
+    font-size: 1.5rem;
+    order: 1; /* Change the order of the element */
+    margin-left: 15%; /* Move the text to the right */
+  }
+  
+  .go-to-company-button {
+    /* Auto layout */
     display: flex;
-}
-
-.portfolio-box img {
-    width: 100%;
-}
-
-.portfolio-box:hover img {
-    width: 100%;
-    transition: .5s ease;
-}
-
-
-.portfolio-box .portfolio-layer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,.1), var(--main-color));
-    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 0 4rem;
-    transform: translateY(100%);
-    transition: .5s ease;
-}
+    padding: 0px 50px;
+    gap: 12px;
+    
+    width: 267px;
+    height: 60px;
+    
+    /* Call to Action */
+    border: 2px solid #A259FF;
+    border-radius: 20px;
+    background-color: var(--bg-color);
+    
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    
+    /* Additional styles */
+    color: #A259FF;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
 
-.portfolio-box:hover .portfolio-layer{
-    transform: translateY(0);
-}
+    order: 2; /* Change the order of the element */
+    margin-right: 15%; /* Move the button to the left */
+  }
+  
+  .go-to-company-button:hover {
+    background-color: #A259FF;
+    color: #fff;
+  }
+  
 
-.portfolio-layer h4 {
-    font-size: 3rem;
-}
-
-.portfolio-layer p {
-    font-size: 1.6rem;
-    margin: .3rem 0 1rem;
-}
-
-.portfolio-layer a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 5rem;
-    height: 5rem;
-    background: var(--text-color);
-    border-radius: 50%;
-}
+  
