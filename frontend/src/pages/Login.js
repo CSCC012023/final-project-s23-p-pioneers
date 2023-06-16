@@ -13,11 +13,15 @@ import {
 import "@fontsource/work-sans";
 import Logo from "../assets/images/CoBuildLogo.png";
 import loginImage from "../assets/images/loginPlaceHolder.png";
+import { useSignIn } from "react-auth-kit";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const signIn = useSignIn();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -48,10 +52,16 @@ function Login() {
         }
       })
       .then((data) => {
-        console.log(data);
         setUsername("");
         setPassword("");
         setLoginError("");
+
+        signIn({
+          token: data.accessToken,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: { username: user.username },
+        });
       })
       .catch((error) => {
         setLoginError("Incorrect username or password");
@@ -94,7 +104,10 @@ function Login() {
           >
             CoBuild
           </Typography>
+
           <Button
+            component={Link}
+            to="/signup"
             style={{
               background: "#A259FF",
               marginLeft: "auto",
@@ -245,9 +258,9 @@ function Login() {
               textTransform: "capitalize",
             }}
           >
-            <a href="#" style={{ color: "white" }}>
+            <Link to="/signup" style={{ color: "white" }}>
               Don't have an account? Sign up
-            </a>
+            </Link>
           </Typography>
         </div>
       </main>
