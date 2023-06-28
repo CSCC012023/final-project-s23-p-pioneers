@@ -30,7 +30,7 @@ function JobPosting() {
 
   const [positionName, setPositionName] = useState();
   const [companyName, setCompanyName] = useState();
-  const [createdDate, setCreatedDate] = useState();
+  //const [createdDate, setCreatedDate] = useState();
   const [location, setLocation] = useState();
   const [description, setDescription] = useState();
   const [tags, setTags] = useState([]);
@@ -64,7 +64,7 @@ function JobPosting() {
 
         setPositionName(jobPostData[0].title);
         setCompanyName(jobPostData[0].companyName);
-        setCreatedDate(jobPostData[0].datePosted);
+        //setCreatedDate(jobPostData[0].datePosted);
         setLocation(jobPostData[0].location);
         setDescription(jobPostData[0].jobDescription);
         setTags(jobPostData[0].skills);
@@ -92,7 +92,7 @@ function JobPosting() {
           <div className="temp">
             <div className="position">{positionName}</div>
             <div className="company">{companyName}</div>
-            <div className="date">{createdDate}</div>
+            {/* <div className="date">{createdDate}</div> */}
             <div className="details">Details</div>
             <div className="location">{location}</div>
           </div>

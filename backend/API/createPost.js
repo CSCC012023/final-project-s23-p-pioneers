@@ -12,10 +12,11 @@ const Job = mongoose.model('Job', jobSchema);
 
 // API endpoint to handle the POST request
 const createPostApi = (req, res) => {
-    const { title, location, jobDescription, companyName, deadline, datePosted, skills } = req.body;
+    const { title, location, jobDescription, companyName, deadline, skills } = req.body;
     const jobId = short.generate();
 
     const deadlineIsoDate = new Date(deadline).toISOString();
+    const datePosted = new Date();
     // const deadlineIsoDate = deadline;
 
     console.log(req.body)
