@@ -9,7 +9,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import {
+  AppBar,
+  Avatar,
+  Typography,
+  Button,
+  TextField,
+  BottomNavigation,
+  Toolbar,
+  InputAdornment,
+} from "@mui/material";
+import Logo from "../assets/images/CoBuildLogo.png";
 function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -18,6 +28,13 @@ function SignUp() {
   const [cpass, setCPassword] = useState("");
   const [skills, setSkills] = useState("");
   const [courses, setCourses] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const [nameError, setNameError] = useState("");
+  const [cpassError, setCpassError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -56,6 +73,68 @@ function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (name.length == 0) {
+      setNameError("Name must contain atleast 1 character");
+      return;
+    } else {
+      setNameError("");
+    }
+
+    // Validate email
+
+    if (email.length == 0) {
+      setEmailError("Email cannot be empty");
+      return;
+    } else {
+      setEmailError("");
+    }
+
+    if (!email.includes("@")) {
+      setEmailError("Email must contain the @ symbol");
+      return;
+    } else {
+      setEmailError("");
+    }
+
+    // Validate username
+    if (username.length < 3 || username.length > 6) {
+      setUsernameError("Username must be between 3 and 6 characters");
+      return;
+    } else {
+      setUsernameError("");
+    }
+
+    // Validate password
+    if (password.length == 0) {
+      setPasswordError("Password cannot be empty");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!/(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      setPasswordError(
+        "Password must have at least one capital letter and one number"
+      );
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    if (cpass.length == 0) {
+      setCpassError("Re-enter password");
+      return;
+    } else {
+      setCpassError("");
+    }
+
+    if (cpass != password) {
+      setCpassError("Passwords do not match");
+      return;
+    } else {
+      setCpassError("");
+    }
+
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
 
@@ -138,85 +217,56 @@ function SignUp() {
   };
   return (
     <div style={{ background: "#2B2B2B" }}>
-      <nav
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-          height: "100px",
-          background: "#2B2B2B",
-          flex: "none",
-          order: "0",
-          alignSelf: "stretch",
-          flexGrow: "0",
-        }}
+      <AppBar
+        position="relative"
+        style={{ background: "#2B2B2B", height: "80px" }}
       >
-        <div style={logoStyles}>
-          <div
+        <Toolbar
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "80px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Avatar
+            alt="Logo"
+            src={Logo}
+            style={{ width: "35px", height: "35px" }}
+          />
+          <Typography
+            variant="h6"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              padding: "0px",
-              gap: "10px",
-              width: "167px",
-              height: "45px",
-              flex: "none",
-              order: "0",
-              flexGrow: "0",
+              fontWeight: "bold",
+              marginLeft: "25px",
+              fontSize: "30px",
+              fontFamily: "work sans",
             }}
           >
-            <p
-              style={{
-                position: "absolute",
-                width: "122px",
-                height: "45px",
-                left: "45px",
-                top: "0px",
-                fontFamily: "Work Sans",
-                fontStyle: "normal",
-                fontWeight: "600",
-                fontSize: "32px",
-                lineHeight: "140%",
-                textAlign: "center",
-                color: "#FFFFFF",
-              }}
-            >
-              CoBuild
-            </p>
-          </div>
-        </div>
-        <Link to={"/login"}>
-          <button
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            CoBuild
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/login"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "0px 30px",
-              gap: "12px",
-              width: "114px",
-              height: "60px",
               background: "#A259FF",
+              marginLeft: "auto",
+              width: "120px",
+              height: "60px",
               borderRadius: "20px",
-              flex: "none",
-              order: "3",
-              flexGrow: "0",
+              fontWeight: 600,
               color: "#FFFFFF",
-              marginRight: "20px",
-              fontWeight: "600",
-              transition: "ease 0.3s",
-              border: isHovered ? "3px solid #FFFFFF" : "3px solid #A259FF",
+              fontStyle: "normal",
+              fontSize: "16px",
+              lineHeight: "140%",
+              fontFamily: "work sans",
             }}
           >
             Sign In
-          </button>
-        </Link>
-      </nav>
+          </Button>
+        </Toolbar>
+      </AppBar>
       <body>
         <div
           style={{
@@ -384,7 +434,7 @@ function SignUp() {
                   order: "0",
                   alignSelf: "stretch",
                   flexGrow: "0",
-                  color: "2B2B2B",
+                  color: "#000000",
                   transition: "transform 0.5s ease",
                 }}
                 onClick={(e) => {
@@ -402,6 +452,11 @@ function SignUp() {
                 required
                 placeholder="Name"
               />
+              {nameError && (
+                <Typography variant="caption" color="error">
+                  {nameError}
+                </Typography>
+              )}
               <input
                 style={{
                   boxSizing: "border-box",
@@ -419,7 +474,7 @@ function SignUp() {
                   order: "0",
                   alignSelf: "stretch",
                   flexGrow: "0",
-                  color: "2B2B2B",
+                  color: "#000000",
                   transition: "transform 0.5s ease",
                 }}
                 onClick={(e) => {
@@ -437,6 +492,11 @@ function SignUp() {
                 required
                 placeholder="Email"
               />
+              {emailError && (
+                <Typography variant="caption" color="error">
+                  {emailError}
+                </Typography>
+              )}
               <input
                 style={{
                   boxSizing: "border-box",
@@ -454,7 +514,15 @@ function SignUp() {
                   order: "0",
                   alignSelf: "stretch",
                   flexGrow: "0",
-                  color: "2B2B2B",
+                  color:
+                    (username.length === 0 ||
+                      username.length < 3 ||
+                      username.length > 6) &&
+                    usernameError
+                      ? "red"
+                      : "#000000",
+
+                  // color: "#000000",
                   transition: "transform 0.5s ease",
                 }}
                 onClick={(e) => {
@@ -472,7 +540,11 @@ function SignUp() {
                 required
                 placeholder="Username"
               />
-
+              {usernameError && (
+                <Typography variant="caption" color="error">
+                  {usernameError}
+                </Typography>
+              )}
               <input
                 style={{
                   boxSizing: "border-box",
@@ -490,7 +562,7 @@ function SignUp() {
                   order: "0",
                   alignSelf: "stretch",
                   flexGrow: "0",
-                  color: "2B2B2B",
+                  color: "#000000",
                   transition: "transform 0.5s ease",
                 }}
                 onClick={(e) => {
@@ -508,7 +580,11 @@ function SignUp() {
                 required
                 placeholder="Password"
               />
-
+              {passwordError && (
+                <Typography variant="caption" color="error">
+                  {passwordError}
+                </Typography>
+              )}
               <input
                 style={{
                   boxSizing: "border-box",
@@ -526,7 +602,7 @@ function SignUp() {
                   order: "0",
                   alignSelf: "stretch",
                   flexGrow: "0",
-                  color: "2B2B2B",
+                  color: "#000000",
                   transition: "transform 0.5s ease",
                 }}
                 onClick={(e) => {
@@ -544,6 +620,11 @@ function SignUp() {
                 required
                 placeholder="Confirm Password"
               />
+              {cpassError && (
+                <Typography variant="caption" color="error">
+                  {cpassError}
+                </Typography>
+              )}
 
               <div
                 style={{
@@ -574,7 +655,7 @@ function SignUp() {
                       width: "330px",
                       height: "160px",
                       background: "#F3F0FF",
-                      border: "1px dashed #C1B2FA",
+                      border: "2px dashed #7A5FEC", // Adjust border color and thickness
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
                       transform: "scale(1)",
@@ -588,6 +669,7 @@ function SignUp() {
                       justifyContent: "center",
                       color: "#7A5FEC",
                       WebkitTextStrokeWidth: "1px",
+                      fontWeight: "normal",
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.animation = "circle 1s infinite linear";
@@ -607,98 +689,121 @@ function SignUp() {
                     style={{ display: "none" }}
                     required
                     capture="user"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      const updatedFiles = [...uploadedFiles];
+
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
+
+                      setUploadedFiles(updatedFiles);
+                    }}
                   />
                 </label>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    padding: "0px",
-                    gap: "12px",
-                    width: "330px",
-                    height: "156px",
-                  }}
-                >
+
+                {uploadedFiles.map((file, index) => (
+                  // <div key={index}>
+                  //   <span>{file.name}</span>
+                  // </div>
+
                   <div
+                    key={index}
                     style={{
                       display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      padding: "8px",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      padding: "0px",
                       gap: "12px",
-                      width: "310px",
-                      height: "72px",
-                      background: "#FFFFFF",
-                      boxShadow: "4px #EAE2FD",
-                      borderRadius: "8px",
+                      width: "330px",
+                      height: "160px", // Adjusted height to match the previous div length
                     }}
                   >
                     <div
                       style={{
-                        width: "48px",
-                        height: "56px",
-                        background: "#DAF2D9",
-                        borderRadius: "4px",
-                        flex: "none",
-                        order: "0",
-                        flexGrow: "0",
-                      }}
-                    ></div>
-                    <div
-                      style={{
                         display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                        padding: "0px",
-                        gap: "4px",
-                        width: "254px",
-                        height: "56px",
-                        flex: "none",
-                        order: "1",
-                        flexGrow: "1",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        padding: "8px",
+                        gap: "12px",
+                        width: "330px",
+                        height: "72px",
+                        background: "#FFFFFF",
+                        boxShadow: "4px #EAE2FD",
+                        borderRadius: "8px",
                       }}
                     >
-                      <p
+                      <div
                         style={{
-                          width: "332px",
-                          height: "18px",
-                          fontFamily: "Inter",
-                          fontStyle: "normal",
-                          fontWeight: 700,
-                          fontSize: "14px",
-                          lineHeight: "130%",
-                          display: "flex",
-                          alignItems: "center",
-                          color: "#575361",
-                        }}
-                      >
-                        Resume.pdf
-                      </p>
-                      <p
-                        style={{
-                          width: "332px",
-                          height: "16px",
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: "500",
-                          fontSize: "12px",
-                          lineHeight: "130%",
-                          display: "flex",
-                          alignItems: "center",
-                          color: "#857E95",
+                          width: "48px",
+                          height: "56px",
+                          background: "#DAF2D9",
+                          borderRadius: "4px",
                           flex: "none",
-                          order: "1",
-                          alignSelf: "stretch",
+                          order: "0",
                           flexGrow: "0",
                         }}
+                      ></div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "flex-start",
+                          padding: "0px",
+                          gap: "4px",
+                          width: "254px",
+                          height: "56px",
+                          flex: "none",
+                          order: "1",
+                          flexGrow: "1",
+                        }}
                       >
-                        12 KB
-                      </p>
+                        <p
+                          style={{
+                            width: "254px", // Adjusted width to match the previous div width
+                            height: "18px",
+                            fontFamily: "Inter",
+                            fontStyle: "normal",
+                            fontWeight: 700,
+                            fontSize: "14px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#575361",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                          title={file.name} // Add the title attribute to display the full name on hover
+                        >
+                          {file.name}
+                        </p>
+                        <p
+                          style={{
+                            width: "254px", // Adjusted width to match the previous div width
+                            height: "16px",
+                            fontFamily: "'Inter'",
+                            fontStyle: "normal",
+                            fontWeight: "500",
+                            fontSize: "12px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#857E95",
+                            flex: "none",
+                            order: "1",
+                            alignSelf: "stretch",
+                            flexGrow: "0",
+                          }}
+                        >
+                          {Math.round(file.size / 1024)} KB
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
+
                 <button
                   onClick={handleSubmit}
                   onMouseEnter={handleMouseEnter}
@@ -738,5 +843,4 @@ function SignUp() {
     </div>
   );
 }
-
 export default SignUp;
