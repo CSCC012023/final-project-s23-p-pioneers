@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
 import Step1 from "./pages/Step1";
+import UserProfile from "./pages/UserProfile";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/step1" element={<Step1 />} />
+        <Route path="/User" element={<UserProfile />} />
         <Route
           path="/jobs"
           element={

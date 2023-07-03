@@ -48,7 +48,7 @@ const Step2 = ({ handleNext }) => {
     return (
       <div>
         <Typography variant="h4" gutterBottom>
-          Education and Courses
+          Educational Background
         </Typography>
   
         <Autocomplete
