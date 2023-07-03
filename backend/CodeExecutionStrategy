@@ -1,0 +1,5 @@
+class CodeExecutionStrategy {
+    executeCode(code) {
+        throw new Error('You have to implement the method executeCode!');
+    }
+}

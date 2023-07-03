@@ -1,0 +1,6 @@
+class Judge0ExecutionStrategy extends CodeExecutionStrategy {
+    executeCode(code) {
+        // Use Judge0 API to execute the code
+        
+    }
+}
