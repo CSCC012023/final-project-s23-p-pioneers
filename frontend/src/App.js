@@ -11,6 +11,7 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
+import Code from "./pages/Code";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/User" element={<UserProfile />} />
+        <Route path="/Code" element={<Code />} />
         <Route
           path="/jobs"
           element={
