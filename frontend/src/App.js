@@ -7,6 +7,7 @@ import { RequireAuth } from "react-auth-kit";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost";
+import Step1 from "./pages/Step1";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/step1" element={<Step1 />} />
         <Route
           path="/jobs"
           element={
