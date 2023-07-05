@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import './JobPosting.css';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./JobPosting.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 function JobPosting() {
-  const API_URL = 'http://localhost:8000/getpost';
+  const API_URL = "http://localhost:8000/getpost";
 
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleLeaderboardClick = () => {
+    navigate(`/leaderboard/${id}`);
+  };
 
   const calculateTimeRemaining = (targetDate) => {
     const timeDiff = new Date(targetDate) - new Date();
@@ -25,7 +30,7 @@ function JobPosting() {
   };
 
   const formatTime = (time) => {
-    return `${time < 10 ? '0' : ''}${time}`;
+    return `${time < 10 ? "0" : ""}${time}`;
   };
 
   const [positionName, setPositionName] = useState();
@@ -36,7 +41,12 @@ function JobPosting() {
   const [tags, setTags] = useState([]);
   const [targetDate, setTargetDate] = useState();
 
-  const [remainingTime, setRemainingTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [remainingTime, setRemainingTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -52,9 +62,9 @@ function JobPosting() {
     const fetchData = async () => {
       try {
         const response = await fetch(API_URL, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ id: id }),
         });
@@ -70,7 +80,7 @@ function JobPosting() {
         setTags(jobPostData[0].skills);
         setTargetDate(jobPostData[0].deadline);
       } catch (error) {
-        console.error('Error fetching job post:', error);
+        console.error("Error fetching job post:", error);
       }
     };
 
@@ -84,10 +94,15 @@ function JobPosting() {
           <div className="cardclock">
             <div className="clockheading">Applications closes in:</div>
             <div className="timer">
-              {formatTime(remainingTime.days)}d {formatTime(remainingTime.hours)}h {formatTime(remainingTime.minutes)}m{' '}
+              {formatTime(remainingTime.days)}d{" "}
+              {formatTime(remainingTime.hours)}h{" "}
+              {formatTime(remainingTime.minutes)}m{" "}
               {formatTime(remainingTime.seconds)}s
             </div>
             <button className="btntimer">Click</button>
+            <button className="btntimer" onClick={handleLeaderboardClick}>
+              Leaderboard
+            </button>
           </div>
           <div className="temp">
             <div className="position">{positionName}</div>
