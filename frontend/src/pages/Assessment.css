@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+  }
+  
+  .description {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .codeUI {
+    flex: 1;
+  }
+
+  .submit {
+    background-color: green;
+    width: 200px;
+  }
