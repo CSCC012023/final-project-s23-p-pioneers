@@ -20,7 +20,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import Logo from "../assets/images/CoBuildLogo.png";
-function SignUp() {
+function SignUpRecruiter() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,12 +29,16 @@ function SignUp() {
   const [skills, setSkills] = useState("");
   const [courses, setCourses] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [jobCategories, setJobCategory] = useState(""); // Added jobCategories state
+  const [positions, setPositions] = useState([]); // Added positions state
 
   const [nameError, setNameError] = useState("");
   const [cpassError, setCpassError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [jobcategoryError, setjobcategoryError] = useState("");
+  const [positionError, setpositionError] = useState("");
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -56,6 +60,16 @@ function SignUp() {
     setCourses(event.target.value);
   };
 
+  const handleJobCategoryChange = (event) => {
+    const category = event.target.value;
+    setJobCategory(category);
+  };
+
+  const handlePositionsChange = (event) => {
+    const position = event.target.value;
+    setPositions((prevPositions) => [...prevPositions, position]);
+  };
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -70,6 +84,9 @@ function SignUp() {
   const handleCPasswordChange = (event) => {
     setCPassword(event.target.value);
   };
+
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -134,6 +151,20 @@ function SignUp() {
     } else {
       setCpassError("");
     }
+    if(jobCategories.length == 0)
+    {
+      setjobcategoryError("Job category cannot be empty");
+    return;
+  } else {
+    setjobcategoryError("");
+  }
+  if(positions.length == 0)
+    {
+      setpositionError("Positions category cannot be empty");
+    return;
+  } else {
+    setpositionError("");
+  }
 
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
@@ -148,7 +179,7 @@ function SignUp() {
       formData,
     };
 
-    fetch("http://localhost:8000/signup", {
+    fetch("http://localhost:8000/signuprecruiter", {
       // Replace with your server URL
       method: "POST",
       headers: {
@@ -806,6 +837,131 @@ function SignUp() {
                     </div>
                   </div>
                 ))}
+{/* <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="jobcategory"
+                id="jobcategory"
+                value={jobCategories}
+                onChange={handleJobCategoryChange}
+                required
+                placeholder="Job Category"
+              />
+              {jobcategoryError && (
+                <Typography variant="caption" color="error">
+                  {jobcategoryError}
+                </Typography>
+              )} */}
+
+
+
+
+
+               {/* <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-start",
+              padding: "0px",
+              gap: "10px",
+              width: "400px",
+              height: "56px",
+              flex: "none",
+              order: "2",
+              alignSelf: "stretch",
+              flexGrow: "0",
+            }}
+          >
+            <TextField
+              id="positionsInput"
+              label="Positions"
+              variant="outlined"
+              value={positions[positions.length - 1] || ""}
+              onChange={handlePositionsChange}
+              fullWidth
+            />
+          </div> */}
+          <TextField
+  id="jobcategoryInput"
+  label="Job Category"
+  variant="outlined"
+  value={jobCategories}
+  onChange={handleJobCategoryChange}
+  fullWidth
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#FFFFFF", // White border color
+        "&:hover": {
+          borderColor: "#A259FF !important", // Purple border color on hover
+        },
+      },
+      "& input": {
+        color: "#FFFFFF", // White text color
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#FFFFFF", // White text color for the label
+    },
+  }}
+/>{jobcategoryError && (
+                <Typography variant="caption" color="error">
+                  {jobcategoryError}
+                </Typography>
+              )}
+  <TextField
+  id="positionsInput"
+  label="Positions"
+  variant="outlined"
+  value={positions[positions.length - 1] || ""}
+  onChange={handlePositionsChange}
+  fullWidth
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#FFFFFF", // White border color
+        "&:hover": {
+          borderColor: "#A259FF !important", // Purple border color on hover
+        },
+      },
+      "& input": {
+        color: "#FFFFFF", // White text color
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#FFFFFF", // White text color for the label
+    },
+  }}
+/>{positionError && (
+                <Typography variant="caption" color="error">
+                  {positionError}
+                </Typography>
+              )}
 
                 <button
                   onClick={handleSubmit}
@@ -864,10 +1020,13 @@ function SignUp() {
     fontWeight: "bold",
   }}
   component={Link}
-  to="/signuprecruiter"
+  to="/signup"
 >
-  Sign Up As Recruiter
+  Sign Up As Candidate
 </Button>
+
+
+
               </div>
             </div>
           </div>
@@ -977,4 +1136,4 @@ function SignUp() {
     </div>
   );
 }
-export default SignUp;
+export default SignUpRecruiter;
