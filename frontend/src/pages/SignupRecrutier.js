@@ -9,8 +9,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import {
   AppBar,
   Avatar,
@@ -22,7 +20,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import Logo from "../assets/images/CoBuildLogo.png";
-function SignUp() {
+function SignUpRecruiter() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,13 +29,17 @@ function SignUp() {
   const [skills, setSkills] = useState("");
   const [courses, setCourses] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [jobCategories, setJobCategory] = useState(""); // Added jobCategories state
+  const [positions, setPositions] = useState([]);
+  const [positionList, setPositionList] = useState([]);
 
   const [nameError, setNameError] = useState("");
   const [cpassError, setCpassError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const navigate = useNavigate();
+  const [jobcategoryError, setjobcategoryError] = useState("");
+  const [positionError, setpositionError] = useState("");
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -59,6 +61,27 @@ function SignUp() {
     setCourses(event.target.value);
   };
 
+  const handleJobCategoryChange = (event) => {
+    const category = event.target.value;
+    setJobCategory(category);
+  };
+
+  const handlePositionsChange = (event) => {
+    const { value } = event.target;
+    setPositions(value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (positions) {
+        setPositionList((prevPositionList) => [...prevPositionList, positions]);
+        setPositions("");
+      }
+    }
+  };
+
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -74,7 +97,10 @@ function SignUp() {
     setCPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+
+
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (name.length == 0) {
       setNameError("Name must contain atleast 1 character");
@@ -137,6 +163,20 @@ function SignUp() {
     } else {
       setCpassError("");
     }
+    if(jobCategories.length == 0)
+    {
+      setjobcategoryError("Job category cannot be empty");
+    return;
+  } else {
+    setjobcategoryError("");
+  }
+  if(positions.length == 0)
+    {
+      setpositionError("Positions category cannot be empty");
+    return;
+  } else {
+    setpositionError("");
+  }
 
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
@@ -148,10 +188,12 @@ function SignUp() {
       email,
       username,
       password,
+      jobCategories,
+      positionList,
+      formData,
     };
 
-    console.log(JSON.stringify(user))
-    fetch("http://localhost:8000/signup", {
+    fetch("http://localhost:8000/signuprecruiter", {
       // Replace with your server URL
       method: "POST",
       headers: {
@@ -167,30 +209,14 @@ function SignUp() {
         }
       })
       .then((data) => {
-
-        // console.log(data); // handle the response from the server
-        // setUsername("");
-        // setEmail("");
-        // setPassword("");
+        console.log(data); // handle the response from the server
+        setUsername("");
+        setEmail("");
+        setPassword("");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
-      localStorage.setItem('username', username)
-      const uname = localStorage.getItem('username');
-      const type = "resume";
-      const extension = "pdf";
-      const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
-      await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/pdf",
-        },
-        body: file
-      });
-      navigate("/step1");
-
   };
 
   const signUpStyles = {
@@ -825,6 +851,160 @@ function SignUp() {
                     </div>
                   </div>
                 ))}
+{/* <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="jobcategory"
+                id="jobcategory"
+                value={jobCategories}
+                onChange={handleJobCategoryChange}
+                required
+                placeholder="Job Category"
+              />
+              {jobcategoryError && (
+                <Typography variant="caption" color="error">
+                  {jobcategoryError}
+                </Typography>
+              )} */}
+
+
+
+
+
+               {/* <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-start",
+              padding: "0px",
+              gap: "10px",
+              width: "400px",
+              height: "56px",
+              flex: "none",
+              order: "2",
+              alignSelf: "stretch",
+              flexGrow: "0",
+            }}
+          >
+            <TextField
+              id="positionsInput"
+              label="Positions"
+              variant="outlined"
+              value={positions[positions.length - 1] || ""}
+              onChange={handlePositionsChange}
+              fullWidth
+            />
+          </div> */}
+          <TextField
+  id="jobcategoryInput"
+  label="Job Category"
+  variant="outlined"
+  value={jobCategories}
+  onChange={handleJobCategoryChange}
+  fullWidth
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#FFFFFF", // White border color
+        "&:hover": {
+          borderColor: "#A259FF !important", // Purple border color on hover
+        },
+      },
+      "& input": {
+        color: "#FFFFFF", // White text color
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#FFFFFF", // White text color for the label
+    },
+  }}
+/>{jobcategoryError && (
+                <Typography variant="caption" color="error">
+                  {jobcategoryError}
+                </Typography>
+              )}
+  <TextField
+  id="positionsInput"
+  label="Positions"
+  variant="outlined"
+  // value={positions[positions.length - 1] || ""}
+  value={positions}
+
+  onChange={handlePositionsChange}
+  onKeyDown={handleKeyDown} // Add keydown event handler
+  fullWidth
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#FFFFFF", // White border color
+        "&:hover": {
+          borderColor: "#A259FF !important", // Purple border color on hover
+        },
+      },
+      "& input": {
+        color: "#FFFFFF", // White text color
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#FFFFFF", // White text color for the label
+    },
+  }}
+/>{positionError && (
+                <Typography variant="caption" color="error">
+                  {positionError}
+                </Typography>
+              )}
+{positionList.length > 0 && (
+  <div
+    style={{
+      boxSizing: "border-box",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      padding: "16px 20px",
+      gap: "12px",
+      width: "330px",
+      border: "1px solid #A259FF", // Updated to purple border color
+      borderRadius: "20px",
+      flex: "none",
+      order: "0",
+      alignSelf: "stretch",
+      flexGrow: "0",
+      color: "#FFFFFF", // Updated to white text color
+      transition: "transform 0.5s ease",
+      overflow: "auto", // Added overflow property
+    }}
+  >
+    {positionList.join(", ")}
+  </div>
+)}
+
+
 
                 <button
                   onClick={handleSubmit}
@@ -883,17 +1063,19 @@ function SignUp() {
     fontWeight: "bold",
   }}
   component={Link}
-  to="/signuprecruiter"
+  to="/signup"
 >
-  Sign Up As Recruiter
+  Sign Up As Candidate
 </Button>
+
+
+
               </div>
             </div>
           </div>
         </div>
       </body>
-
     </div>
   );
 }
-export default SignUp;
+export default SignUpRecruiter;
