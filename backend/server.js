@@ -9,6 +9,8 @@ const userLogin = require("./API/loginUser");
 const signUpRequest = require("./API/signUp.js");
 const postApplication = require("./API/postApplication");
 
+const getLeaderboard = require("./API/getLeaderboard");
+
 app.use(cors());
 app.use(express.json()); // Add this line to parse JSON payloads
 
@@ -37,4 +39,6 @@ app.post("/getpost", getPost);
 app.post("/login", userLogin);
 app.post("/signup", signUpRequest);
 
+
 app.post("/submitApplication", postApplication);
+app.post("/leaderboard", getLeaderboard);
