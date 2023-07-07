@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -44,8 +45,28 @@ const useStyles = makeStyles({
 const Step3 = ({ handleSetProfileImage }) => {
   const classes = useStyles();
   const [profileImage, setProfileImage] = useState(null);
+  const navigate = useNavigate();
 
-  const handleProfileImageChange = (event) => {
+  const handleProfileImageSubmit = async (event) => {
+    if (!event.target || !event.target.files || event.target.files.length <= 0) return;
+    const file = event.target.files[0];
+    if (!file) return;
+    const uname = "user1";
+    const type = "profile";
+    const extension = "jpg";
+    const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+    await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: file
+    });
+    navigate("/users");
+  };
+
+  const handleProfileImageChange = async (event) => {
+    if (!event.target || !event.target.files || event.target.files.length <= 0) return;
     const file = event.target.files[0];
 
     if (file) {
@@ -54,9 +75,11 @@ const Step3 = ({ handleSetProfileImage }) => {
         setProfileImage(reader.result);
       };
       reader.readAsDataURL(file);
+      
     }
   };
 
+  
   const handlePreviewClick = () => {
     // Implement any custom logic when the profile image preview is clicked
   };
@@ -93,7 +116,7 @@ const Step3 = ({ handleSetProfileImage }) => {
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={() => handleSetProfileImage(profileImage)}
+            onClick={() => handleProfileImageSubmit(profileImage)}
           >
             Set Profile Picture
           </Button>

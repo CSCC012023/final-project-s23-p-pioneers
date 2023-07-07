@@ -35,7 +35,9 @@ app.get('/s3Url', async (req, res) => {
   try {
     const url = await generateUploadURL(req.query.username, req.query.type, req.query.extension);
     res.send({ url });
-    console.log(url);
+    //console.log(url);
+    const finalUrl = url.split("?")[0];
+    console.log(finalUrl);
   } catch (error) {
     console.error('Error generating upload URL:', error);
     res.status(500).send('Error generating upload URL');
