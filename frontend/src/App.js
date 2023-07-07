@@ -6,21 +6,48 @@ import { Routes, Route } from "react-router-dom";
 import { RequireAuth } from "react-auth-kit";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import CreatePost from "./pages/CreatePost";
+import Step1 from "./pages/Step1";
+import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from './pages/SignupRecrutier';
-import CreatePost from './pages/CreatePost'
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
+import Code from "./pages/Code";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={ <Login/> } />
-        <Route path="/signup" element={ <Signup/> } />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/step1" element={<Step1 />} />
+        <Route path="/User" element={<UserProfile />} />
+        <Route path="/Code" element={<Code />} />
         <Route path="/signuprecruiter" element={ <Signuprecruiter/> } />
-        <Route path="/jobs" element={ <Jobs />} />
-        <Route path="/jobpost/:id" element={ <JobPosting/> } />
-        <Route path="/createpost" element={ <CreatePost/> } />
+        <Route
+          path="/jobs"
+          element={
+            <RequireAuth loginPath="/login">
+              <Jobs />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/jobpost/:id"
+          element={
+            <RequireAuth loginPath="/login">
+              <JobPosting />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/createpost"
+          element={
+            <RequireAuth loginPath="/login">
+              <CreatePost />
+            </RequireAuth>
+          }
+        />
       </Routes>
       <BottomNavigation
         style={{
