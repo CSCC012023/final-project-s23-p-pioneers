@@ -62,7 +62,7 @@ function Assessment() {
 
   const [selectedProblem, setSelectedProblem] = useState(problems[0]);
   const [selectedTab, setSelectedTab] = useState('description');
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(problems[0].starterCode);
   const [submissions, setSubmissions] = useState([]);
 
   const handleProblemSelect = (problem) => {
@@ -84,7 +84,7 @@ function Assessment() {
       };
 
       setSubmissions([...submissions, newSubmission]);
-      setInputValue('');
+      setInputValue(problems[0].starterCode);
       setSelectedTab('submission');
     }
   };
