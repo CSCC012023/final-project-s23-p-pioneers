@@ -81,7 +81,6 @@ function SignUpRecruiter() {
     }
   };
 
-
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -96,9 +95,6 @@ function SignUpRecruiter() {
   const handleCPasswordChange = (event) => {
     setCPassword(event.target.value);
   };
-
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -163,20 +159,18 @@ function SignUpRecruiter() {
     } else {
       setCpassError("");
     }
-    if(jobCategories.length == 0)
-    {
+    if (jobCategories.length == 0) {
       setjobcategoryError("Job category cannot be empty");
-    return;
-  } else {
-    setjobcategoryError("");
-  }
-  if(positions.length == 0)
-    {
+      return;
+    } else {
+      setjobcategoryError("");
+    }
+    if (positions.length == 0) {
       setpositionError("Positions category cannot be empty");
-    return;
-  } else {
-    setpositionError("");
-  }
+      return;
+    } else {
+      setpositionError("");
+    }
 
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
@@ -733,7 +727,7 @@ function SignUpRecruiter() {
                   <input
                     type="file"
                     id="fileInput"
-                    accept="application/pdf"
+                    accept="application/pdf/png/jpeg"
                     style={{ display: "none" }}
                     required
                     capture="user"
@@ -851,160 +845,91 @@ function SignUpRecruiter() {
                     </div>
                   </div>
                 ))}
-{/* <input
-                style={{
-                  boxSizing: "border-box",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  padding: "16px 20px",
-                  gap: "12px",
-                  width: "330px",
-                  height: "46px",
-                  background: "#FFFFFF",
-                  border: "1px solid #858584",
-                  borderRadius: "20px",
-                  flex: "none",
-                  order: "0",
-                  alignSelf: "stretch",
-                  flexGrow: "0",
-                  color: "#000000",
-                  transition: "transform 0.5s ease",
-                }}
-                onClick={(e) => {
-                  e.target.style.animation = "circle 1s infinite linear";
-                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
-                }}
-                onBlur={(e) => {
-                  e.target.style.animation = "none";
-                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
-                }}
-                type="jobcategory"
-                id="jobcategory"
-                value={jobCategories}
-                onChange={handleJobCategoryChange}
-                required
-                placeholder="Job Category"
-              />
-              {jobcategoryError && (
-                <Typography variant="caption" color="error">
-                  {jobcategoryError}
-                </Typography>
-              )} */}
 
-
-
-
-
-               {/* <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-start",
-              padding: "0px",
-              gap: "10px",
-              width: "400px",
-              height: "56px",
-              flex: "none",
-              order: "2",
-              alignSelf: "stretch",
-              flexGrow: "0",
-            }}
-          >
-            <TextField
-              id="positionsInput"
-              label="Positions"
-              variant="outlined"
-              value={positions[positions.length - 1] || ""}
-              onChange={handlePositionsChange}
-              fullWidth
-            />
-          </div> */}
-          <TextField
-  id="jobcategoryInput"
-  label="Job Category"
-  variant="outlined"
-  value={jobCategories}
-  onChange={handleJobCategoryChange}
-  fullWidth
-  sx={{
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#FFFFFF", // White border color
-        "&:hover": {
-          borderColor: "#A259FF !important", // Purple border color on hover
-        },
-      },
-      "& input": {
-        color: "#FFFFFF", // White text color
-      },
-    },
-    "& .MuiInputLabel-root": {
-      color: "#FFFFFF", // White text color for the label
-    },
-  }}
-/>{jobcategoryError && (
-                <Typography variant="caption" color="error">
-                  {jobcategoryError}
-                </Typography>
-              )}
-  <TextField
-  id="positionsInput"
-  label="Positions"
-  variant="outlined"
-  // value={positions[positions.length - 1] || ""}
-  value={positions}
-
-  onChange={handlePositionsChange}
-  onKeyDown={handleKeyDown} // Add keydown event handler
-  fullWidth
-  sx={{
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#FFFFFF", // White border color
-        "&:hover": {
-          borderColor: "#A259FF !important", // Purple border color on hover
-        },
-      },
-      "& input": {
-        color: "#FFFFFF", // White text color
-      },
-    },
-    "& .MuiInputLabel-root": {
-      color: "#FFFFFF", // White text color for the label
-    },
-  }}
-/>{positionError && (
-                <Typography variant="caption" color="error">
-                  {positionError}
-                </Typography>
-              )}
-{positionList.length > 0 && (
-  <div
-    style={{
-      boxSizing: "border-box",
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      padding: "16px 20px",
-      gap: "12px",
-      width: "330px",
-      border: "1px solid #A259FF", // Updated to purple border color
-      borderRadius: "20px",
-      flex: "none",
-      order: "0",
-      alignSelf: "stretch",
-      flexGrow: "0",
-      color: "#FFFFFF", // Updated to white text color
-      transition: "transform 0.5s ease",
-      overflow: "auto", // Added overflow property
-    }}
-  >
-    {positionList.join(", ")}
-  </div>
-)}
-
-
+                <TextField
+                  id="jobcategoryInput"
+                  label="Job Category"
+                  variant="outlined"
+                  value={jobCategories}
+                  onChange={handleJobCategoryChange}
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#FFFFFF", // White border color
+                        "&:hover": {
+                          borderColor: "#A259FF !important", // Purple border color on hover
+                        },
+                      },
+                      "& input": {
+                        color: "#FFFFFF", // White text color
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#FFFFFF", // White text color for the label
+                    },
+                  }}
+                />
+                {jobcategoryError && (
+                  <Typography variant="caption" color="error">
+                    {jobcategoryError}
+                  </Typography>
+                )}
+                <TextField
+                  id="positionsInput"
+                  label="Positions"
+                  variant="outlined"
+                  // value={positions[positions.length - 1] || ""}
+                  value={positions}
+                  onChange={handlePositionsChange}
+                  onKeyDown={handleKeyDown} // Add keydown event handler
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#FFFFFF", // White border color
+                        "&:hover": {
+                          borderColor: "#A259FF !important", // Purple border color on hover
+                        },
+                      },
+                      "& input": {
+                        color: "#FFFFFF", // White text color
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: "#FFFFFF", // White text color for the label
+                    },
+                  }}
+                />
+                {positionError && (
+                  <Typography variant="caption" color="error">
+                    {positionError}
+                  </Typography>
+                )}
+                {positionList.length > 0 && (
+                  <div
+                    style={{
+                      boxSizing: "border-box",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      padding: "16px 20px",
+                      gap: "12px",
+                      width: "330px",
+                      border: "1px solid #A259FF", // Updated to purple border color
+                      borderRadius: "20px",
+                      flex: "none",
+                      order: "0",
+                      alignSelf: "stretch",
+                      flexGrow: "0",
+                      color: "#FFFFFF", // Updated to white text color
+                      transition: "transform 0.5s ease",
+                      overflow: "auto", // Added overflow property
+                    }}
+                  >
+                    {positionList.join(", ")}
+                  </div>
+                )}
 
                 <button
                   onClick={handleSubmit}
@@ -1039,37 +964,34 @@ function SignUpRecruiter() {
                 </button>
 
                 <Button
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
-  fullWidth
-  style={{
-    boxSizing: "border-box",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "16px 20px",
-    gap: "12px",
-    width: "330px",
-    height: "46px",
-    background: isHovered ? "#A259FF" : "#FFFFFF",
-    color: isHovered ? "#FFFFFF" : "#A259FF",
-    border: `3px solid #A259FF`,
-    borderRadius: "20px",
-    flex: "none",
-    order: "0",
-    alignSelf: "stretch",
-    flexGrow: "0",
-    fontWeight: "bold",
-  }}
-  component={Link}
-  to="/signup"
->
-  Sign Up As Candidate
-</Button>
-
-
-
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  fullWidth
+                  style={{
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "16px 20px",
+                    gap: "12px",
+                    width: "330px",
+                    height: "46px",
+                    background: isHovered ? "#A259FF" : "#FFFFFF",
+                    color: isHovered ? "#FFFFFF" : "#A259FF",
+                    border: `3px solid #A259FF`,
+                    borderRadius: "20px",
+                    flex: "none",
+                    order: "0",
+                    alignSelf: "stretch",
+                    flexGrow: "0",
+                    fontWeight: "bold",
+                  }}
+                  component={Link}
+                  to="/signup"
+                >
+                  Sign Up As Candidate
+                </Button>
               </div>
             </div>
           </div>
