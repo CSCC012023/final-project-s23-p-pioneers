@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+  username: {
+    type: String,
+    // ref: "user",
     required: true,
   },
   job: {
@@ -20,6 +20,14 @@ const applicationSchema = new mongoose.Schema({
     type: String,
     enum: ["correct", "incorrect", "pending"],
     default: "pending",
+  },
+  code: {
+    type: String, 
+    
+  },
+  score: {
+    type: String,
+    default: 0,
   },
   additionalFields: {
     complexity: {
