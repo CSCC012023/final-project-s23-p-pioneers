@@ -24,11 +24,8 @@ const getApplicationsByJob = async (req, res) => {
     const applications = await Application.find({
       job: appliedJob._id,
       submissionTime: { $gte: date }, // Filter applications with submissionTime greater than or equal to the calculated date
-    }).populate({
-      path: "user",
-      select: "username",
-    });
-
+    })
+    console.log(applications)
     // Send the applications as a response
     res.json(applications);
   } catch (error) {

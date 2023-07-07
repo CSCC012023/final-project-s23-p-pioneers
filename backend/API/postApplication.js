@@ -7,7 +7,7 @@ const Job = mongoose.model("Job", jobSchema);
 
 const postApplication = async (req, res) => {
   try {
-    const { jobID, userID, additionalFields } = req.body; // Extract the jobID, userID, and additionalFields from the request body
+    const { jobID, username, additionalFields } = req.body; // Extract the jobID, userID, and additionalFields from the request body
 
     // Check if the job exists
     const appliedJob = await Job.findOne({ jobId: jobID });
@@ -19,7 +19,7 @@ const postApplication = async (req, res) => {
     // Create a new application document
     const newApplication = new Application({
       job: appliedJob._id,
-      user: userID,
+      username: username,
       additionalFields,
     });
 

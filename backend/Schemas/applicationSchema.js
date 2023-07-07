@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+  username: {
+    type: String,
+    // ref: "user",
     required: true,
   },
   job: {

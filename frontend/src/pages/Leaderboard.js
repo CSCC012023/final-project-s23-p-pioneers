@@ -38,13 +38,14 @@ const theme = createTheme({
 });
 
 function LeaderboardContent({ entities, currentTab }) {
+  console.log(entities)
   return (
     <>
       {entities.map((entity, index) => (
         <LeaderboardTab
           key={index}
           number={index + 1}
-          username={entity.user.username}
+          username={entity.username}
           time={entity.additionalFields.time}
           complexity={entity.additionalFields.complexity}
           space={entity.additionalFields.space}

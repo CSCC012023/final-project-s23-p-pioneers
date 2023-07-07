@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./JobPosting.css";
-import { useParams } from "react-router-dom";
 import ApplicationDialog from "./components/ApplicationDialog";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -99,9 +98,10 @@ function JobPosting() {
 
   const handleSubmitDialog = async () => {
     try {
+      // console.log()
       const req = {
         jobID: id,
-        userID: "649c655d35eab52585d7a2a3", // Replace with the actual userID
+        username: localStorage.getItem('username'), // Replace with the actual userID
         additionalFields: {
           complexity: "O(nlog(n))",
           space: "O(n)",
