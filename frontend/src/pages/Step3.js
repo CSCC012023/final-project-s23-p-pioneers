@@ -47,23 +47,29 @@ const Step3 = ({ handleSetProfileImage }) => {
   const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
 
-  const handleProfileImageSubmit = async (event) => {
-    if (!event.target || !event.target.files || event.target.files.length <= 0) return;
-    const file = event.target.files[0];
-    if (!file) return;
-    const uname = "user1";
-    const type = "profile";
+  const handleProfileImageSubmit = async () => {
+    // if (!profileImage) return;
+    console.log("hello")
+  
+    const file = profileImage;
+    const uname = localStorage.getItem("username");
+    const type = "profilepic";
     const extension = "jpg";
-    const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+    const { url } = await fetch(
+      `http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`
+    ).then((res) => res.json());
+  
     await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "multipart/form-data",
       },
-      body: file
+      body: file,
     });
-    navigate("/users");
+  
+    navigate("/user");
   };
+  
 
   const handleProfileImageChange = async (event) => {
     if (!event.target || !event.target.files || event.target.files.length <= 0) return;
@@ -116,8 +122,8 @@ const Step3 = ({ handleSetProfileImage }) => {
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={() => handleProfileImageSubmit(profileImage)}
-          >
+            onClick={() => handleProfileImageSubmit()}
+            >
             Set Profile Picture
           </Button>
         </Box>
