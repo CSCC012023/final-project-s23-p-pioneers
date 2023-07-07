@@ -58,8 +58,18 @@
   margin: 0;
 }
 
-.submission-box {
-  background-color: #3b3b3b;
+.submission-boxgreen{
+  background-color: green;
+  /* color: green; */
+  border: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.submission-boxred{
+  background-color: red;
+  /* color: blue; */
   border: 10px;
   padding: 10px;
   margin-bottom: 10px;

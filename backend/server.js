@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const assesmentApi = require('./API/assesments')
+const { assesmentAPI, compile } = require('./API/assesments')
 const getPost = require('./API/getpost')
 const createPost = require('./API/createPost')
 const userLogin = require("./API/loginUser");
@@ -28,8 +28,8 @@ app.listen(8000, () => {
   console.log("Server started on port 8000");
 });
 
-
-app.post('/createassesment', assesmentApi)
+app.post('/compile', compile)
+app.post('/createassesment', assesmentAPI)
 app.post("/createpost", createPost);
 
 app.post('/getpost', getPost)

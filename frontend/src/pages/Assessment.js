@@ -11,12 +11,14 @@ function Assessment() {
       id: 1,
       title: 'Two Sum',
       description: 'Given an array of integers, find two numbers such that they add up to a specific target.',
-      language: 'java',
-      starterCode: `class Solution {
-  public int[] twoSum(int[] nums, int target) {
-    // Your code here
-  }
-}`,
+      language: 'python',
+      starterCode: "import sys\n\ndef add(num1, num2):\n    return\n\nif __name__ == \"__main__\":\n    num1 = int(sys.argv[1])\n    num2 = int(sys.argv[2])\n    print(add(num1, num2))",
+      tests: [
+        [[2, 3], 5],
+        [[-1, 7], 6],
+        [[0, 0], 0],
+        [[10, -5], 5]
+      ],
       examples: [
         {
           input: '[2, 7, 11, 15], target = 9',
@@ -29,11 +31,14 @@ function Assessment() {
     // Add more problems as needed
   ]);
 
+
+
   const [selectedProblem, setSelectedProblem] = useState(problems[0]);
   const [selectedTab, setSelectedTab] = useState('description');
   const [inputValue, setInputValue] = useState(problems[0].starterCode);
   const [submissions, setSubmissions] = useState([]);
   const [consoleOutput, setConsoleOutput] = useState('');
+  const [result, setResult] = useState()
 
   const handleProblemSelect = (problem) => {
     setSelectedProblem(problem);
@@ -46,16 +51,41 @@ function Assessment() {
   };
 
   const submitCode = () => {
-    if (inputValue.trim() !== '') {
-      const newSubmission = {
-        id: Date.now(),
-        code: inputValue,
-      };
 
-      setSubmissions([...submissions, newSubmission]);
-      setInputValue(problems[0].starterCode);
-      setSelectedTab('submission');
-    }
+
+  const requestData = {
+    pythonCode: inputValue,
+    tests: problems[0].tests
+  };
+
+  fetch("http://localhost:8000/compile", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data
+      setResult(data.result);
+      console.log(data.result)
+      if (inputValue.trim() !== '') {
+        const newSubmission = {
+          id: Date.now(),
+          code: inputValue,
+        };
+  
+        setSubmissions([...submissions, { "newSubmission" : newSubmission, "result" : data.result}]);
+        setInputValue(problems[0].starterCode);
+        setSelectedTab('submission');
+      }
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error:', error);
+    });
+
   };
 
   const executeJavaCode = () => {
@@ -130,9 +160,10 @@ class Main {
             <div className="submission">
               <h1>Submission</h1>
               {submissions.map((submission) => (
-                <div key={submission.id} className="submission-box">
+                <div key={submission.newSubmission.id} className={`${submission.result === 100 ? 'submission-boxgreen' : 'submission-boxred'}`}>
                   <h3>Submission ID: {submission.id}</h3>
-                  <pre>{submission.code}</pre>
+                  <pre>{submission.newSubmission.code}</pre>
+                  <p><strong>Result:</strong> {submission.result}</p>
                 </div>
               ))}
             </div>
