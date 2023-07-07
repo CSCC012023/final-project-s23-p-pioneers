@@ -71,7 +71,7 @@ function SignUp() {
     setCPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (name.length == 0) {
       setNameError("Name must contain atleast 1 character");
@@ -171,6 +171,18 @@ function SignUp() {
       })
       .catch((error) => {
         console.error("Error:", error);
+      });
+
+      const uname = "sdfsdfsdf";
+      const type = "resume";
+      const extension = "pdf";
+      const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+        body: file
       });
   };
 
