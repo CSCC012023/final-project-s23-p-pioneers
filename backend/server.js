@@ -2,12 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const assesmentApi = require('./API/assesments')
-const getPost = require('./API/getpost')
-const createPost = require('./API/createPost')
+const assesmentApi = require("./API/assesments");
+const getPost = require("./API/getpost");
+const createPost = require("./API/createPost");
 const userLogin = require("./API/loginUser");
 const signUpRequest = require("./API/signUp.js");
 const generateUploadURL = require("./s3.js");
+const postApplication = require("./API/postApplication");
 
 app.use(cors());
 app.use(express.json()); // Add this line to parse JSON payloads
@@ -44,8 +45,9 @@ app.get('/s3Url', async (req, res) => {
 app.post('/createassesment', assesmentApi)
 app.post("/createpost", createPost);
 
-app.post('/getpost', getPost)
-
+app.post("/getpost", getPost);
 
 app.post("/login", userLogin);
 app.post("/signup", signUpRequest);
+
+app.post("/submitApplication", postApplication);
