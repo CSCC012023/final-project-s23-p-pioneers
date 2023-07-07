@@ -18,14 +18,14 @@ const s3 = new aws.S3({
   signatureVersion: 'v4'
 })
 
-async function generateUploadURL(username, type) {
+async function generateUploadURL(username, type, extension) {
   console.log("here")
   const rawBytes = await randomBytes(16)
-  const imageName = rawBytes.toString('hex')
+  const name = rawBytes.toString('hex')
 
   const params = ({
     Bucket: bucketName,
-    Key: "${username}/${type}/${imageName}.jpg",
+    Key: `${username}/${type}/${name}.${extension}`,
     Expires: 60
   })
 

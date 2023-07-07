@@ -33,7 +33,7 @@ app.get('/s3Url', async (req, res) => {
   console.log("heeere")
 
   try {
-    const url = await generateUploadURL(req.query.username, req.query.type);
+    const url = await generateUploadURL(req.query.username, req.query.type, req.query.extension);
     res.send({ url });
     console.log(url);
   } catch (error) {
