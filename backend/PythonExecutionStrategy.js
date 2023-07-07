@@ -20,16 +20,14 @@ class PythonExecutionStrategy extends CodeExecutionStrategy {
             };
             
             console.log('Executing Python code for input:', input);
-            console.log(code);
-            PythonShell.runString(code, options, function (err, result) {
-                console.log("check");
-                if (err) {
-                  console.error(err);
-                } else {
-                  console.log(result);
-                }
+            // console.log(code);
+            PythonShell.runString(code, options).then(messages => {
+                console.log(messages);
+
               });
         }
+
+
     
         return testResults;
     }
