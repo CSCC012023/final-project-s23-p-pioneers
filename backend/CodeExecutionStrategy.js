@@ -1,5 +1,5 @@
 class CodeExecutionStrategy {
-    executeCode(code, tests, language) {
+    executeCode(code, tests) {
         throw new Error('You have to implement the method executeCode!');
     }
     evaluateCode(code, memoryUsage, timeUsage, tests) {
@@ -8,3 +8,5 @@ class CodeExecutionStrategy {
         // evaluation should be based on the test cases passed, runtime, memory, clean code, time taken to write the code, etc.
     }
 }
+
+module.exports = CodeExecutionStrategy;
