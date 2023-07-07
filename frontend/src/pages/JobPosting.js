@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./JobPosting.css";
 import { useParams } from "react-router-dom";
 import ApplicationDialog from "./components/ApplicationDialog";
+import { useNavigate, useParams } from "react-router-dom";
 
 function JobPosting() {
   const API_URL = "http://localhost:8000/getpost";
 
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleLeaderboardClick = () => {
+    navigate(`/leaderboard/${id}`);
+  };
 
   const calculateTimeRemaining = (targetDate) => {
     const timeDiff = new Date(targetDate) - new Date();
@@ -144,6 +150,9 @@ function JobPosting() {
             <button className="btntimer">Click</button>
             <button className="btntimer" onClick={handleOpenDialog}>
               Apply
+            </button>
+            <button className="btntimer" onClick={handleLeaderboardClick}>
+              Leaderboard
             </button>
           </div>
           <div className="temp">

@@ -1,6 +1,7 @@
 import "./App.css";
 import JobPosting from "./pages/JobPosting";
 import Jobs from "./pages/Jobs";
+import Leaderboard from "./pages/Leaderboard";
 import { Routes, Route } from "react-router-dom";
 
 import { RequireAuth } from "react-auth-kit";
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/leaderboard/:id" element={<Leaderboard />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/User" element={<UserProfile />} />
         <Route path="/Code" element={<Code />} />
