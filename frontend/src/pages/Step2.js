@@ -19,106 +19,111 @@ const universities = [
   // Add more universities here
 ];
 
-const Step2 = ({ handleNext }) => {
-    const classes = useStyles();
-    const [courses, setCourses] = useState([]);
-  
-    const handleAddCourse = (event, value) => {
-        if (value) {
-          let newCourses = [];
-          if (Array.isArray(value)) {
-            newCourses = value.map((course) => course.trim());
-          } else if (typeof value === "string") {
-            newCourses = value.split(",").map((course) => course.trim());
-          }
-          setCourses((prevCourses) => {
-            const filteredCourses = prevCourses.filter(
-              (course) => !newCourses.includes(course)
-            );
-            return [...filteredCourses, ...newCourses];
-          });
-        }
-      };
-      
-  
-    const handleRemoveCourse = (course) => {
-      setCourses((prevCourses) => prevCourses.filter((c) => c !== course));
-    };
-  
-    return (
-      <div>
-        <Typography variant="h4" gutterBottom>
-          Educational Background
-        </Typography>
-  
-        <Autocomplete
-          freeSolo
-          options={universities}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="University"
-              fullWidth
-              InputProps={{
-                ...params.InputProps,
-                style: { color: "white" },
-              }}
-            />
-          )}
-          classes={{
-            paper: classes.dropdownMenu,
-          }}
-        />
-  
-        <Box marginTop={2} />
-  
-        <Autocomplete
-          multiple
-          freeSolo
-          options={[]}
-          value={courses}
-          onChange={handleAddCourse}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Courses"
-              fullWidth
-              InputProps={{
-                ...params.InputProps,
-                style: { color: "white" },
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleAddCourse(null, params.inputProps.value);
-                  params.inputProps.onChange(e);
-                }
-              }}
-            />
-          )}
-          renderTags={(value, getTagProps) =>
-            value.map((course, index) => (
-              <Chip
-                key={course}
-                label={course}
-                onDelete={() => handleRemoveCourse(course)}
-                {...getTagProps({ index })}
-              />
-            ))
-          }
-          classes={{
-            paper: classes.dropdownMenu,
-          }}
-        />
-  
-        <Box marginTop={2}>
-          <Button variant="contained" color="primary" onClick={handleNext}>
-            Continue
-          </Button>
-        </Box>
-      </div>
-    );
+const Step2 = ({ handleNext, handlePrevious }) => {
+  const classes = useStyles();
+  const [courses, setCourses] = useState([]);
+
+  const handleAddCourse = (event, value) => {
+    if (value) {
+      let newCourses = [];
+      if (Array.isArray(value)) {
+        newCourses = value.map((course) => course.trim());
+      } else if (typeof value === "string") {
+        newCourses = value.split(",").map((course) => course.trim());
+      }
+      setCourses((prevCourses) => {
+        const filteredCourses = prevCourses.filter(
+          (course) => !newCourses.includes(course)
+        );
+        return [...filteredCourses, ...newCourses];
+      });
+    }
   };
-  
-  export default Step2;
-  
+
+  const handleRemoveCourse = (course) => {
+    setCourses((prevCourses) => prevCourses.filter((c) => c !== course));
+  };
+
+  const handlePreviousClick = () => {
+    handlePrevious(); // Trigger the navigation to Step1
+  };
+
+  return (
+    <div>
+      <Typography variant="h4" gutterBottom>
+        Educational Background
+      </Typography>
+
+      <Autocomplete
+        freeSolo
+        options={universities}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="University"
+            fullWidth
+            InputProps={{
+              ...params.InputProps,
+              style: { color: "white" },
+            }}
+          />
+        )}
+        classes={{
+          paper: classes.dropdownMenu,
+        }}
+      />
+
+      <Box marginTop={2} />
+
+      <Autocomplete
+        multiple
+        freeSolo
+        options={[]}
+        value={courses}
+        onChange={handleAddCourse}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Courses"
+            fullWidth
+            InputProps={{
+              ...params.InputProps,
+              style: { color: "white" },
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddCourse(null, params.inputProps.value);
+                params.inputProps.onChange(e);
+              }
+            }}
+          />
+        )}
+        renderTags={(value, getTagProps) =>
+          value.map((course, index) => (
+            <Chip
+              key={course}
+              label={course}
+              onDelete={() => handleRemoveCourse(course)}
+              {...getTagProps({ index })}
+            />
+          ))
+        }
+        classes={{
+          paper: classes.dropdownMenu,
+        }}
+      />
+
+      <Box marginTop={2}>
+        <Button variant="outlined" onClick={handlePreviousClick}>
+          Previous
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleNext}>
+          Continue
+        </Button>
+      </Box>
+    </div>
+  );
+};
+
+export default Step2;
