@@ -1,0 +1,370 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+    color: #ffffff;
+
+}
+.subcontent {
+    background-color: #2B2B2B;
+
+}
+.content {
+    /* margin-top: 5%; */
+    justify-content: center;
+    width: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 100%;
+    padding-bottom: 50px;
+}
+
+.position {
+    margin-bottom: 20px;
+
+    width: 605px;
+    height: 56px;
+    
+    /* H2 - Work Sans */
+    
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 51px;
+    line-height: 110%;
+    /* or 56px */
+    
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    
+    /* White */
+    
+    color: #FFFFFF;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+.company{
+    width: 605px;
+    height: 56px;
+    
+    /* H2 - Work Sans */
+    
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 110%;
+    /* or 56px */
+    
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    
+    /* White */
+    
+    color: #FFFFFF;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    margin-bottom: 20px;
+}
+
+.date{
+    width: 605px;
+    height: 35px;
+    margin-bottom: 10px;
+    /* Body Text- Work Sans */
+    
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 160%;
+    /* or 35px */
+    
+    text-transform: capitalize;
+    
+    /* Caption & Label Text */
+    
+    color: #858584;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 3;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.details {
+    width: 605px;
+    height: 35px;
+    /* Body Text- Work Sans */
+    
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 160%;
+    /* or 35px */
+    
+    text-transform: capitalize;
+    
+    /* Caption & Label Text */
+    
+    color: #858584;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 3;
+    align-self: stretch;
+    flex-grow: 0;
+}
+.location{
+    width: 563px;
+    height: 35px;
+    margin-bottom: 10px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 160%;
+    /* or 35px */
+    
+    
+    /* White */
+    
+    color: #FFFFFF;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+}
+.descriptionTitle{
+    width: 605px;
+    height: 35px;
+    /* Body Text- Work Sans */
+    
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 160%;
+    /* or 35px */
+    
+    text-transform: capitalize;
+    
+    /* Caption & Label Text */
+    
+    color: #858584;
+    
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 3;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.descriptionText{
+    width: 605px;
+height: 490px;
+
+font-family: 'Work Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 160%;
+/* or 35px */
+
+
+/* White */
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+}
+
+.tags {
+    margin-bottom: 10px;
+    width: 49px;
+height: 31px;
+
+/* H5 - Work Sans */
+
+font-family: 'Work Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 22px;
+line-height: 140%;
+/* identical to box height, or 31px */
+
+text-transform: capitalize;
+
+color: #858584;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+.btnss {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 30px;
+    gap: 12px;
+    
+    width: 159px;
+    height: 46px;
+    
+    /* Background - Secondary */
+    
+    background: #3B3B3B;
+    border-radius: 20px;
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border-style: none;
+    font-family: 'Work Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 140%;
+/* or 22px */
+
+text-align: center;
+text-transform: uppercase;
+
+color: #FFFFFF;
+}
+
+.tagelements {
+    display: flex;
+  }
+  
+  .tagelements .btnss {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+
+  .cardclock {
+    margin-top: 7%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    gap: 30px;
+    
+
+    width: 260px;
+    height: 200px;
+
+    /* Background - Secondary */
+
+    background: #3B3B3B;
+    border-radius: 20px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+.clockheading {
+    font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 110%;
+}
+
+.timer {
+    font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 120%;
+/* identical to box height, or 46px */
+
+text-align: center;
+text-transform: capitalize;
+}
+
+.btntimer {
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+align-content: center;
+/* padding: 0px 50px; */
+/* gap: 12px; */
+
+width: 235px;
+height: 60px;
+
+/* Call to Action */
+
+background: #A259FF;
+border-radius: 20px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+border-style: none;
+
+font-family: 'Work Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+/* line-height: 140%; */
+/* or 22px */
+
+text-align: center;
+
+}
+
+.btntimer:hover {
+    background: #8F4CEC;
+}
+
+.side {
+    display: flex;
+    /* flex-direction: column; */
+}
+
+.temp {
+    margin-top: 7%;
+
+}
+

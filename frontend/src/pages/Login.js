@@ -1,94 +1,276 @@
-import React from 'react'
-import {useState} from 'react';
-
+import React from "react";
+import { useState } from "react";
+import {
+  AppBar,
+  Avatar,
+  Typography,
+  Button,
+  TextField,
+  BottomNavigation,
+  Toolbar,
+  InputAdornment,
+} from "@mui/material";
+import "@fontsource/work-sans";
+import Logo from "../assets/images/CoBuildLogo.png";
+import loginImage from "../assets/images/loginPlaceHolder.png";
+import { useSignIn } from "react-auth-kit";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-  
-    const handleUsernameChange = (event) => {
-      setUsername(event.target.value);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const signIn = useSignIn();
+  const navigate = useNavigate();
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleClick = () => {
+    navigate("/jobs");
+  };
+  const handleLoginFormSubmit = (event) => {
+    event.preventDefault();
+    const user = {
+      username,
+      password,
     };
-  
-    const handleEmailChange = (event) => {
-      setEmail(event.target.value);
-    };
-  
-    const handlePasswordChange = (event) => {
-      setPassword(event.target.value);
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      const user = {
-        username,
-        email,
-        password,
-      };
-  
-      fetch('http://localhost:8000/signup', { // Replace with your server URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
+    fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Login request failed");
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Sign-up request failed.');
-          }
-        })
-        .then((data) => {
-          console.log(data); // handle the response from the server
-          setUsername('');
-          setEmail('');
-          setPassword('');
-        })
-        .catch((error) => {
-          console.error('Error:', error);
+      .then((data) => {
+        setUsername("");
+        setPassword("");
+        setLoginError("");
+
+        signIn({
+          token: data.accessToken,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: { username: user.username },
         });
-    };
-  
-    return (
-      <div>
-        <h2>Sign Up</h2>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-            required
+        // handleClick();
+        handleClick();
+      })
+      .catch((error) => {
+        setLoginError("Incorrect username or password");
+        console.error(error);
+      });
+  };
+
+  return (
+    <div
+      style={{
+        background: "#2B2B2B",
+        fontFamily: "Work Sans, sans-serif",
+      }}
+    >
+      <AppBar
+        position="relative"
+        style={{ background: "#2B2B2B", height: "80px" }}
+      >
+        <Toolbar
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "80px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Avatar
+            alt="Logo"
+            src={Logo}
+            style={{ width: "35px", height: "35px" }}
+          />
+          <Typography
+            variant="h6"
+            style={{
+              fontWeight: "bold",
+              marginLeft: "25px",
+              fontSize: "30px",
+              fontFamily: "work sans",
+            }}
+          >
+            CoBuild
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/signup"
+            style={{
+              background: "#A259FF",
+              marginLeft: "auto",
+              width: "120px",
+              height: "60px",
+              borderRadius: "20px",
+              fontWeight: 600,
+              color: "#FFFFFF",
+              fontStyle: "normal",
+              fontSize: "16px",
+              lineHeight: "140%",
+              fontFamily: "work sans",
+            }}
+          >
+            Sign Up
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <main style={{ display: "flex", flex: 1 }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "flex-start",
+            maxHeight: "800px",
+          }}
+        >
+          <img
+            alt="Image"
+            src={loginImage}
+            style={{
+              width: "100%",
+              objectFit: "cover",
+              height: "100%",
+            }}
           />
         </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "0 30px",
+          }}
+        >
+          <h1
+            style={{
+              color: "white",
+              fontSize: "51px",
+              width: "460px",
+              height: "56px",
+              fontWeight: 600,
+              lineHeight: "110%",
+              marginTop: "-10px",
+              marginLeft: "40px",
+            }}
+          >
+            Sign In
+          </h1>
+          <Typography
+            style={{
+              marginLeft: "40px",
+              color: "white",
+              width: "400px",
+              fontSize: "22px",
+              fontFamily: "work sans",
+            }}
+          >
+            Welcome Back! enter your details and start applying, Searching and
+            Coding on CoBuild.
+          </Typography>
+          {loginError && (
+            <Typography
+              variant="caption"
+              color="error"
+              marginLeft={5}
+              marginTop={1}
+            >
+              {loginError}
+            </Typography>
+          )}
+          <div style={{ marginTop: "20px", marginLeft: "40px" }}>
+            <TextField
+              label="Username"
+              value={username}
+              onChange={handleUsernameChange}
+              variant="filled"
+              style={{
+                marginBottom: "30px",
+                backgroundColor: "white",
+                borderRadius: "20px",
+                width: "330px",
+              }}
+              InputProps={{
+                disableUnderline: true,
+                // startAdornment: (
+                //   <InputAdornment position="start">
+                //     <AccountCircle></AccountCircle>
+                //   </InputAdornment>
+                // ),
+              }}
+            />
+            <TextField
+              label="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              variant="filled"
+              type="password"
+              style={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                width: "330px",
+              }}
+              InputProps={{ disableUnderline: true }}
+            />
+          </div>
+          <Button
+            style={{
+              background: "#A259FF",
+              width: "330px",
+              height: "46px",
+              borderRadius: "20px",
+              color: "white",
+              marginTop: "30px",
+              marginLeft: "40px",
+              fontFamily: "work sans",
+            }}
+            onClick={handleLoginFormSubmit}
+          >
+            sign in
+          </Button>
+          <Typography
+            variant="caption"
+            style={{
+              color: "white",
+              fontSize: "14px",
+              marginTop: "20px",
+              marginLeft: "40px",
+              width: "610px",
+              height: "35px",
+              fontStyle: "normal",
+              fontWeight: 400,
+              fontSize: "22px",
+              lineHeight: "160%",
+              fontFamily: "work sans",
+              textDecorationLine: "underline",
+              textTransform: "capitalize",
+            }}
+          >
+            <Link to="/signup" style={{ color: "white" }}>
+              Don't have an account? Sign up
+            </Link>
+          </Typography>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
-        </div>
-        <button onClick={handleSubmit}>Sign Up</button>
-      </div>
-    );
+      </main>
+    </div>
+  );
 }
 
-export default Login
+export default Login;
