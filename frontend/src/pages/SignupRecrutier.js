@@ -9,6 +9,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Avatar,
@@ -60,6 +61,7 @@ function SignUpRecruiter() {
   const handleCoursesChange = (event) => {
     setCourses(event.target.value);
   };
+  const navigate = useNavigate();
 
   const handleJobCategoryChange = (event) => {
     const category = event.target.value;
@@ -184,7 +186,6 @@ function SignUpRecruiter() {
       password,
       jobCategories,
       positionList,
-      formData,
     };
 
     fetch("http://localhost:8000/signuprecruiter", {
@@ -211,6 +212,8 @@ function SignUpRecruiter() {
       .catch((error) => {
         console.error("Error:", error);
       });
+      navigate("/createpost");
+
   };
 
   const signUpStyles = {

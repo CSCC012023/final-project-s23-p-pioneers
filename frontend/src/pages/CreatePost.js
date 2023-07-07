@@ -102,6 +102,7 @@ function JobPosting() {
     setDeadline(event.target.value);
   };
 
+
   const handleSkillsChange = (event) => {
     setSkills(event.target.value);
   };
@@ -112,19 +113,7 @@ function JobPosting() {
   const handleCreateAssessments = () => {
     // Handle create assessments logic here
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const job = {
-      title,
-      location,
-      jobDescription,
-      companyName,
-      deadline,
-      skills: ["C++", "Java", "Python", "Test"],
-    };
-
+  const createJobPosting = (job) => {
     fetch("http://localhost:8000/createpost", {
       method: "POST",
       headers: {
@@ -152,6 +141,24 @@ function JobPosting() {
       .catch((error) => {
         console.error("Error:", error);
       });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    
+
+    const job = {
+      title: title,
+      location: location,
+      jobDescription: jobDescription,
+      companyName: companyName,
+      deadline: deadline,
+      skills: ["C++", "Java", "Python", "Test"]
+    }
+
+
+
+      createJobPosting(job)
   };
 
   return (

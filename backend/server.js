@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require('./API/assesments')
 const getPost = require('./API/getpost')
+const signUpEmployer = require('./API/signupRecruiter')
 const createPost = require('./API/createPost')
 
 const userLogin = require("./API/loginUser");
@@ -44,6 +45,7 @@ app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
+app.post("/signuprecruiter", signUpEmployer)
 app.post("/addcode", addAssessment)
 
 app.get('/s3Url', async (req, res) => {
