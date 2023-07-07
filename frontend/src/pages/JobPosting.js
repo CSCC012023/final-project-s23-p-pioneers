@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import './JobPosting.css';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./JobPosting.css";
+import { useParams } from "react-router-dom";
+import ApplicationDialog from "./components/ApplicationDialog";
 
 function JobPosting() {
-  const API_URL = 'http://localhost:8000/getpost';
+  const API_URL = "http://localhost:8000/getpost";
 
   const { id } = useParams();
 
@@ -25,7 +26,7 @@ function JobPosting() {
   };
 
   const formatTime = (time) => {
-    return `${time < 10 ? '0' : ''}${time}`;
+    return `${time < 10 ? "0" : ""}${time}`;
   };
 
   const [positionName, setPositionName] = useState();
@@ -36,7 +37,12 @@ function JobPosting() {
   const [tags, setTags] = useState([]);
   const [targetDate, setTargetDate] = useState();
 
-  const [remainingTime, setRemainingTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [remainingTime, setRemainingTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -52,9 +58,9 @@ function JobPosting() {
     const fetchData = async () => {
       try {
         const response = await fetch(API_URL, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ id: id }),
         });
@@ -70,12 +76,58 @@ function JobPosting() {
         setTags(jobPostData[0].skills);
         setTargetDate(jobPostData[0].deadline);
       } catch (error) {
-        console.error('Error fetching job post:', error);
+        console.error("Error fetching job post:", error);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleSubmitDialog = async () => {
+    try {
+      const req = {
+        jobID: id,
+        userID: "649c655d35eab52585d7a2a3", // Replace with the actual userID
+        additionalFields: {
+          complexity: "O(nlog(n))",
+          space: "O(n)",
+          time: "10 mins",
+        },
+      };
+
+      const response = await fetch("http://localhost:8000/submitApplication", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      });
+
+      // Handle the response from the server
+      if (response.ok) {
+        // Application submitted successfully
+        console.log("Application submitted successfully");
+        // Perform any necessary actions or show a success message
+      } else {
+        // Application submission failed
+        console.error("Failed to submit application");
+        // Handle the error or show an error message
+      }
+    } catch (error) {
+      // Handle network errors or exceptions
+      console.error("Error submitting application:", error);
+      // Show an error message to the user
+    }
+    setOpenDialog(false);
+  };
 
   return (
     <div className="subcontent">
@@ -84,10 +136,15 @@ function JobPosting() {
           <div className="cardclock">
             <div className="clockheading">Applications closes in:</div>
             <div className="timer">
-              {formatTime(remainingTime.days)}d {formatTime(remainingTime.hours)}h {formatTime(remainingTime.minutes)}m{' '}
+              {formatTime(remainingTime.days)}d{" "}
+              {formatTime(remainingTime.hours)}h{" "}
+              {formatTime(remainingTime.minutes)}m{" "}
               {formatTime(remainingTime.seconds)}s
             </div>
             <button className="btntimer">Click</button>
+            <button className="btntimer" onClick={handleOpenDialog}>
+              Apply
+            </button>
           </div>
           <div className="temp">
             <div className="position">{positionName}</div>
@@ -110,6 +167,13 @@ function JobPosting() {
           ))}
         </div>
       </div>
+      <ApplicationDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        submit={handleSubmitDialog}
+        job={positionName}
+        company={companyName}
+      />
     </div>
   );
 }
