@@ -8,13 +8,15 @@ class CodeExecutionContext {
       this.strategy = strategy;
     }
   
-    executeCode(code, language) {
+    executeCode(code, tests, language) {
       this.strategy.executeCode(code, language);
       // should return the result of the execution (which test cases passed, runtime, memory, etc.)
     }
   }
 
 const code = 'console.log("Hello, World!");';
+const language = 'JavaScript';
+const tests = []
 const judge0Strategy = new Judge0ExecutionStrategy();
 const context = new CodeExecutionContext(judge0Strategy);
-context.executeCode(code, 'JavaScript');
+context.executeCode(code, tests, language);
