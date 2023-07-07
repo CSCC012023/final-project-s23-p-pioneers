@@ -45,6 +45,22 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  progam: {
+    type: String, 
+    required: false,
+  }, 
+  savedJobIds: {
+    type: [String],
+    required: false,
+  },
+  appliedJobsIds: {
+    type: [String],
+    required: false,
+  },
+  assessmentIds: {
+    type: [String],
+    required: false,
+  },
   // resume: {
   //   type: String,
   //   required: [true, "Please enter a resume"],
