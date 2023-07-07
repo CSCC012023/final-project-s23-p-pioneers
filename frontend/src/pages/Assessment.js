@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { dracula } from '@uiw/codemirror-theme-dracula';
-import { javascript} from '@codemirror/lang-javascript';
-import {java} from '@codemirror/lang-java';
-import {python} from '@codemirror/lang-python';
-import {cpp} from '@codemirror/lang-cpp';
-
+import { javascript } from '@codemirror/lang-javascript';
+import { java } from '@codemirror/lang-java';
 import './Assessment.css';
 
 function Assessment() {
@@ -14,6 +11,7 @@ function Assessment() {
       id: 1,
       title: 'Two Sum',
       description: 'Given an array of integers, find two numbers such that they add up to a specific target.',
+      language: 'java',
       starterCode: `class Solution {
   public int[] twoSum(int[] nums, int target) {
     // Your code here
@@ -24,35 +22,6 @@ function Assessment() {
           input: '[2, 7, 11, 15], target = 9',
           output: '[0, 1]',
           explanation: 'Because nums[0] + nums[1] == 9, we return [0, 1].',
-        }, 
-        {
-          input: '[3, 2, 4], target = 6',
-          output: '[1, 2]',
-          explanation: 'Because nums[1] + nums[2] == 6, we return [1, 2].',
-        },
-        {
-          input: '[3, 3], target = 6',
-          output: '[0, 1]',
-          explanation: 'Because nums[0] + nums[1] == 6, we return [0, 1].',
-
-        },
-        // More examples...
-      ],
-    },
-    {
-      id: 2,
-      title: 'Reverse Integer',
-      description: 'Given a signed 32-bit integer, reverse the digits of an integer.',
-      starterCode: `class Solution {
-  public int reverse(int x) {
-    // Your code here
-  }
-}`,
-      examples: [
-        {
-          input: '123',
-          output: '321',
-          explanation: 'After reversing the digits, we get 321.',
         },
         // More examples...
       ],
@@ -64,13 +33,13 @@ function Assessment() {
   const [selectedTab, setSelectedTab] = useState('description');
   const [inputValue, setInputValue] = useState(problems[0].starterCode);
   const [submissions, setSubmissions] = useState([]);
+  const [consoleOutput, setConsoleOutput] = useState('');
 
   const handleProblemSelect = (problem) => {
     setSelectedProblem(problem);
     setSelectedTab('description');
     setInputValue(problem.starterCode);
   };
-  
 
   const handleInputChange = (value) => {
     setInputValue(value);
@@ -87,6 +56,34 @@ function Assessment() {
       setInputValue(problems[0].starterCode);
       setSelectedTab('submission');
     }
+  };
+
+  const executeJavaCode = () => {
+    const code = `
+${inputValue}
+
+class Main {
+  public static void main(String[] args) {
+    int[] nums = {2, 7, 11, 15};
+    int target = 9;
+    Solution solution = new Solution();
+    int[] result = solution.twoSum(nums, target);
+    System.out.println("Output: " + Arrays.toString(result));
+  }
+}`;
+
+    const blob = new Blob([code], { type: 'text/plain' });
+    const file = window.URL.createObjectURL(blob);
+
+    const newWindow = window.open(file, '_blank');
+    newWindow.onload = () => {
+      newWindow.document.title = `${selectedProblem.title} Execution`;
+      newWindow.document.body.style.backgroundColor = 'white';
+
+      newWindow.console.log = (message) => {
+        setConsoleOutput((prevOutput) => prevOutput + message + '\n');
+      };
+    };
   };
 
   return (
@@ -149,7 +146,7 @@ function Assessment() {
           height="80vh"
           width="50vw"
           theme={dracula}
-          extensions={[javascript({ jsx: true }), java(), python(), cpp()]}
+          extensions={[javascript({ jsx: true }), java()]}
           options={{
             mode: 'javascript',
             theme: 'dracula',
@@ -159,9 +156,18 @@ function Assessment() {
             autofocus: true,
           }}
         />
+        <div className="execute" onClick={executeJavaCode}>
+          Execute Java Code
+        </div>
         <div className="submit" onClick={submitCode}>
           Submit
         </div>
+        {consoleOutput && (
+          <div className="console-output">
+            <h3>Console Output:</h3>
+            <pre>{consoleOutput}</pre>
+          </div>
+        )}
       </div>
     </div>
   );
