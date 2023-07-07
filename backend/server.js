@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const assesmentApi = require("./API/assesments");
-const getPost = require("./API/getpost");
-const createPost = require("./API/createPost");
+const { assesmentAPI, compile } = require('./API/assesments')
+const getPost = require('./API/getpost')
+const createPost = require('./API/createPost')
+
 const userLogin = require("./API/loginUser");
 const {
   signUpRequest,
@@ -109,8 +110,8 @@ app.get('/s3Url', async (req, res) => {
   }
 });
 
-
-app.post('/createassesment', assesmentApi)
+app.post('/compile', compile)
+app.post('/createassesment', assesmentAPI)
 app.post("/createpost", createPost);
 
 app.post("/getpost", getPost);
