@@ -17,7 +17,7 @@ const {
 
 
 const generateUploadURL = require("./s3.js");
-const postApplication = require("./API/postApplication");
+const { postApplication, addAssessment }  = require("./API/postApplication");
 
 const getLeaderboard = require("./API/getLeaderboard");
 
@@ -44,6 +44,7 @@ app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
+app.post("/addcode", addAssessment)
 
 app.get('/s3Url', async (req, res) => {
   console.log("hello")

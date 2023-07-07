@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Application = mongoose.model("Application", applicationSchema);
 const Job = mongoose.model("Job", jobSchema);
 
-const getApplicationsByJob = async (req, res) => {
+const getLeaderboard = async (req, res) => {
   try {
     const { jobID, days } = req.body; // Extract the jobID and days from the request body
 
@@ -24,8 +24,10 @@ const getApplicationsByJob = async (req, res) => {
     const applications = await Application.find({
       job: appliedJob._id,
       submissionTime: { $gte: date }, // Filter applications with submissionTime greater than or equal to the calculated date
-    })
-    console.log(applications)
+    }).sort({ score: -1 }); // Sort applications by score in descending order (-1)
+
+    console.log(applications);
+
     // Send the applications as a response
     res.json(applications);
   } catch (error) {
@@ -35,4 +37,5 @@ const getApplicationsByJob = async (req, res) => {
   }
 };
 
-module.exports = getApplicationsByJob;
+
+module.exports = getLeaderboard;

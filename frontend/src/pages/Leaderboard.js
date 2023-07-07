@@ -47,7 +47,7 @@ function LeaderboardContent({ entities, currentTab }) {
           number={index + 1}
           username={entity.username}
           time={entity.additionalFields.time}
-          complexity={entity.additionalFields.complexity}
+          complexity={entity.score}
           space={entity.additionalFields.space}
         />
       ))}

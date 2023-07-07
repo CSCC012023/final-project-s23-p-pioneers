@@ -50,6 +50,30 @@ function Assessment() {
     setInputValue(value);
   };
 
+  const addAssessment = async (code, score, username) => {
+    try {
+      const response = await fetch('http://localhost:8000/addcode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code, score, username }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add assessment');
+      }
+  
+      const data = await response.json();
+      console.log(data); // Do something with the response data
+  
+      return data;
+    } catch (error) {
+      console.error('Error adding assessment:', error);
+      throw error;
+    }
+  };
+  
   const submitCode = () => {
 
 
@@ -77,6 +101,7 @@ function Assessment() {
         };
   
         setSubmissions([...submissions, { "newSubmission" : newSubmission, "result" : data.result}]);
+        addAssessment(inputValue, data.result, localStorage.getItem("username"))
         setInputValue(problems[0].starterCode);
         setSelectedTab('submission');
       }

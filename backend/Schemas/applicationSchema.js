@@ -21,6 +21,14 @@ const applicationSchema = new mongoose.Schema({
     enum: ["correct", "incorrect", "pending"],
     default: "pending",
   },
+  code: {
+    type: String, 
+    
+  },
+  score: {
+    type: String,
+    default: 0,
+  },
   additionalFields: {
     complexity: {
       type: String,
