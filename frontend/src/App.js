@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Signuprecruiter from './pages/SignupRecrutier';
 import CreatePost from './pages/CreatePost'
-import CreatePost from "./pages/CreatePost";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
 

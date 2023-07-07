@@ -30,7 +30,8 @@ function SignUpRecruiter() {
   const [courses, setCourses] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [jobCategories, setJobCategory] = useState(""); // Added jobCategories state
-  const [positions, setPositions] = useState([]); // Added positions state
+  const [positions, setPositions] = useState([]);
+  const [positionList, setPositionList] = useState([]);
 
   const [nameError, setNameError] = useState("");
   const [cpassError, setCpassError] = useState("");
@@ -66,9 +67,20 @@ function SignUpRecruiter() {
   };
 
   const handlePositionsChange = (event) => {
-    const position = event.target.value;
-    setPositions((prevPositions) => [...prevPositions, position]);
+    const { value } = event.target;
+    setPositions(value);
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (positions) {
+        setPositionList((prevPositionList) => [...prevPositionList, positions]);
+        setPositions("");
+      }
+    }
+  };
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -176,6 +188,8 @@ function SignUpRecruiter() {
       email,
       username,
       password,
+      jobCategories,
+      positionList,
       formData,
     };
 
@@ -938,8 +952,11 @@ function SignUpRecruiter() {
   id="positionsInput"
   label="Positions"
   variant="outlined"
-  value={positions[positions.length - 1] || ""}
+  // value={positions[positions.length - 1] || ""}
+  value={positions}
+
   onChange={handlePositionsChange}
+  onKeyDown={handleKeyDown} // Add keydown event handler
   fullWidth
   sx={{
     "& .MuiOutlinedInput-root": {
@@ -962,6 +979,32 @@ function SignUpRecruiter() {
                   {positionError}
                 </Typography>
               )}
+{positionList.length > 0 && (
+  <div
+    style={{
+      boxSizing: "border-box",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      padding: "16px 20px",
+      gap: "12px",
+      width: "330px",
+      border: "1px solid #A259FF", // Updated to purple border color
+      borderRadius: "20px",
+      flex: "none",
+      order: "0",
+      alignSelf: "stretch",
+      flexGrow: "0",
+      color: "#FFFFFF", // Updated to white text color
+      transition: "transform 0.5s ease",
+      overflow: "auto", // Added overflow property
+    }}
+  >
+    {positionList.join(", ")}
+  </div>
+)}
+
+
 
                 <button
                   onClick={handleSubmit}
@@ -1032,107 +1075,6 @@ function SignUpRecruiter() {
           </div>
         </div>
       </body>
-      <BottomNavigation
-        style={{
-          background: "#3B3B3B",
-          height: "195px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "Work Sans",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Avatar
-            alt="Logo"
-            src={Logo}
-            style={{
-              width: "60px",
-              height: "60px",
-              marginRight: "10px",
-              marginLeft: "40px",
-            }}
-          />
-          <Typography
-            variant="body1"
-            style={{
-              color: "white",
-              fontSize: "28px",
-              fontFamily: "Work Sans",
-              borderBottom: "1px solid white",
-            }}
-          >
-            CoBuild
-          </Typography>
-          <Typography
-            variant="body2"
-            style={{
-              color: "white",
-              fontSize: "28px",
-              fontFamily: "Work Sans",
-              marginLeft: "150px",
-            }}
-          >
-            <a href="#" style={{ color: "white" }}>
-              Join Our Community
-            </a>{" "}
-          </Typography>
-          <Typography
-            variant="body2"
-            style={{
-              color: "white",
-              fontSize: "28px",
-              fontFamily: "Work Sans",
-              marginLeft: "150px",
-            }}
-          >
-            <a href="#" style={{ color: "white" }}>
-              About
-            </a>{" "}
-          </Typography>
-          <Typography
-            variant="body2"
-            style={{
-              color: "white",
-              fontSize: "28px",
-              fontFamily: "Work Sans",
-              marginLeft: "150px",
-            }}
-          >
-            <a href="#" style={{ color: "white" }}>
-              Explore
-            </a>{" "}
-          </Typography>
-        </div>
-        <div
-          style={{
-            borderTop: "1px solid white",
-            marginTop: "20px",
-            paddingTop: "10px",
-            display: "flex",
-            justifyContent: "center",
-            width: "50%",
-          }}
-        >
-          <Typography
-            variant="body2"
-            style={{
-              color: "white",
-              fontSize: "14px",
-              fontFamily: "Work Sans",
-            }}
-          >
-            &copy; {new Date().getFullYear()} CoBuild. All rights reserved.
-          </Typography>
-        </div>
-      </BottomNavigation>
-
     </div>
   );
 }
