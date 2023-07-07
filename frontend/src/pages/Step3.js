@@ -50,45 +50,6 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
   const navigate = useNavigate();
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
-  const handleProfileImageSubmit = async () => {
-    // if (!profileImage) return;
-    console.log("hello")
-  
-    const file = profileImage;
-    const uname = localStorage.getItem("username");
-    const type = "profilepic";
-    const extension = "jpg";
-    const { url } = await fetch(
-      `http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`
-    ).then((res) => res.json());
-  
-    await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: file,
-    });
-  
-    navigate("/user");
-  };
-  
-
-  const handleProfileImageChange = async (event) => {
-    if (!event.target || !event.target.files || event.target.files.length <= 0) return;
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-      
-    }
-  };
-
-  
   const handlePreviewClick = () => {
     // Implement any custom logic when the profile image preview is clicked
   };
@@ -161,22 +122,6 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                         updatedFiles.push(files[i]);
                       }
 
-      {profileImage && (
-        <Box className={classes.previewContainer}>
-          <Avatar
-            className={classes.avatar}
-            alt="Profile Image"
-            src={profileImage}
-            onClick={handlePreviewClick}
-          />
-          <Typography variant="subtitle1">Preview</Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={() => handleProfileImageSubmit()}
-            >
-            Set Profile Picture
                       setUploadedFiles(updatedFiles);
                     }}
                   />
