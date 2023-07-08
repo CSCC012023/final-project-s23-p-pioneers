@@ -26,6 +26,7 @@ __Mid:__
 17. As a user, I should be able to bookmark job postings to a bookmark tab so that I can view them later and keep track of interesting opportunities.
 
 __Low:__
+
 18. As a user, I should be able to select my university and the respective coursework I've completed so that employers can see my educational background.
 19. As a user, I should be able to see a job posting feed relevant to my preferences so that I can discover new job opportunities easily.
 20. As a user, I should be able to create an account so that I can access the platform.
