@@ -80,7 +80,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
     navigate("/step3"); // Navigate to Step3
   };
 
-  const handleProfileImageChange = (event) => {
+  const handleProfileImageChange = async (event) => {
     // Handle the profile image change logic
     if (
       !event.target ||
@@ -97,10 +97,44 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
       };
       reader.readAsDataURL(file);
 
+      const uname = localStorage.getItem('username');
+      const type = "profilepic";
+      const extension = "png";
+      const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+      const finalUrl = url.split("?")[0];
+      console.log("frontend", finalUrl)
+
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+        body: file
+      });
+
+      await fetch('http://localhost:8000/profilepic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: localStorage.getItem("username"), link: finalUrl }) // Replace with actual data
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle the error
+          console.error('Error:', error);
+        });
+
+
       // Add the uploaded file to the state
       const updatedFiles = [...uploadedFiles];
       updatedFiles.push(file);
       setUploadedFiles(updatedFiles);
+
     }
   };
 
@@ -118,6 +152,25 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
 
   const handleFinish = () => {
     // Handle the finish button logic
+    fetch('http://localhost:8000/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: localStorage.getItem("username"),
+            field: 'bio',
+            value: bio, // Replace with the desired program value
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
     navigate("/User"); // Navigate to the final page
   };
 

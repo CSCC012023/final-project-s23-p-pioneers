@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Typography, Box, Button, TextField, Autocomplete, Chip } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Typography,
+  Box,
+  Button,
+  TextField,
+  Autocomplete,
+  Chip,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -21,8 +28,82 @@ const universities = [
 
 const Step2 = ({ handleNext, handlePrevious }) => {
   const classes = useStyles();
+  const [university, setUniversity] = useState("");
+  const [program, setProgram] = useState("");
   const [courses, setCourses] = useState([]);
 
+  useEffect(() => {
+    console.log("University changed:", university);
+  }, [university]);
+
+  useEffect(() => {
+    console.log("Program changed:", program);
+  }, [program]);
+
+
+  const handleNextClick = () => {
+    // Execute the intermediate function here
+    fetch('http://localhost:8000/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem("username"),
+        field: 'university',
+        value: university, // Replace with the desired university value
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  
+    // Update program
+    fetch('http://localhost:8000/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem("username"),
+        field: 'program',
+        value: program, // Replace with the desired program value
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  
+    // Update courses
+    fetch('http://localhost:8000/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem("username"),
+        field: 'courses',
+        value: courses, // Replace with the desired courses value (can be an array or string)
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    // Call the parent class handler
+    handleNext();
+  };
   const handleAddCourse = (event, value) => {
     if (value) {
       let newCourses = [];
@@ -57,6 +138,8 @@ const Step2 = ({ handleNext, handlePrevious }) => {
       <Autocomplete
         freeSolo
         options={universities}
+        value={university}
+        onChange={(event, value) => setUniversity(value)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -70,6 +153,20 @@ const Step2 = ({ handleNext, handlePrevious }) => {
         )}
         classes={{
           paper: classes.dropdownMenu,
+        }}
+      />
+
+      <Box marginTop={2} />
+
+      <Box marginTop={2} />
+
+      <TextField
+        label="Program"
+        fullWidth
+        value={program}
+        onChange={(event) => setProgram(event.target.value)}
+        InputProps={{
+          style: { color: "white" },
         }}
       />
 
@@ -118,7 +215,7 @@ const Step2 = ({ handleNext, handlePrevious }) => {
         <Button variant="outlined" onClick={handlePreviousClick}>
           Previous
         </Button>
-        <Button variant="contained" color="primary" onClick={handleNext}>
+        <Button variant="contained" color="primary" onClick={handleNextClick}>
           Continue
         </Button>
       </Box>

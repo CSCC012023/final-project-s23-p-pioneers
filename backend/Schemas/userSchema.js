@@ -21,12 +21,12 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  skills: {
+  skills: [{
     type: String,
     required: false,
-  },
+  }],
   courses: {
-    type: String,
+    type: [String],
     required: false,
   },
   resume: {
@@ -45,7 +45,7 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  progam: {
+  program: {
     type: String, 
     required: false,
   }, 

@@ -73,8 +73,31 @@ const Step1 = ({ handleNext }) => {
     );
     setSelectedLanguages(newSelectedLanguages);
   };
+  const formattedLanguages = selectedLanguages.map(language => language.label);
 
   const handleContinue = () => {
+    fetch('http://localhost:8000/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem("username"),
+        field: 'skills',
+        value: formattedLanguages, // Replace with the desired skills array
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response data
+        console.log(data);
+      })
+      .catch(error => {
+        // Handle the error
+        console.error('Error:', error);
+      });
+
+
     setActiveStep((prevStep) => prevStep + 1);
   };
 

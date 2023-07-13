@@ -105,7 +105,8 @@ app.get('/s3Url', async (req, res) => {
     //       console.error('Error updating profile picture:', error);
     //     });
     // }
-    res.status(200).json({ url: finalUrl });
+
+    // res.status(200).json({ url: finalUrl });
 
   } catch (error) {
     console.error('Error generating upload URL:', error);

@@ -137,7 +137,12 @@ function JobPosting() {
 
   return (
     <div className="subcontent">
-      <div className="content">
+      <div style={{justifyContent: "center",
+          width: "100%",
+          marginLeft: "20%",
+          marginRight: "20%",
+          height: "100%",
+          paddingBottom: "50px",}}>
         <div className="side">
           <div className="cardclock">
             <div className="clockheading">Applications closes in:</div>

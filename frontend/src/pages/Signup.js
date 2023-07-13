@@ -182,6 +182,9 @@ function SignUp() {
       const type = "resume";
       const extension = "pdf";
       const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+      const finalUrl = url.split("?")[0];
+      console.log("frontend", finalUrl)
+
       await fetch(url, {
         method: "PUT",
         headers: {
@@ -189,6 +192,25 @@ function SignUp() {
         },
         body: file
       });
+
+      await fetch('http://localhost:8000/resume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: localStorage.getItem("username"), link: finalUrl }) // Replace with actual data
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle the error
+          console.error('Error:', error);
+        });
+
+
       navigate("/step1");
 
   };

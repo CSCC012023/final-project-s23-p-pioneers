@@ -85,22 +85,22 @@ const setCoverLetter = async (req, res) => {
 };
 
 const updateParams = async (req, res) => {
-  const userId = req.user.id; // Assuming you have implemented authentication and have access to the user ID
+  const username = req.body.username;
   const fieldToUpdate = req.body.field;
   const value = req.body.value;
 
   try {
-    const user = await User.findById(userId);
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (Array.isArray(user[fieldToUpdate])) {
-      // Update array field
-      user[fieldToUpdate].push(value);
+    if (fieldToUpdate === 'skills') {
+      // Handle skills field separately as an array
+      user.skills = Array.isArray(value) ? value : [value];
     } else {
-      // Update non-array field
+      // Handle other fields normally
       user[fieldToUpdate] = value;
     }
 
@@ -110,7 +110,9 @@ const updateParams = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to update field" });
   }
-}
+};
+
+
 
 const setProfilePic = async (req, res) => {
   const { username, link } = req.body;
@@ -124,6 +126,7 @@ const setProfilePic = async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to update profile picture' });
   }
 };
