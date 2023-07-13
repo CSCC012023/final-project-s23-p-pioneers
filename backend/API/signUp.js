@@ -51,6 +51,87 @@ const validate = (data) => {
   return errors;
 };
 
+const setResume = async (req, res) => {
+  const { username, link } = req.body;
+  console.log(req.body);
+  console.log("resume triggered");
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      { $set: { resume: link } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update resume' });
+  }
+};
+
+const setCoverLetter = async (req, res) => {
+  const { username, link } = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      { $set: { coverletter: link } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update cover letter' });
+  }
+};
+
+const updateParams = async (req, res) => {
+  const username = req.body.username;
+  const fieldToUpdate = req.body.field;
+  const value = req.body.value;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (fieldToUpdate === 'skills') {
+      // Handle skills field separately as an array
+      user.skills = Array.isArray(value) ? value : [value];
+    } else {
+      // Handle other fields normally
+      user[fieldToUpdate] = value;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "Field updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update field" });
+  }
+};
+
+
+
+const setProfilePic = async (req, res) => {
+  const { username, link } = req.body;
+  console.log(req.body);
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      { $set: { profilepic: link } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Failed to update profile picture' });
+  }
+};
+
+
 const signUpRequest = async (req, res) => {
   const {
     username: username,
@@ -60,22 +141,22 @@ const signUpRequest = async (req, res) => {
     // resume: resume,
     // transcript: transcript,
   } = req.body;
-
+  // console.log(req)
   // Validate the input data
-  const validationErrors = validate(req.body);
-  if (Object.keys(validationErrors).length > 0) {
-    return res.status(400).json({ errors: validationErrors });
-  }
+  // const validationErrors = validate(req.body);
+  // if (Object.keys(validationErrors).length > 0) {
+  //   return res.status(400).json({ errors: validationErrors });
+  // }
 
-  const existingEmail = await User.findOne({ email: email });
-  if (existingEmail) {
-    return res.status(400).json({ error: "Email already exists" });
-  }
+  // const existingEmail = await User.findOne({ email: email });
+  // if (existingEmail) {
+  //   return res.status(400).json({ error: "Email already exists" });
+  // }
 
-  const existingUser = await User.findOne({ username: username });
-  if (existingUser) {
-    return res.status(400).json({ error: "Username already exists" });
-  }
+  // const existingUser = await User.findOne({ username: username });
+  // if (existingUser) {
+  //   return res.status(400).json({ error: "Username already exists" });
+  // }
 
   // Hash the password
   // 10 is the salt rounds, which determines the hashing complexity
@@ -105,4 +186,10 @@ const signUpRequest = async (req, res) => {
     });
 };
 
-module.exports = signUpRequest;
+module.exports = {
+  signUpRequest,
+  setResume,
+  setCoverLetter,
+  setProfilePic,
+  updateParams
+};

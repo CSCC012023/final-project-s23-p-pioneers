@@ -9,6 +9,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   AppBar,
   Avatar,
@@ -35,6 +37,7 @@ function SignUp() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const navigate = useNavigate();
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -71,7 +74,7 @@ function SignUp() {
     setCPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (name.length == 0) {
       setNameError("Name must contain atleast 1 character");
@@ -145,9 +148,9 @@ function SignUp() {
       email,
       username,
       password,
-      formData,
     };
 
+    console.log(JSON.stringify(user))
     fetch("http://localhost:8000/signup", {
       // Replace with your server URL
       method: "POST",
@@ -164,14 +167,52 @@ function SignUp() {
         }
       })
       .then((data) => {
-        console.log(data); // handle the response from the server
-        setUsername("");
-        setEmail("");
-        setPassword("");
+
+        // console.log(data); // handle the response from the server
+        // setUsername("");
+        // setEmail("");
+        // setPassword("");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+
+      localStorage.setItem('username', username)
+      const uname = localStorage.getItem('username');
+      const type = "resume";
+      const extension = "pdf";
+      const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+      const finalUrl = url.split("?")[0];
+      console.log("frontend", finalUrl)
+
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+        body: file
+      });
+
+      await fetch('http://localhost:8000/resume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: localStorage.getItem("username"), link: finalUrl }) // Replace with actual data
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle the error
+          console.error('Error:', error);
+        });
+
+
+      navigate("/step1");
+
   };
 
   const signUpStyles = {

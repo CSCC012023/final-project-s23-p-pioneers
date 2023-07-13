@@ -30,7 +30,24 @@ const createPostApi = (req, res) => {
         datePosted,
         skills
     });
-    
+    const createJobPosting = (jobData) => {
+  fetch("http://your-api-endpoint", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jobData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response data
+    console.log(data.message);
+  })
+  .catch(error => {
+    // Handle the error
+    console.error('Error:', error);
+  });
+};
     // Save the job to the database
     newJob.save()
         .then(() => {

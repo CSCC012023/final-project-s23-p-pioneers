@@ -17,6 +17,50 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter a name"],
   },
+  bio: {
+    type: String,
+    required: false,
+  },
+  skills: [{
+    type: String,
+    required: false,
+  }],
+  courses: {
+    type: [String],
+    required: false,
+  },
+  resume: {
+    type: String,
+    required: false,
+  },
+  coverletter: {
+    type: String,
+    required: false,
+  },
+  profilepic: {
+    type: String,
+    required: false,
+  },
+  university: {
+    type: String,
+    required: false,
+  },
+  program: {
+    type: String, 
+    required: false,
+  }, 
+  savedJobIds: {
+    type: [String],
+    required: false,
+  },
+  appliedJobsIds: {
+    type: [String],
+    required: false,
+  },
+  assessmentIds: {
+    type: [String],
+    required: false,
+  },
   // resume: {
   //   type: String,
   //   required: [true, "Please enter a resume"],
