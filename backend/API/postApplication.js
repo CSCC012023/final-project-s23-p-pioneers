@@ -10,7 +10,7 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const addAssessment = async (req, res) => {
   try {
-    const { code, score, username } = req.body;
+    const { username, codingQuestionResult } = req.body;
 
     // Find the existing application document by username
     const application = await Application.findOne({ username });
@@ -33,24 +33,25 @@ const addAssessment = async (req, res) => {
         },
         {
           role: "user",
-          content: `Can you respond back with only the characters of the complexity of the code: ${code}`,
+          content: `Can you respond back with only the characters of the complexity of the code: ${codingQuestionResult.code}`,
         },
       ],
     });
     //Get GPT Response
     const complexity = response.data.choices[0].message.content;
 
-    application.code = code;
-    application.score = score;
+    application.codingQuestionResult.code = codingQuestionResult.code;
+    application.codingQuestionResult.score = codingQuestionResult.score;
     application.submissionTime = new Date();
+    application.codingQuestionStatus = "done";
 
     // Extract the complexity from the GPT response
     const complexityRegex = /O\([^\)]+\)/;
     const complexityMatch = complexity.match(complexityRegex);
     if (complexityMatch) {
-      application.additionalFields.complexity = complexity;
+      application.codingQuestionResult.complexity = complexity;
     } else {
-      application.additionalFields.complexity = "Unknown";
+      application.codingQuestionResult.complexity = "Unknown";
     }
 
     // Save the updated application to the database
@@ -66,7 +67,7 @@ const addAssessment = async (req, res) => {
 
 const postApplication = async (req, res) => {
   try {
-    const { jobID, username, additionalFields } = req.body; // Extract the jobID, userID, and additionalFields from the request body
+    const { jobID, username } = req.body; // Extract the jobID, userID, and additionalFields from the request body
 
     // Check if the job exists
     const appliedJob = await Job.findOne({ jobId: jobID });
@@ -79,7 +80,6 @@ const postApplication = async (req, res) => {
     const newApplication = new Application({
       job: appliedJob._id,
       username: username,
-      additionalFields,
     });
 
     // Save the application

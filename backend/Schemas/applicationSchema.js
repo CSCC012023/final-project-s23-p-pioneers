@@ -30,9 +30,11 @@ const applicationSchema = new mongoose.Schema({
     },
     complexity: {
       type: String,
+      default: "Unknown",
     },
     time: {
       type: String,
+      default: "Unknown",
     },
   },
 });
