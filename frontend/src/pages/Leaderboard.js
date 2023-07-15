@@ -38,7 +38,7 @@ const theme = createTheme({
 });
 
 function LeaderboardContent({ entities, currentTab }) {
-  console.log(entities)
+  console.log(entities);
   return (
     <>
       {entities.map((entity, index) => (
@@ -46,9 +46,9 @@ function LeaderboardContent({ entities, currentTab }) {
           key={index}
           number={index + 1}
           username={entity.username}
-          time={entity.additionalFields.time}
-          complexity={entity.score}
-          space={entity.additionalFields.space}
+          time={entity.codingQuestionResult.time}
+          complexity={entity.codingQuestionResult.complexity}
+          score={entity.codingQuestionResult.score}
         />
       ))}
     </>

@@ -24,9 +24,14 @@ const getLeaderboard = async (req, res) => {
     const applications = await Application.find({
       job: appliedJob._id,
       submissionTime: { $gte: date }, // Filter applications with submissionTime greater than or equal to the calculated date
-    }).sort({ score: -1 }); // Sort applications by score in descending order (-1)
-
-    console.log(applications);
+      codingQuestionStatus: "done",
+    })
+      .sort({
+        score: -1,
+        "codingQuestionResult.complexity": 1,
+        "codingQuestionResult.time": -1,
+      })
+      .limit(20); // Limit the results to the top 20 applications
 
     // Send the applications as a response
     res.json(applications);
