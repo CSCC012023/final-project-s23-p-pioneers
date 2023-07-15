@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 const Application = mongoose.model("Application", applicationSchema);
 const Job = mongoose.model("Job", jobSchema);
 
+require("dotenv").config();
+const { Configuration, OpenAIApi } = require("openai");
 
 const addAssessment = async (req, res) => {
   try {
-    const { code, score, username } = req.body; // Extract the code, score, and username from the request body
-    console.log(req.body)
+    const { code, score, username } = req.body;
+
     // Find the existing application document by username
     const application = await Application.findOne({ username });
 
@@ -17,16 +19,43 @@ const addAssessment = async (req, res) => {
       return res.status(404).json({ error: "Application not found" });
     }
 
-    // Update the code and score if they are empty
-    application.code = code;
-  
+    const openai = new OpenAIApi(
+      new Configuration({ apiKey: process.env.OPENAI_API_KEY })
+    );
 
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an assistant that responds with just the Big O Complexity of given code",
+        },
+        {
+          role: "user",
+          content: `Can you respond back with only the characters of the complexity of the code: ${code}`,
+        },
+      ],
+    });
+    //Get GPT Response
+    const complexity = response.data.choices[0].message.content;
+
+    application.code = code;
     application.score = score;
-    
+    application.submissionTime = new Date();
+
+    // Extract the complexity from the GPT response
+    const complexityRegex = /O\([^\)]+\)/;
+    const complexityMatch = complexity.match(complexityRegex);
+    if (complexityMatch) {
+      application.additionalFields.complexity = complexity;
+    } else {
+      application.additionalFields.complexity = "Unknown";
+    }
 
     // Save the updated application to the database
-    const savedApplication = await application.save();
-    console.log(savedApplication)
+    await application.save();
+
     res.status(200).json({ message: "Assessment added successfully" });
   } catch (error) {
     // Handle errors
@@ -64,4 +93,4 @@ const postApplication = async (req, res) => {
   }
 };
 
-module.exports = {postApplication, addAssessment};
+module.exports = { postApplication, addAssessment };

@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const applicationSchema = new mongoose.Schema({
   username: {
     type: String,
-    // ref: "user",
     required: true,
   },
   job: {
@@ -16,34 +15,26 @@ const applicationSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  codingQuestionResult: {
+  codingQuestionStatus: {
     type: String,
-    enum: ["correct", "incorrect", "pending"],
+    enum: ["done", "pending"],
     default: "pending",
   },
-  code: {
-    type: String, 
-    
-  },
-  score: {
-    type: String,
-    default: 0,
-  },
-  additionalFields: {
+  codingQuestionResult: {
+    code: {
+      type: String,
+    },
+    score: {
+      type: String,
+      default: 0,
+    },
     complexity: {
       type: String,
-      required: true,
-    },
-    space: {
-      type: String,
-      required: true,
     },
     time: {
       type: String,
-      required: true,
     },
   },
-  // Additional application-specific fields can be added here
 });
 
 module.exports = applicationSchema;
