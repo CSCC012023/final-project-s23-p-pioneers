@@ -10,13 +10,16 @@ function Jobs() {
   }, []);
 
   const fetchJobIds = () => {
-    console.log("hello");
+    const requestOptions = {
+      requestType: "all",
+    };
+
     fetch("http://localhost:8000/getpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(requestOptions),
     })
       .then((response) => response.json())
       .then((data) => {
