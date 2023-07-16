@@ -2,10 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const { assesmentAPI, compile } = require('./API/assesments')
-const getPost = require('./API/getpost')
-const signUpEmployer = require('./API/signupRecruiter')
-const createPost = require('./API/createPost')
+const { assesmentAPI, compile } = require("./API/assesments");
+const getPost = require("./API/getpost");
+const signUpEmployer = require("./API/signupRecruiter");
+const createPost = require("./API/createPost");
+const postBookmarkJob = require("./API/postBookmarkJob");
 
 const userLogin = require("./API/loginUser");
 const {
@@ -13,12 +14,11 @@ const {
   setResume,
   setCoverLetter,
   setProfilePic,
-  updateParams
+  updateParams,
 } = require("./API/signUp.js");
 
-
 const generateUploadURL = require("./s3.js");
-const { postApplication, addAssessment }  = require("./API/postApplication");
+const { postApplication, addAssessment } = require("./API/postApplication");
 
 const getLeaderboard = require("./API/getLeaderboard");
 
@@ -45,14 +45,18 @@ app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
-app.post("/signuprecruiter", signUpEmployer)
-app.post("/addcode", addAssessment)
+app.post("/signuprecruiter", signUpEmployer);
+app.post("/addcode", addAssessment);
 
-app.get('/s3Url', async (req, res) => {
-  console.log("hello")
+app.get("/s3Url", async (req, res) => {
+  console.log("hello");
 
   try {
-    const url = await generateUploadURL(req.query.username, req.query.type, req.query.extension);
+    const url = await generateUploadURL(
+      req.query.username,
+      req.query.type,
+      req.query.extension
+    );
 
     res.send({ url });
     const finalUrl = url.split("?")[0];
@@ -107,15 +111,14 @@ app.get('/s3Url', async (req, res) => {
     // }
 
     // res.status(200).json({ url: finalUrl });
-
   } catch (error) {
-    console.error('Error generating upload URL:', error);
-    res.status(500).send('Error generating upload URL');
+    console.error("Error generating upload URL:", error);
+    res.status(500).send("Error generating upload URL");
   }
 });
 
-app.post('/compile', compile)
-app.post('/createassesment', assesmentAPI)
+app.post("/compile", compile);
+app.post("/createassesment", assesmentAPI);
 app.post("/createpost", createPost);
 
 app.post("/getpost", getPost);
@@ -123,6 +126,6 @@ app.post("/getpost", getPost);
 app.post("/login", userLogin);
 app.post("/signup", signUpRequest);
 
-
 app.post("/submitApplication", postApplication);
 app.post("/leaderboard", getLeaderboard);
+app.post("/bookmarkjob", postBookmarkJob);

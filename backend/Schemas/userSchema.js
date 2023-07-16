@@ -21,10 +21,12 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  skills: [{
-    type: String,
-    required: false,
-  }],
+  skills: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
   courses: {
     type: [String],
     required: false,
@@ -46,11 +48,7 @@ const signUpSchema = new mongoose.Schema({
     required: false,
   },
   program: {
-    type: String, 
-    required: false,
-  }, 
-  savedJobIds: {
-    type: [String],
+    type: String,
     required: false,
   },
   appliedJobsIds: {
@@ -58,6 +56,10 @@ const signUpSchema = new mongoose.Schema({
     required: false,
   },
   assessmentIds: {
+    type: [String],
+    required: false,
+  },
+  bookmarkedJobsIds: {
     type: [String],
     required: false,
   },
