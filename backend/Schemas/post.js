@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema({
   jobId: String,
@@ -8,7 +8,11 @@ const jobSchema = new mongoose.Schema({
   deadline: String,
   companyName: String,
   datePosted: String,
-  skills: [String] // Ensure skills is defined as an array of strings
+  skills: [String], // Ensure skills is defined as an array of strings
+  applicationIds: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Application",
+  },
 });
 
-  module.exports = jobSchema;
+module.exports = jobSchema;
