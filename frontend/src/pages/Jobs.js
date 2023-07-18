@@ -22,6 +22,7 @@ function Jobs() {
   const [search, setSearch] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [shouldFilter, setShouldFilter] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("All");
 
   const handleLocationChange = (event) => {
     const { value } = event.target;
@@ -33,49 +34,74 @@ function Jobs() {
     setSearch(value);
   };
 
-  useEffect(() => {
-    fetchJobIds();
-  }, []);
-
-  useEffect(() => {
-    if (shouldFilter) {
-      filterJobs();
-    }
-  }, [shouldFilter]);
+  const handleFilterClick = (filter) => {
+    setSelectedFilter(filter);
+  };
 
   const fetchJobIds = () => {
-    console.log("hello");
+    if (!shouldFilter) {
+      return;
+    }
+
+    let requestType = "all";
+
+    if (selectedFilter === "Latest") {
+      requestType = "latest";
+    } else if (selectedFilter === "Deadline") {
+      requestType = "deadline";
+    }
+    else if(selectedFilter == "Expired")
+    {
+      requestType = "expired";
+    }
+
+    const requestOptions = {
+      requestType: requestType,
+    };
+
+    console.log("lmao"); // Log "lmao" when the API request is made
+
     fetch("http://localhost:8000/getpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(requestOptions),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setJobs(data);
-        setFilteredJobs(data);
+
+        // Apply title and location filters
+        const filtered = data.filter((job) => {
+          const titleMatch = search ? job.title.toLowerCase().includes(search.toLowerCase()) : true;
+          const locationMatch = location ? job.location.toLowerCase().includes(location.toLowerCase()) : true;
+          return titleMatch && locationMatch;
+        });
+
+        setFilteredJobs(filtered);
       })
       .catch((error) => {
         console.error("Error fetching job posts:", error);
+      })
+      .finally(() => {
+        setShouldFilter(false);
       });
-  };
-
-  const filterJobs = () => {
-    const filtered = jobs.filter((job) => {
-      const titleMatch = search ? job.title.toLowerCase().includes(search.toLowerCase()) : true;
-      const locationMatch = location ? job.location.toLowerCase().includes(location.toLowerCase()) : true;
-      return titleMatch && locationMatch;
-    });
-    setFilteredJobs(filtered);
-    setShouldFilter(false);
   };
 
   const handleGoButtonClick = () => {
     setShouldFilter(true);
   };
+
+  useEffect(() => {
+    setSelectedFilter("All"); // Set the initial filter to "All"
+    setShouldFilter(true); // Trigger the initial API request
+  }, []);
+
+  useEffect(() => {
+    fetchJobIds();
+  }, [shouldFilter, search, location]);
 
   return (
     <div style={{ backgroundColor: "#3B3B3B" }}>
@@ -133,7 +159,6 @@ function Jobs() {
             padding: "0px",
             gap: "30px",
             width: "1050px",
-
             margin: "0 auto",
           }}
         >
@@ -149,7 +174,7 @@ function Jobs() {
             Browse Job Postings
           </Typography>
           <Typography
-            stlye={{ float: "left", fontFamily: "work sans", fontSize: "25px" }}
+            style={{ float: "left", fontFamily: "work sans", fontSize: "25px" }}
           >
             Browse through more than 100s of job postings on CoBuild Job Board
           </Typography>
@@ -204,6 +229,52 @@ function Jobs() {
           >
             Search For Jobs
           </TextField>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                color: selectedFilter === "All" ? "#A259FF" : "#FFFFFF",
+                borderColor: selectedFilter === "All" ? "#A259FF" : "#FFFFFF",
+              }}
+              onClick={() => handleFilterClick("All")}
+            >
+              All
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                color: selectedFilter === "Latest" ? "#A259FF" : "#FFFFFF",
+                borderColor: selectedFilter === "Latest" ? "#A259FF" : "#FFFFFF",
+              }}
+              onClick={() => handleFilterClick("Latest")}
+            >
+              Latest
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                color: selectedFilter === "Deadline" ? "#A259FF" : "#FFFFFF",
+                borderColor: selectedFilter === "Deadline" ? "#A259FF" : "#FFFFFF",
+              }}
+              onClick={() => handleFilterClick("Deadline")}
+            >
+              Deadline
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{
+                color: selectedFilter === "Expired" ? "#A259FF" : "#FFFFFF",
+                borderColor: selectedFilter === "Expired" ? "#A259FF" : "#FFFFFF",
+              }}
+              onClick={() => handleFilterClick("Expired")}
+            >
+              Expired
+            </Button>
+          </div>
           <Button
             variant="contained"
             onClick={handleGoButtonClick}
@@ -278,7 +349,6 @@ function Jobs() {
 
       </div>
       <JobPosting prop={filteredJobs} />
-
     </div>
   );
 }
