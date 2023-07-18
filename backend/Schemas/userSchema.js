@@ -21,10 +21,12 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  skills: [{
-    type: String,
-    required: false,
-  }],
+  skills: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
   courses: {
     type: [String],
     required: false,
@@ -46,9 +48,9 @@ const signUpSchema = new mongoose.Schema({
     required: false,
   },
   program: {
-    type: String, 
+    type: String,
     required: false,
-  }, 
+  },
   savedJobIds: {
     type: [String],
     required: false,
@@ -60,6 +62,23 @@ const signUpSchema = new mongoose.Schema({
   assessmentIds: {
     type: [String],
     required: false,
+  },
+  verification: {
+    verified: {
+      type: Boolean,
+      required: false,
+    },
+    uniqueString: {
+      type: String,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiresAt: {
+      type: Date,
+    },
   },
   // resume: {
   //   type: String,
