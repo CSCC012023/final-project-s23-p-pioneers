@@ -5,9 +5,17 @@ const jobSchema = new mongoose.Schema({
   title: String,
   location: String,
   jobDescription: String,
-  deadline: String,
+  deadline: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  }, // Change to Date type
   companyName: String,
-  datePosted: String,
+  datePosted: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  }, // Change to Date type
   skills: [String], // Ensure skills is defined as an array of strings
   applicationIds: {
     type: [mongoose.Schema.Types.ObjectId],
