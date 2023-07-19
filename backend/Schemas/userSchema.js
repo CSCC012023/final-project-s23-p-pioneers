@@ -51,6 +51,10 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  savedJobIds: {
+    type: [String],
+    required: false,
+  },
   appliedJobsIds: {
     type: [String],
     required: false,
@@ -59,6 +63,22 @@ const signUpSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
+  verification: {
+    verified: {
+      type: Boolean,
+      required: false,
+    },
+    uniqueString: {
+      type: String,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiresAt: {
+      type: Date,
+    },
   bookmarkedJobsIds: {
     type: [String],
     required: false,

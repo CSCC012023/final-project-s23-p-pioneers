@@ -6,6 +6,8 @@ const { assesmentAPI, compile } = require("./API/assesments");
 const getPost = require("./API/getpost");
 const signUpEmployer = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
+const verifyEmail = require("./API/postEmailVerification");
+
 const postBookmarkJob = require("./API/postBookmarkJob");
 
 const userLogin = require("./API/loginUser");
@@ -128,4 +130,6 @@ app.post("/signup", signUpRequest);
 
 app.post("/submitApplication", postApplication);
 app.post("/leaderboard", getLeaderboard);
+app.post("/verifyEmail", verifyEmail);
+
 app.post("/bookmarkjob", postBookmarkJob);

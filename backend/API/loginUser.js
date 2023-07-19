@@ -38,6 +38,13 @@ const userLogin = async (req, res) => {
       });
     }
 
+    if (user.verification.verified === false) {
+      return res.status(401).json({
+        isValid: false,
+        message: `Please verify your email`,
+      });
+    }
+
     const payload = {
       username: user.username,
     };
