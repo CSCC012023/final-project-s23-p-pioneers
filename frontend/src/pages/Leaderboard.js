@@ -59,6 +59,7 @@ function Leaderboard() {
   const [currentTab, setCurrentTab] = useState(0);
   const [entities, setEntities] = useState([]); // Use useState for entities
   const [foundJob, setFoundJob] = useState(true);
+  const [job, setJob] = useState("404"); // Use useState for job
 
   const { id } = useParams();
 
@@ -106,6 +107,37 @@ function Leaderboard() {
       console.error(error);
     }
   };
+
+  const fetchJob = async () => {
+    const request = {
+      id: id,
+    };
+    try {
+      const response = await fetch("http://localhost:8000/getpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+      });
+      if (response.status === 404) {
+        // Handle the scenario where the ID does not exist
+        console.error("Job not found");
+        // You can show an error message to the user or perform any other necessary actions
+        return;
+      }
+
+      const jobData = await response.json();
+      console.log(jobData);
+      setJob(jobData[0].title);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchJob();
+  }, [job]);
 
   useEffect(() => {
     fetchApplications(1);
@@ -157,7 +189,7 @@ function Leaderboard() {
               color="#969090"
               sx={{ marginBottom: "0.5rem" }}
             >
-              Software Engineer Google
+              {job}
             </Typography>
           </Link>
           <Typography

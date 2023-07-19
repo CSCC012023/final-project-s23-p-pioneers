@@ -76,6 +76,7 @@ function Login() {
           authState: { username: user.username },
         });
         // handleClick();
+        localStorage.setItem("username", user.username);
         handleClick();
       })
       .catch((error) => {
