@@ -1,0 +1,20 @@
+.connectorActive {
+    stroke: #8e24aa !important;
+  }
+  
+  .connectorCompleted {
+    stroke: #8e24aa !important;
+  }
+  
+  .connectorLine {
+    stroke: #8e24aa !important;
+  }
+  
+  .completedIcon {
+    color: #8e24aa !important;
+  }
+  
+  .active {
+    color: #8e24aa !important;
+  }
+  
