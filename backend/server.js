@@ -8,6 +8,8 @@ const signUpEmployer = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
 
+const postBookmarkJob = require("./API/postBookmarkJob");
+
 const userLogin = require("./API/loginUser");
 const {
   signUpRequest,
@@ -129,3 +131,5 @@ app.post("/signup", signUpRequest);
 app.post("/submitApplication", postApplication);
 app.post("/leaderboard", getLeaderboard);
 app.post("/verifyEmail", verifyEmail);
+
+app.post("/bookmarkjob", postBookmarkJob);

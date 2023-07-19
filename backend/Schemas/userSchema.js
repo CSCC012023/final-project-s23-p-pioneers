@@ -79,6 +79,9 @@ const signUpSchema = new mongoose.Schema({
     expiresAt: {
       type: Date,
     },
+  bookmarkedJobsIds: {
+    type: [String],
+    required: false,
   },
   // resume: {
   //   type: String,
