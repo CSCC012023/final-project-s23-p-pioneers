@@ -1,10 +1,10 @@
 const applicationSchema = require("../Schemas/applicationSchema");
 const jobSchema = require("../Schemas/post");
 const mongoose = require("mongoose");
+const userSignUpSchema = require("../Schemas/userSchema");
 
 const Application = mongoose.model("Application", applicationSchema);
 const Job = mongoose.model("Job", jobSchema);
-
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -76,20 +76,33 @@ const postApplication = async (req, res) => {
       return res.status(404).json({ error: "Job not found" });
     }
 
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
     // Create a new application document
     const newApplication = new Application({
       job: appliedJob._id,
       username: username,
     });
 
+    appliedJob.applicationIds.push(newApplication._id);
+
+    user.appliedJobsIds.push(appliedJob.jobId);
+
+    await user.save();
+    await appliedJob.save();
     // Save the application
     await newApplication.save();
 
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, message: "Application posted" });
   } catch (error) {
     // Handle errors
     console.error("Error posting application:", error);
-    res.status(500).json({ error: "Failed to post application" });
+    res
+      .status(500)
+      .json({ success: false, error: "Failed to post application" });
   }
 };
 
