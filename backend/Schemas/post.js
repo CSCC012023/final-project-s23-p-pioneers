@@ -17,6 +17,10 @@ const jobSchema = new mongoose.Schema({
     default: Date.now,
   }, // Change to Date type
   skills: [String], // Ensure skills is defined as an array of strings
+  applicationIds: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Application",
+  },
 });
 
 module.exports = jobSchema;

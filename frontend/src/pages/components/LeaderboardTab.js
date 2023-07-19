@@ -7,7 +7,7 @@ const LeaderboardTab = ({
   username,
   time,
   complexity,
-  space,
+  score,
 }) => {
   return (
     <Paper
@@ -15,7 +15,7 @@ const LeaderboardTab = ({
       sx={{
         mt: "0.5rem",
         display: "grid",
-        gridTemplateColumns: "180px 50px 270px 300px 330px auto", // Define the column sizes here
+        gridTemplateColumns: "160px 50px 220px 270px 290px auto", // Define the column sizes here
         alignItems: "center",
         borderRadius: "50px",
         backgroundColor: "#3b3b3b",
@@ -54,6 +54,15 @@ const LeaderboardTab = ({
 
       <Typography
         sx={{
+          color: "#079e4d",
+          fontWeight: "bold",
+        }}
+      >
+        {score}
+      </Typography>
+
+      <Typography
+        sx={{
           color: "#ffffff",
           fontWeight: "bold",
         }}
@@ -67,16 +76,7 @@ const LeaderboardTab = ({
           fontWeight: "bold",
         }}
       >
-        {space}
-      </Typography>
-
-      <Typography
-        sx={{
-          color: "#ffffff",
-          fontWeight: "bold",
-        }}
-      >
-        {time}
+        {time} mins
       </Typography>
     </Paper>
   );

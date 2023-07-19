@@ -101,12 +101,7 @@ function JobPosting() {
       // console.log()
       const req = {
         jobID: id,
-        username: localStorage.getItem('username'), // Replace with the actual userID
-        additionalFields: {
-          complexity: "O(nlog(n))",
-          space: "O(n)",
-          time: "10 mins",
-        },
+        username: localStorage.getItem("username"),
       };
 
       const response = await fetch("http://localhost:8000/submitApplication", {
@@ -137,12 +132,16 @@ function JobPosting() {
 
   return (
     <div className="subcontent">
-      <div style={{justifyContent: "center",
+      <div
+        style={{
+          justifyContent: "center",
           width: "100%",
           marginLeft: "20%",
           marginRight: "20%",
           height: "100%",
-          paddingBottom: "50px",}}>
+          paddingBottom: "50px",
+        }}
+      >
         <div className="side">
           <div className="cardclock">
             <div className="clockheading">Applications closes in:</div>
