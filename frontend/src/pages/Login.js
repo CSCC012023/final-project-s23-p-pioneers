@@ -55,6 +55,11 @@ function Login() {
           return res.json().then((data) => {
             throw new Error(data.message);
           });
+        } else if (res.status === 404) {
+          // Not found (user not found)
+          return res.json().then((data) => {
+            throw new Error(data.message);
+          });
         } else {
           throw new Error("Login request failed");
         }
