@@ -9,6 +9,7 @@ const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
 
 const postBookmarkJob = require("./API/postBookmarkJob");
+const removeBookmarkJob = require("./API/removeBookmarkJob");
 
 const userLogin = require("./API/loginUser");
 const {
@@ -23,6 +24,7 @@ const generateUploadURL = require("./s3.js");
 const { postApplication, addAssessment } = require("./API/postApplication");
 
 const getLeaderboard = require("./API/getLeaderboard");
+const { remove } = require("lodash");
 
 app.use(cors());
 app.use(express.json()); // Add this line to parse JSON payloads
@@ -33,7 +35,7 @@ const uri =
 async function connect() {
   try {
     await mongoose.connect(uri);
-    console.log("Connected to MongoDB Vikram");
+    console.log("Connected to MongoDB");
   } catch (error) {
     console.log(error);
   }
@@ -43,6 +45,24 @@ connect();
 app.listen(8000, () => {
   console.log("Server started on port 8000");
 });
+
+const logRequestResponse = (req, res, next) => {
+  console.log("Request:", req.method, req.url, req.body); // Log request method, URL, and body
+  const oldSend = res.send; // Store the original send method of the response
+
+  // Override the send method to log the response daata
+  res.send = function (data) {
+    console.log("Response:", data); // Log the response data
+    oldSend.call(this, data); // Call the original send method with the response data
+  };
+
+  next(); // Call the next middleware or route handler
+};
+
+
+
+
+app.use(logRequestResponse)
 app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
@@ -133,3 +153,5 @@ app.post("/leaderboard", getLeaderboard);
 app.post("/verifyEmail", verifyEmail);
 
 app.post("/bookmarkjob", postBookmarkJob);
+app.post("/removebookmarkjob", removeBookmarkJob);
+

@@ -43,4 +43,6 @@ const postBookmarkJob = async (req, res) => {
   }
 };
 
+
+
 module.exports = postBookmarkJob;

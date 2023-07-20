@@ -59,7 +59,6 @@ const validate = (data) => {
 const setResume = async (req, res) => {
   const { username, link } = req.body;
   console.log(req.body);
-  console.log("resume triggered");
   try {
     const updatedUser = await User.findOneAndUpdate(
       { username: username },

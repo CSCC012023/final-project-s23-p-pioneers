@@ -17,12 +17,72 @@ function JobPosting() {
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const handleBookmark = () => {
-    setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
-    if (isBookmarked) {
-    } else {
+  const handleBookmark = async () => {
+    try {
+      const req = {
+        username: localStorage.getItem("username"),
+        jobId: id,
+      };
+  
+      const response = await fetch("http://localhost:8000/bookmarkjob", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      });
+  
+      if (response.ok) {
+        console.log("Job bookmarked successfully");
+        setIsBookmarked(true); // Always set the local state to true when bookmarked
+        // Save the bookmarked state in localStorage
+        localStorage.setItem("bookmark_" + id, "true");
+      } else {
+        console.error("Failed to bookmark the job");
+      }
+    } catch (error) {
+      console.error("Error bookmarking the job:", error);
     }
   };
+  
+
+  const handleRemoveBookmark = async () => {
+    try {
+      const req = {
+        username: localStorage.getItem("username"),
+        jobId: id,
+      };
+  
+      const response = await fetch("http://localhost:8000/removebookmarkjob", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      });
+  
+      if (response.ok) {
+        console.log("Bookmark removed successfully");
+        setIsBookmarked(false); // Always set the local state to false when removed
+        // Remove the bookmarked state from localStorage
+        localStorage.removeItem("bookmark_" + id);
+      } else {
+        console.error("Failed to remove bookmark");
+      }
+    } catch (error) {
+      console.error("Error removing bookmark:", error);
+    }
+  };
+  
+
+  const toggleBookmark = () => {
+    if (isBookmarked) {
+      handleRemoveBookmark();
+    } else {
+      handleBookmark();
+    }
+  };
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -105,6 +165,14 @@ function JobPosting() {
         setDescription(jobPostData[0].jobDescription);
         setTags(jobPostData[0].skills);
         setTargetDate(jobPostData[0].deadline);
+
+        const bookmarked = localStorage.getItem("bookmark_" + id);
+        if (bookmarked === "true") {
+          setIsBookmarked(true);
+        } else {
+          setIsBookmarked(false);
+        }
+
       } catch (error) {
         console.error("Error fetching job post:", error);
       }
@@ -138,7 +206,6 @@ function JobPosting() {
           space: "O(n)",
           time: "10 mins",
         },
-
       };
 
       const response = await fetch("http://localhost:8000/submitApplication", {
@@ -206,17 +273,17 @@ function JobPosting() {
                 <FontAwesomeIcon
                   icon={isBookmarked ? faBookmarkSolid : faBookmarkRegular}
                   style={{ color: "#A259FF" }}
-                  onClick={handleBookmark}
+                  onClick={toggleBookmark}
                   className={`bookmark-icon ${
                     isBookmarked ? "bookmarked" : ""
                   }`}
                 />
               )}
-
             </div>
           </div>
           <button className="btntimer leadbtn" onClick={handleLeaderboardClick}>
-            Leaderboard &nbsp;<BiTrophy />
+            Leaderboard &nbsp;
+            <BiTrophy />
           </button>
         </div>
         <div className="temp">
