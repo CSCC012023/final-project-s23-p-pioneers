@@ -138,6 +138,7 @@ function JobPosting() {
           space: "O(n)",
           time: "10 mins",
         },
+
       };
 
       const response = await fetch("http://localhost:8000/submitApplication", {
@@ -211,6 +212,7 @@ function JobPosting() {
                   }`}
                 />
               )}
+
             </div>
           </div>
           <button className="btntimer leadbtn" onClick={handleLeaderboardClick}>
