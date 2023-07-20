@@ -61,6 +61,8 @@ function Jobs() {
 
     console.log("lmao"); // Log "lmao" when the API request is made
 
+
+
     fetch("http://localhost:8000/getpost", {
       method: "POST",
       headers: {

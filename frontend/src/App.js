@@ -2,6 +2,7 @@ import "./App.css";
 import JobPosting from "./pages/JobPosting";
 import Jobs from "./pages/Jobs";
 import Leaderboard from "./pages/Leaderboard";
+import Verification from "./pages/Verification";
 import { Routes, Route } from "react-router-dom";
 
 import { RequireAuth } from "react-auth-kit";
@@ -11,7 +12,7 @@ import CreatePost from "./pages/CreatePost";
 import Assessment from "./pages/Assessment";
 import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
-import Signuprecruiter from './pages/SignupRecrutier';
+import Signuprecruiter from "./pages/SignupRecrutier";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
 
@@ -25,21 +26,18 @@ function App() {
         <Route path="/leaderboard/:id" element={<Leaderboard />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/User" element={<UserProfile />} />
-        <Route path="/signuprecruiter" element={ <Signuprecruiter/> } />
+        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
+        <Route path="/verfication/:id" element={<Verification />} />
         <Route
           path="/jobs"
           element={
-            <RequireAuth loginPath="/login">
               <Jobs />
-            </RequireAuth>
           }
         />
         <Route
           path="/jobpost/:id"
           element={
-            <RequireAuth loginPath="/login">
               <JobPosting />
-            </RequireAuth>
           }
         />
         <Route

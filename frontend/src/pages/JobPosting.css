@@ -277,17 +277,22 @@ color: #FFFFFF;
   }
 
   .cardclock {
-    margin-top: 7%;
+    
+    position: fixed;
+    /* margin-top: 7%; */
 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    margin-left: 700px;
     padding: 30px;
     gap: 30px;
     
 
-    width: 260px;
-    height: 200px;
+
+    /* Add the following styles */
+    justify-content: space-between;
+
+
+    width: auto;
+    height: auto;
 
     /* Background - Secondary */
 
@@ -296,9 +301,6 @@ color: #FFFFFF;
 
     /* Inside auto layout */
 
-    flex: none;
-    order: 1;
-    flex-grow: 0;
 }
 .clockheading {
     font-style: normal;
@@ -319,6 +321,8 @@ text-transform: capitalize;
 }
 
 .btntimer {
+    margin: auto;
+    margin-top: 20px;
     display: flex;
 flex-direction: row;
 justify-content: center;
@@ -327,12 +331,10 @@ align-content: center;
 /* padding: 0px 50px; */
 /* gap: 12px; */
 
-width: 235px;
-height: 60px;
+
 
 /* Call to Action */
 
-background: #A259FF;
 border-radius: 20px;
 
 /* Inside auto layout */
@@ -354,12 +356,35 @@ text-align: center;
 
 }
 
-.btntimer:hover {
+.bookmark {
+    margin-left: 40px;
+}
+
+.applybtn {
+    background: #2ecc71;
+    width: 160px;
+height: 60px;
+
+}
+
+.leadbtn {
+    background: #A259FF;
+    width: 235px;
+height: 60px;
+
+}
+
+.applybtn:hover {
+    background: #27ae60;
+}
+
+.leadbtn:hover {
     background: #8F4CEC;
 }
 
 .side {
     display: flex;
+    background-color: green;
     /* flex-direction: column; */
 }
 
@@ -368,3 +393,19 @@ text-align: center;
 
 }
 
+.centered {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.bookmark-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.bookmarked {
+  color: #ff8c00;
+}
