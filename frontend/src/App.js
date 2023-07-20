@@ -31,17 +31,13 @@ function App() {
         <Route
           path="/jobs"
           element={
-            <RequireAuth loginPath="/login">
               <Jobs />
-            </RequireAuth>
           }
         />
         <Route
           path="/jobpost/:id"
           element={
-            <RequireAuth loginPath="/login">
               <JobPosting />
-            </RequireAuth>
           }
         />
         <Route

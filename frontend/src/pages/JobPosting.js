@@ -1,11 +1,28 @@
 import React, { useState, useEffect } from "react";
 import "./JobPosting.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { BiTrophy, BiGlobe } from "react-icons/bi";
+
 import ApplicationDialog from "./components/ApplicationDialog";
 import { useNavigate, useParams } from "react-router-dom";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBookmark as faBookmarkRegular } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark as faBookmarkSolid } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faBookmarkRegular, faBookmarkSolid);
 
 function JobPosting() {
   const API_URL = "http://localhost:8000/getpost";
 
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const handleBookmark = () => {
+    setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
+    if (isBookmarked) {
+    } else {
+    }
+  };
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -36,7 +53,7 @@ function JobPosting() {
 
   const [positionName, setPositionName] = useState();
   const [companyName, setCompanyName] = useState();
-  //const [createdDate, setCreatedDate] = useState();
+  const [createdDate, setCreatedDate] = useState();
   const [location, setLocation] = useState();
   const [description, setDescription] = useState();
   const [tags, setTags] = useState([]);
@@ -49,7 +66,15 @@ function JobPosting() {
     seconds: 0,
   });
 
+  const isDeadlinePassed =
+    remainingTime.days <= 0 &&
+    remainingTime.hours <= 0 &&
+    remainingTime.minutes <= 0 &&
+    remainingTime.seconds <= 0;
+
   useEffect(() => {
+    setRemainingTime(calculateTimeRemaining(targetDate));
+
     const timerId = setInterval(() => {
       setRemainingTime(calculateTimeRemaining(targetDate));
     }, 1000);
@@ -75,7 +100,7 @@ function JobPosting() {
 
         setPositionName(jobPostData[0].title);
         setCompanyName(jobPostData[0].companyName);
-        //setCreatedDate(jobPostData[0].datePosted);
+        setCreatedDate(jobPostData[0].datePosted);
         setLocation(jobPostData[0].location);
         setDescription(jobPostData[0].jobDescription);
         setTags(jobPostData[0].skills);
@@ -96,12 +121,24 @@ function JobPosting() {
     setOpenDialog(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { weekday: "short", month: "short", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", options);
+  };
+
   const handleSubmitDialog = async () => {
     try {
       // console.log()
       const req = {
         jobID: id,
-        username: localStorage.getItem("username"),
+        username: localStorage.getItem("username"), // Replace with the actual userID
+        additionalFields: {
+          complexity: "O(nlog(n))",
+          space: "O(n)",
+          time: "10 mins",
+        },
+
       };
 
       const response = await fetch("http://localhost:8000/submitApplication", {
@@ -142,29 +179,54 @@ function JobPosting() {
           paddingBottom: "50px",
         }}
       >
-        <div className="side">
-          <div className="cardclock">
-            <div className="clockheading">Applications closes in:</div>
-            <div className="timer">
-              {formatTime(remainingTime.days)}d{" "}
-              {formatTime(remainingTime.hours)}h{" "}
-              {formatTime(remainingTime.minutes)}m{" "}
-              {formatTime(remainingTime.seconds)}s
+        <div className="cardclock">
+          {isDeadlinePassed ? (
+            <div className="timer">Deadline Passed</div>
+          ) : (
+            <>
+              <div className="clockheading">Applications closes in:</div>
+
+              <div className="timer">
+                {formatTime(remainingTime.days)}d{" "}
+                {formatTime(remainingTime.hours)}h{" "}
+                {formatTime(remainingTime.minutes)}m{" "}
+                {formatTime(remainingTime.seconds)}s
+              </div>
+            </>
+          )}
+
+          <div className="centered">
+            {!isDeadlinePassed && (
+              <button className="btntimer applybtn" onClick={handleOpenDialog}>
+                Apply
+              </button>
+            )}
+            <div className="centered bookmark">
+              {!isDeadlinePassed && (
+                <FontAwesomeIcon
+                  icon={isBookmarked ? faBookmarkSolid : faBookmarkRegular}
+                  style={{ color: "#A259FF" }}
+                  onClick={handleBookmark}
+                  className={`bookmark-icon ${
+                    isBookmarked ? "bookmarked" : ""
+                  }`}
+                />
+              )}
+
             </div>
-            <button className="btntimer">Click</button>
-            <button className="btntimer" onClick={handleOpenDialog}>
-              Apply
-            </button>
-            <button className="btntimer" onClick={handleLeaderboardClick}>
-              Leaderboard
-            </button>
           </div>
-          <div className="temp">
-            <div className="position">{positionName}</div>
-            <div className="company">{companyName}</div>
-            {/* <div className="date">{createdDate}</div> */}
-            <div className="details">Details</div>
-            <div className="location">{location}</div>
+          <button className="btntimer leadbtn" onClick={handleLeaderboardClick}>
+            Leaderboard &nbsp;<BiTrophy />
+          </button>
+        </div>
+        <div className="temp">
+          <div className="position">{positionName}</div>
+          <div className="company">{companyName}</div>
+          <div className="date">Created on {formatDate(createdDate)}</div>
+          <div className="details">Details</div>
+          <div className="location">
+            <BiGlobe size={19} />
+            &nbsp;{location}
           </div>
         </div>
 
