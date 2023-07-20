@@ -5,10 +5,12 @@ const jobSchema = require("../Schemas/post");
 const Job = mongoose.model("Job", jobSchema);
 
 const getJobPost = async (req, res) => {
+
   const { id, requestType } = req.body;
   try {
     if (id != undefined) {
       const jobPost = await Job.find({ jobId: id });
+
       if (!jobPost) {
         return res.status(404).json({ error: "Job post not found" });
       }
