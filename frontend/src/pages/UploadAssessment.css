@@ -18,3 +18,10 @@
     color: #8e24aa !important;
   }
   
+  .editor-wrapper {
+    border: 1px solid #ccc;
+    padding: 5px;
+    height: 200px; /* Adjust the height as needed */
+    overflow-y: auto;
+  }
+  

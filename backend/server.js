@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require('./API/assesments')
+const { createAssessment } = require('./API/uploadAssess')
 const getPost = require('./API/getpost')
 const signUpEmployer = require('./API/signupRecruiter')
 const createPost = require('./API/createPost')
@@ -117,6 +118,7 @@ app.get('/s3Url', async (req, res) => {
 app.post('/compile', compile)
 app.post('/createassesment', assesmentAPI)
 app.post("/createpost", createPost);
+app.post("/createAssessment", createAssessment);
 
 app.post("/getpost", getPost);
 

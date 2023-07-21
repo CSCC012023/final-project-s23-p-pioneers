@@ -27,7 +27,7 @@ const AssesmentModel = mongoose.model('assessments', assessmentSchema);
 assesmentAPI = (req, res) => {
     const { postid, title, description, exampleCases, testCases } = req.body;
     const assesmentUUID = uuidv4();
-    console.log(uuid);
+    //console.log(assesmentUUID);
     
 
     // Create a new user instance
@@ -36,7 +36,7 @@ assesmentAPI = (req, res) => {
         title,
         description,
         exampleCases,
-        testCases
+        testCases: testCases,
         // image,
         // exampleCases,
         // testCases
