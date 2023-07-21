@@ -99,7 +99,7 @@ const signUpSchema = new mongoose.Schema({
   isFirstTime: {
     type: Boolean,
     required: false,
-  }
+  },
 
   // resume: {
   //   type: String,
@@ -109,7 +109,6 @@ const signUpSchema = new mongoose.Schema({
   //   type: String,
   //   required: [true, "Please enter a transcript"],
   // },
-  
 });
 
 module.exports = signUpSchema;

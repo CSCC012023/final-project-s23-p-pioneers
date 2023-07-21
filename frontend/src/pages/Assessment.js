@@ -4,7 +4,7 @@ import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
 import { java } from "@codemirror/lang-java";
 import { useTimer } from "react-timer-hook";
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { python as codemirrorPython } from "@codemirror/lang-python"; // Update the import to use pythonLanguage
 
 import "./Assessment.css";
@@ -12,7 +12,6 @@ import "./Assessment.css";
 function Assessment() {
   const { id } = useParams();
 
- 
   const [res, setRes] = useState({
     assessmentId: "",
     title: "",
@@ -43,14 +42,10 @@ function Assessment() {
     setInputValue(value);
   };
 
-  const {
-    seconds,
-    minutes,
-    start,
-    pause,
-    reset,
-    expiryTimestamp,
-  } = useTimer({ expiryTimestamp: null, autoStart: false });
+  const { seconds, minutes, start, pause, reset, expiryTimestamp } = useTimer({
+    expiryTimestamp: null,
+    autoStart: false,
+  });
 
   // Set the fixed duration for the timer (e.g., 10 minutes)
   const fixedDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
@@ -65,7 +60,6 @@ function Assessment() {
 
   // Update the timer state every second
 
-
   useEffect(() => {
     const jobId = id; // Replace this with the actual jobId or assessmentId you want to fetch
 
@@ -74,7 +68,7 @@ function Assessment() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ jobId: jobId}),
+      body: JSON.stringify({ jobId: jobId }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -84,22 +78,20 @@ function Assessment() {
       })
       .then((data) => {
         // Data contains the assessment object returned from the server
-        setRes(data)
-        console.log(data)
+        setRes(data);
+        console.log(data);
         const resObject = JSON.parse(data.description);
-        setDescription(resObject.blocks[0].text)
+        setDescription(resObject.blocks[0].text);
 
-        setInputValue(data.boilerCode)
-        console.log(data)
+        setInputValue(data.boilerCode);
+        console.log(data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
-  }, [])
+  }, []);
 
   // Initialize the timer when the component mounts
-
 
   const addAssessment = async (code, score, username) => {
     const requestOptions = {
@@ -133,17 +125,17 @@ function Assessment() {
     }
   };
   const boilerPlate = `\n\nimport inspect\n\nimport sys\n\ndef parse_test_case(test_case, func):\n\n    signature = inspect.signature(func)\n\n    parameters = signature.parameters\n\n    args = []\n\n    kwargs = {}\n\n\n    if len(test_case) != len(parameters):\n\n        raise ValueError("Number of arguments in the test case doesn't match the function's signature.")\n\n\n    for i, (param_name, param) in enumerate(parameters.items()):\n\n        param_type = param.annotation\n\n        arg_value = test_case[i]\n\n\n        if param_name == 'self':\n\n            continue\n\n\n        if param.default != param.empty:\n\n            kwargs[param_name] = arg_value\n\n        else:\n\n            if param_type == inspect.Parameter.empty:\n\n                raise ValueError(f"Missing type annotation for parameter '{param_name}'.")\n\n            if isinstance(arg_value, param_type):\n\n                args.append(arg_value)\n\n            else:\n\n                raise TypeError(f"Argument '{arg_value}' for parameter '{param_name}' is of incorrect type.")\n\n\n    return args, kwargs\n\n\ndef run_test_case(func):\n\n    def wrapper(test_case, expected_result):\n\n        try:\n\n            args, kwargs = parse_test_case(test_case, func)\n\n            result = func(*args, **kwargs)\n\n            print("Expected Result:", expected_result)\n\n            print("Actual Result:", result)\n\n            assert result == expected_result, "Test Failed!"\n\n            print("Test Passed!")\n\n        except Exception as e:\n\n            print("Error:", e)\n\n\n    return wrapper\n\n\n# Find the function in the module dynamically\n\nfunction_name = [name for name, obj in globals().items() if inspect.isfunction(obj)][0]\n\nfunction = globals()[function_name]\n\n\n# Read test case and expected result from stdin\n\ndef read_test_case_and_expected_result():\n\n    test_case = eval(sys.argv[1])  # Using eval to parse the test case list\n\n    expected_result = eval(sys.argv[2])  # Using eval to parse the expected result\n\n    return test_case, expected_result\n\n\nif __name__ == "__main__":\n\n    test_case, expected_result = read_test_case_and_expected_result()\n\n    run_test_case(function)(test_case, expected_result)
-`
+`;
 
   const submitCode = () => {
     const requestData = {
       pythonCode: inputValue + "\n" + boilerPlate,
       tests: res.testCases,
     };
-  
+
     // Get the username from local storage or any other source where you store it
     const username = localStorage.getItem("username");
-  
+
     fetch("http://localhost:8000/compile", {
       method: "POST",
       headers: {
@@ -161,13 +153,13 @@ function Assessment() {
             id: Date.now(),
             code: inputValue,
           };
-  
+
           setSubmissions([
             ...submissions,
             { newSubmission: newSubmission, result: data.score },
           ]);
           // Pass the username to the addAssessment function
-          addAssessment(inputValue, data.result, username);
+          addAssessment(inputValue, data.score, username);
           // setInputValue(res.boilerCode);
           setSelectedTab("submission");
         }
@@ -177,12 +169,9 @@ function Assessment() {
         console.error("Error:", error);
       });
   };
-  
 
   return (
     <div className="container">
-
-
       <div className="left-content">
         <div className="tabs">
           <div
@@ -245,13 +234,11 @@ function Assessment() {
         </div>
       </div>
 
-
-
       <div className="codeUI">
-      <div className="timer">
-        {minutes.toString().padStart(2, "0")}:
-        {seconds.toString().padStart(2, "0")}
-      </div> 
+        <div className="timer">
+          {minutes.toString().padStart(2, "0")}:
+          {seconds.toString().padStart(2, "0")}
+        </div>
         <CodeMirror
           value={inputValue}
           onChange={handleInputChange}

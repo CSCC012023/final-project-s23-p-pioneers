@@ -14,21 +14,19 @@ const addAssessment = async (req, res) => {
     const { username, codingQuestionResult, jobId } = req.body;
 
     // Find the existing application document by username
-    console.log("username", username, "jobId", jobId)
+    console.log("username", username, "jobId", jobId);
 
-    const application = await Application.findOne({ username: username, jobId: jobId })
-    
+    const application = await Application.findOne({
+      username: username,
+      jobId: jobId,
+    });
 
     // Find the application that matches the requested jobID
 
-    
-
-
     // user.applicatioIds.map((application) => (application))
 
-    // const applicatioIds = 
+    // const applicatioIds =
     // const application = await Application.findOne({ username });
-
 
     // if (!application) {
     //   return res.status(404).json({ error: "Application not found" });
@@ -40,7 +38,6 @@ const addAssessment = async (req, res) => {
     const openai = new OpenAIApi(
       new Configuration({ apiKey: process.env.OPENAI_API_KEY })
     );
-
 
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -65,7 +62,6 @@ const addAssessment = async (req, res) => {
     application.submissionTime = new Date();
     application.codingQuestionStatus = "done";
 
-    
     // Extract the complexity from the GPT response
     const complexityRegex = /O\([^\)]+\)/;
     const complexityMatch = complexity.match(complexityRegex);
