@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -10,6 +11,8 @@ import {
   TextField,
   Autocomplete,
   Chip,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import Step2 from "./Step2";
@@ -35,15 +38,25 @@ const languages = [
 const RootContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
-  height: "100vh",
+  height: (window.innerHeight),
   alignItems: "flex-start",
   justifyContent: "top",
-  marginTop: "5%",
+});
+
+const colorTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#c599ff", //light purple
+    },
+    secondary: {
+      main: "#A259FF" // mid-light purple
+    },
+  },
 });
 
 const Container = styled("div")({
-  width: "40%",
-  marginLeft: "10%",
+  width: (window.innerWidth/5) * 2,
+  marginLeft: "30%",
 });
 
 const LanguageBox = styled("div")(({ theme }) => ({
@@ -75,6 +88,8 @@ const Step1 = ({ handleNext }) => {
   };
   const formattedLanguages = selectedLanguages.map(language => language.label);
 
+  const navigate = useNavigate();
+
   const handleContinue = () => {
     fetch('http://localhost:8000/update', {
       method: 'POST',
@@ -103,6 +118,10 @@ const Step1 = ({ handleNext }) => {
 
   const handlePrevious = () => {
     setActiveStep((prevStep) => prevStep - 1);
+  };
+
+  const handleFinish = () => {
+    navigate("/User"); // Navigate to the final page
   };
 
   const handleInputChange = (event) => {
@@ -166,7 +185,7 @@ const Step1 = ({ handleNext }) => {
       case 1:
         return (
           <div>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom paddingTop={4}>
               What tools/languages do you use?
             </Typography>
             <Autocomplete
@@ -179,9 +198,16 @@ const Step1 = ({ handleNext }) => {
                 <TextField
                   {...params}
                   label="Languages"
+                  color="primary"
+                  sx={{
+                    "& .MuiInputLabel-root": {color: 'primary.main'},
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "primary.main" },
+                    },
+                  }}
                   fullWidth
                   onKeyDown={handleKeyDown}
-                />
+                  />
               )}
               renderOption={renderOption}
               renderTags={(value, getTagProps) =>
@@ -214,7 +240,7 @@ const Step1 = ({ handleNext }) => {
               <Grid item xs={12}>
                 <ContinueButton
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   fullWidth
                   onClick={handleContinue}
                 >
@@ -222,7 +248,7 @@ const Step1 = ({ handleNext }) => {
                 </ContinueButton>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="outlined" fullWidth>
+                <Button variant="outlined" color="secondary" fullWidth onClick={handleFinish} >
                   I'll do this later
                 </Button>
               </Grid>
@@ -243,13 +269,20 @@ const Step1 = ({ handleNext }) => {
   return (
     <RootContainer>
       <Container>
-        <Box mb={2}>
+        <Box mb={2} sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: (window.innerHeight/8)/5,
+        }}>
           <LinearProgress
             variant="determinate"
             value={(activeStep / totalSteps) * 100}
           />
         </Box>
-        {renderStepContent()}
+        <ThemeProvider theme={colorTheme}>
+          {renderStepContent()}
+        </ThemeProvider>
       </Container>
     </RootContainer>
   );

@@ -6,6 +6,7 @@ import {
   TextField,
   Autocomplete,
   Chip,
+  Grid,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
@@ -143,6 +144,12 @@ const Step2 = ({ handleNext, handlePrevious }) => {
         renderInput={(params) => (
           <TextField
             {...params}
+            sx={{
+              "& .MuiInputLabel-root": {color: 'primary.main'},
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "primary.main" },
+              },
+            }}
             label="University"
             fullWidth
             InputProps={{
@@ -158,10 +165,14 @@ const Step2 = ({ handleNext, handlePrevious }) => {
 
       <Box marginTop={2} />
 
-      <Box marginTop={2} />
-
       <TextField
         label="Program"
+        sx={{
+          "& .MuiInputLabel-root": {color: 'primary.main'},
+          "& .MuiOutlinedInput-root": {
+            "& > fieldset": { borderColor: "primary.main" },
+          },
+        }}
         fullWidth
         value={program}
         onChange={(event) => setProgram(event.target.value)}
@@ -182,6 +193,12 @@ const Step2 = ({ handleNext, handlePrevious }) => {
           <TextField
             {...params}
             label="Courses"
+            sx={{
+              "& .MuiInputLabel-root": {color: 'primary.main'},
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "primary.main"},
+              },
+            }}
             fullWidth
             InputProps={{
               ...params.InputProps,
@@ -211,14 +228,23 @@ const Step2 = ({ handleNext, handlePrevious }) => {
         }}
       />
 
-      <Box marginTop={2}>
-        <Button variant="outlined" onClick={handlePreviousClick}>
-          Previous
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleNextClick}>
-          Continue
-        </Button>
-      </Box>
+      <Grid container spacing={2} paddingTop={2}>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={handleNextClick}
+          >
+            Continue
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="outlined" color="secondary" fullWidth onClick={handlePreviousClick}>
+            Previous
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 };
