@@ -6,6 +6,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import JobBox from "./components/JobBox";
+import JobPosting from "./components/Card";
+
+
+import {useState, useEffect} from 'react'
 
 
 const useStyles = makeStyles({
@@ -107,7 +111,33 @@ const useStyles = makeStyles({
 
 const UserProfile = () => {
   const classes = useStyles();
+  const [userData, setUserData] = useState(null);
+
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
+
+  const fetchUserData = async () => {
+    try {
+      const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
+  
+      const response = await fetch("http://localhost:8000/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      const data = await response.json();
+      setUserData(data.user); // Store the fetched user data in the state
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch user data when the component mounts
+    fetchUserData();
+  }, []);
 
   // Job data for Saved Jobs
   const savedJobs = [
@@ -179,6 +209,13 @@ const UserProfile = () => {
     return jobs.map((job) => <JobBox key={job.id} job={job} />);
   };
 
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
+  const { name, university, program, email, bio, profilepic, bookmarkedJobsIds, appliedJobsIds} = userData; // Assuming these fields exist in the fetched user data
+
+
   return (
     <div className={classes.root}>
       <div className={classes.banner}>
@@ -186,7 +223,7 @@ const UserProfile = () => {
           <img
             className={classes.userImage}
             alt="User Profile"
-            src="https://i0.wp.com/mynintendonews.com/wp-content/uploads/2017/07/mario.jpg?resize=630%2C620&ssl=1"
+            src={profilepic}
           />
         </div>
         <Button 
@@ -218,7 +255,7 @@ const UserProfile = () => {
             Name
           </Typography>
           <Typography variant="h3" className={classes.userValue}>
-            Ansh Goatya
+            {name}
           </Typography>
           <div style={{ display: "flex", gap: "200px" }}>
             <div>
@@ -226,7 +263,7 @@ const UserProfile = () => {
                 University
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                University of Toronto
+                {university}
               </Typography>
             </div>
             <div>
@@ -234,7 +271,7 @@ const UserProfile = () => {
                 Program
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                Computer Science
+                {program}
               </Typography>
             </div>
             <div>
@@ -242,7 +279,7 @@ const UserProfile = () => {
                 Email
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                ansh.goatya@mail.utoronto.ca
+                {email}
               </Typography>
             </div>
           </div>
@@ -250,7 +287,7 @@ const UserProfile = () => {
             Bio
           </Typography>
           <Typography variant="h5" className={classes.userValue}>
-            I'm Him!!!!!
+            {bio}
           </Typography>
           <Typography variant="h4" className={classes.userLabel}>
             Links
@@ -293,14 +330,11 @@ const UserProfile = () => {
         </div>
 
         {selectedSection === "Saved Jobs" && (
-          <div className={classes.carouselContent}>
-            {getJobBoxes(savedJobs)}
-          </div>
+                  <JobPosting prop={bookmarkedJobsIds} />
         )}
         {selectedSection === "Applied Jobs" && (
-          <div className={classes.carouselContent}>
-            {getJobBoxes(appliedJobs)}
-          </div>
+                  <JobPosting prop={appliedJobsIds} />
+
         )}
 
       </div>

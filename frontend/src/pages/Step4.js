@@ -44,8 +44,8 @@ const PreviewContainer = styled(Box)(({ theme }) => ({
 }));
 
 const PreviewAvatar = styled(Avatar)(({ theme }) => ({
-  width: 120,
-  height: 120,
+  width: 180,
+  height: 180,
   marginBottom: theme.spacing(2),
   borderRadius: "50%",
   cursor: "pointer",
@@ -107,7 +107,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
       await fetch(url, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/pdf",
+          "Content-Type": "multipart/form-data",
         },
         body: file
       });
@@ -175,64 +175,88 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
   };
 
   return (
-    <RootContainer>
-      <Title variant="h4" gutterBottom>
+    <div>
+      <Typography variant="h4" gutterBottom>
         Set Profile Picture & Bio
-      </Title>
+      </Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <UploadContainer>
-            <FormControl>
+
+
+          <UploadContainer id="pfp">
+            {/* <FormControl>
               <Input
+                color="primary"
                 id="profile-image-input"
+                sx={{ color: "white", }}
                 type="file"
                 accept="image/*"
                 onChange={handleProfileImageChange}
               />
-              <FormHelperText>Accepted formats: JPG, PNG</FormHelperText>
-            </FormControl>
+              <FormHelperText sx={{ color: "white", }} >Accepted formats: JPG, PNG</FormHelperText>
+            </FormControl> */}
           </UploadContainer>
 
-          {profileImage && (
-            <PreviewContainer>
-              <PreviewAvatar
-                alt="Profile Image"
-                src={profileImage}
-                onClick={handlePreviewClick}
+          <PreviewContainer>
+            <PreviewAvatar
+              alt="Profile Image"
+              src={profileImage}
+              onClick={handlePreviewClick}
+            />
+            <StyledButton variant="contained" color="primary" component="label">
+              Set Profile Picture
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/jpg, image/png"
+                style={{ display: "none" }}
+                required
+                capture="user"
+                onChange={handleProfileImageChange}
               />
-              <PreviewText variant="subtitle1">Preview</PreviewText>
-              <StyledButton
-                variant="contained"
-                color="primary"
-                onClick={handleProfileImageSubmit}
-              >
-                Set Profile Picture
-              </StyledButton>
-            </PreviewContainer>
-          )}
+            </StyledButton>
+          </PreviewContainer>
         </Grid>
         <Grid item xs={12} md={6}>
           <BioField
+            sx={{
+              "& .MuiInputLabel-root": {color: 'primary.main'},
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "primary.main"},
+              },
+            }}
             label="Bio"
             multiline
-            rows={4}
+            rows={12}
             variant="outlined"
             value={bio}
             onChange={handleBioChange}
+            InputProps={{
+              style: { color: "white" },
+            }}
           />
         </Grid>
       </Grid>
-
-      <Box marginTop={2}>
-        <Button variant="outlined" onClick={handlePreviousClick}>
-          Previous
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleFinish}>
-          Finish
-        </Button>
-      </Box>
-    </RootContainer>
+      
+      <Grid container spacing={2} paddingTop={2}>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={handleFinish}
+          >
+            Continue
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="outlined" color="secondary" fullWidth onClick={handlePreviousClick}>
+            Previous
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 

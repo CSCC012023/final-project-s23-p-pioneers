@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const signUpSchema = require("../Schemas/userSchema");
 const jobSchema = require("../Schemas/post");
 
@@ -16,6 +15,7 @@ const postBookmarkJob = async (req, res) => {
 
     const user = await User.findOne({ username });
 
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -26,12 +26,18 @@ const postBookmarkJob = async (req, res) => {
       return res.status(404).json({ error: "Job not found" });
     }
 
-    if (user.bookmarkedJobsIds.includes(jobId)) {
+    const bookmarkedJobIds = user.bookmarkedJobsIds.map((bookmark) =>
+      bookmark.toString()
+    );
+
+    if (bookmarkedJobIds.includes(jobId)) {
+      // If the job is already bookmarked, remove it from the bookmarks
       user.bookmarkedJobsIds = user.bookmarkedJobsIds.filter(
-        (id) => id !== jobId
+        (bookmark) => bookmark.toString() !== jobId
       );
     } else {
-      user.bookmarkedJobsIds.push(jobId);
+      // If the job is not bookmarked, add it to the bookmarks
+      user.bookmarkedJobsIds.push(job);
     }
 
     await user.save();

@@ -51,18 +51,56 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  appliedJobsIds: {
+  savedJobIds: {
     type: [String],
     required: false,
   },
+  appliedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
   assessmentIds: {
     type: [String],
     required: false,
   },
-  bookmarkedJobsIds: {
-    type: [String],
+  verification: {
+    verified: {
+      type: Boolean,
+      required: false,
+    },
+    uniqueString: {
+      type: String,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiresAt: {
+      type: Date,
+    },
+  },
+  bookmarkedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
+  resume: {
+    type: String,
     required: false,
   },
+  transcript: {
+    type: String,
+    required: false,
+  },
+  isFirstTime: {
+    type: Boolean,
+    required: false,
+  }
+
   // resume: {
   //   type: String,
   //   required: [true, "Please enter a resume"],
@@ -71,6 +109,7 @@ const signUpSchema = new mongoose.Schema({
   //   type: String,
   //   required: [true, "Please enter a transcript"],
   // },
+  
 });
 
 module.exports = signUpSchema;

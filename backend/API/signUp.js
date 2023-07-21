@@ -1,6 +1,11 @@
 const signUpSchema = require("../Schemas/userSchema");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const { v4: uuidv4 } = require("uuid");
+const mailgen = require("mailgen");
+
+require("dotenv").config();
 
 const User = mongoose.model("user", signUpSchema);
 
@@ -54,7 +59,6 @@ const validate = (data) => {
 const setResume = async (req, res) => {
   const { username, link } = req.body;
   console.log(req.body);
-  console.log("resume triggered");
   try {
     const updatedUser = await User.findOneAndUpdate(
       { username: username },
@@ -64,7 +68,7 @@ const setResume = async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update resume' });
+    res.status(500).json({ error: "Failed to update resume" });
   }
 };
 
@@ -80,7 +84,7 @@ const setCoverLetter = async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update cover letter' });
+    res.status(500).json({ error: "Failed to update cover letter" });
   }
 };
 
@@ -96,7 +100,7 @@ const updateParams = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (fieldToUpdate === 'skills') {
+    if (fieldToUpdate === "skills") {
       // Handle skills field separately as an array
       user.skills = Array.isArray(value) ? value : [value];
     } else {
@@ -112,8 +116,6 @@ const updateParams = async (req, res) => {
   }
 };
 
-
-
 const setProfilePic = async (req, res) => {
   const { username, link } = req.body;
   console.log(req.body);
@@ -126,11 +128,79 @@ const setProfilePic = async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Failed to update profile picture' });
+    console.log(error);
+    res.status(500).json({ error: "Failed to update profile picture" });
   }
 };
 
+const sendVerificationEmail = async ({ _id, email, username }, res) => {
+  const currentUrl = "http://localhost:3000";
+
+  const uniqueString = uuidv4() + _id;
+
+  let MailGenerator = new mailgen({
+    theme: "default",
+    product: {
+      name: "CoBuild",
+      link: `${currentUrl}/login`,
+    },
+  });
+
+  let response = {
+    body: {
+      name: username,
+      intro: "Welcome to CoBuild! We're very excited to have you on board.",
+      action: {
+        instructions:
+          "To get started with CoBuild, please verify your account here, this link will expire in 6 hours:",
+        button: {
+          color: "#22BC66", // Optional action button color
+          text: "Confirm your account",
+          link: `${currentUrl}/verfication/${uniqueString}`,
+        },
+      },
+      outro:
+        "Need help, or have questions? Just reply to this email, we'd love to help.",
+    },
+  };
+
+  let mail = MailGenerator.generate(response);
+
+  let mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: email,
+    subject: "Please verify your email",
+    html: mail,
+  };
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.AUTH_EMAIL,
+      pass: process.env.AUTH_PASSWORD,
+    },
+  });
+  // hash the uniqueString and save it to the database
+
+  const updateUser = await User.findById(_id);
+
+  updateUser.verification.uniqueString = uniqueString;
+  updateUser.verification.createdAt = Date.now();
+  updateUser.verification.expiresAt = Date.now() + 21600000;
+  updateUser.verification.verified = false;
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to send verification email" });
+    } else {
+      console.log("Email sent: " + info.response);
+      res.status(200).json({ message: "Email sent" });
+    }
+  });
+  await updateUser.save();
+};
+// Verify email
 
 const signUpRequest = async (req, res) => {
   const {
@@ -168,13 +238,15 @@ const signUpRequest = async (req, res) => {
     email,
     name,
     password: hashedPassword,
+    verified: false,
     // resume,
     // transcript,
   });
 
   newUser
     .save()
-    .then(() => {
+    .then((result) => {
+      sendVerificationEmail(result, res);
       // User saved successfully
       res.status(201).json({ message: "User created successfully" });
     })
@@ -191,5 +263,5 @@ module.exports = {
   setResume,
   setCoverLetter,
   setProfilePic,
-  updateParams
+  updateParams,
 };
