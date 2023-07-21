@@ -50,6 +50,16 @@ function Login() {
       .then((res) => {
         if (res.ok) {
           return res.json();
+        } else if (res.status === 401) {
+          // Unauthorized (email not verified)
+          return res.json().then((data) => {
+            throw new Error(data.message);
+          });
+        } else if (res.status === 404) {
+          // Not found (user not found)
+          return res.json().then((data) => {
+            throw new Error(data.message);
+          });
         } else {
           throw new Error("Login request failed");
         }
@@ -66,10 +76,11 @@ function Login() {
           authState: { username: user.username },
         });
         // handleClick();
+        localStorage.setItem("username", user.username);
         handleClick();
       })
       .catch((error) => {
-        setLoginError("Incorrect username or password");
+        setLoginError(error.message);
         console.error(error);
       });
   };
