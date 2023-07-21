@@ -1,5 +1,5 @@
 # Example function
-def add_list(s: str, nums: list):
+def add_list(length: int, nums: list):
     count = 0
     for char in s:
          count += sum(nums)
