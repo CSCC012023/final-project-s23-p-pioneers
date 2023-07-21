@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -61,6 +61,85 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
     handlePrevious(); // Trigger the navigation to Step1
   };
 
+  const handleNextClick = async (event) => {
+    event.preventDefault();
+    console.log('helllloooooadwidhawidhawihdaiwdhawd')
+    const uname = localStorage.getItem('username');
+    const resumeInput = document.getElementById("resumeInput");
+    const transcriptInput = document.getElementById("transcriptInput");
+    const resumeFile = resumeInput.files[0];
+    const transcriptFile = transcriptInput.files[0];
+    console.log("testing;",resumeFile)
+    console.log("3edad;",transcriptFile)
+
+
+    const extension = "pdf";
+    let finalResumeUrl, finalTranscriptUrl, type;
+
+    // resume upload
+    type = "resume";
+    console.log("hel3fawdlo");
+    const {url: resumeUrl} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+    console.log("test:",resumeUrl)
+    finalResumeUrl = resumeUrl.split("?")[0];
+    console.log("Resume Link", finalResumeUrl)
+    await fetch(resumeUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/pdf",
+      },
+      body: resumeFile
+    });
+
+
+    // transcript upload
+    type = "transcript"
+    const {url: transcriptUrl} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json()); 
+    finalTranscriptUrl = transcriptUrl.split("?")[0];
+    console.log("Transcript Link", finalTranscriptUrl)
+    await fetch(transcriptUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/pdf",
+      },
+      body: transcriptFile
+    });
+   
+    // Notify backend about the resume and transcript URLs
+    await Promise.all([
+      fetch('http://localhost:8000/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem("username"),
+          field: 'resume',
+          value: finalResumeUrl })
+      }),
+      fetch('http://localhost:8000/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem("username"),
+          field: 'transcript',
+          value: finalTranscriptUrl })
+      })
+    ])
+    .then(([resumeResponse, transcriptResponse]) => {
+      // Handle the response data for both requests
+      console.log('Resume response:', resumeResponse);
+      console.log('Transcript response:', transcriptResponse);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error:', error);
+    });
+    handleNext();
+  }
+
   return (
     <div className={classes.root}>
       <Typography variant="h4" gutterBottom paddingTop={2}>
@@ -121,8 +200,12 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                     capture="user"
                     onChange={(e) => {
                       const files = e.target.files;
-                      
-                      setUploadedResume([...files]);
+                      const updatedFiles = [...uploadedFiles];
+
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
+                      setUploadedResume(updatedFiles);
                     }}
                   />
                 </label>
@@ -278,8 +361,13 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                     capture="user"
                     onChange={(e) => {
                       const files = e.target.files;
+                      const updatedFiles = [...uploadedFiles];
 
-                      setUploadedTranscript([...files]);
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
+
+                      setUploadedTranscript(updatedFiles);
                     }}
                   />
                 </label>
@@ -394,7 +482,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
             variant="contained"
             color="secondary"
             fullWidth
-            onClick={handleNext}
+            onClick={handleNextClick}
           >
             Continue
           </Button>

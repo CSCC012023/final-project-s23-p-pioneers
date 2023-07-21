@@ -96,6 +96,10 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  isFirstTime: {
+    type: Boolean,
+    required: false,
+  }
 
   // resume: {
   //   type: String,

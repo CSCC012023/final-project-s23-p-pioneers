@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { RxOpenInNewWindow } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
+
+
 import {
   Container,
   Grid,
@@ -76,6 +79,8 @@ function JobPosting() {
   const [skills, setSkills] = React.useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
+  const navigate = useNavigate()
+
   //const [datePosted, setDatePosted] = React.useState('');
 
   const handleFileChange = (event) => {
@@ -112,53 +117,56 @@ function JobPosting() {
 
   const handleCreateAssessments = () => {
     // Handle create assessments logic here
+    handleSubmit()
+    navigate("/upload")
   };
-  const createJobPosting = (job) => {
-    fetch("http://localhost:8000/createpost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(job),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Job posting request failed.");
-        }
-      })
-      .then((data) => {
-        console.log(data); // handle the response from the server
-        setTitle("");
-        setLocation("");
-        setJobDescription("");
-        setCompanyName("");
-        setDeadline("");
-        setSkills("");
-        //setDatePosted('');
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+  const createJobPosting = async (jobData) => {
+  
+    try {
+      const response = await fetch("http://localhost:8000/createpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jobData),
       });
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
-    
-
-    const job = {
-      title: title,
-      location: location,
-      jobDescription: jobDescription,
-      companyName: companyName,
-      deadline: deadline,
-      skills: ["C++", "Java", "Python", "Test"]
+      if (response.ok) {
+        const data = await response.json();
+        return data.jobId;
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Job posting request failed.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
     }
+  };
+  const handleSubmit = async (event) => {
+    // event.preventDefault();
+    const jobData = {
+      title,
+      location,
+      jobDescription,
+      companyName,
+      deadline,
+      isAssessmemnt: false,
+      skills: ["C++", "Java", "Python", "Test"],
+    };
 
+    try {
+      const jobId = await createJobPosting(jobData);
+      console.log("Job posting created successfully. Job ID:", jobId);
 
+      // Save the jobId to localStorage or use it as needed
+      localStorage.setItem("tempJobId", jobId);
 
-      createJobPosting(job)
+      // Navigate to the upload page or any other page as needed
+    } catch (error) {
+      console.error("Error creating job posting:", error.message);
+      // Handle the error as needed
+    }
   };
 
   return (

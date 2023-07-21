@@ -11,11 +11,28 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const addAssessment = async (req, res) => {
   try {
-    const { username, codingQuestionResult } = req.body;
+    const { username, codingQuestionResult, jobId } = req.body;
 
     // Find the existing application document by username
-    const application = await Application.findOne({ username });
+    console.log("username", username, "jobId", jobId)
 
+    const application = await Application.findOne({ username: username, jobId: jobId })
+    
+
+    // Find the application that matches the requested jobID
+
+    
+
+
+    // user.applicatioIds.map((application) => (application))
+
+    // const applicatioIds = 
+    // const application = await Application.findOne({ username });
+
+
+    // if (!application) {
+    //   return res.status(404).json({ error: "Application not found" });
+    // }
     if (!application) {
       return res.status(404).json({ error: "Application not found" });
     }
@@ -23,6 +40,7 @@ const addAssessment = async (req, res) => {
     const openai = new OpenAIApi(
       new Configuration({ apiKey: process.env.OPENAI_API_KEY })
     );
+
 
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -43,9 +61,11 @@ const addAssessment = async (req, res) => {
 
     application.codingQuestionResult.code = codingQuestionResult.code;
     application.codingQuestionResult.score = codingQuestionResult.score;
+    application.codingQuestionResult.time = "15";
     application.submissionTime = new Date();
     application.codingQuestionStatus = "done";
 
+    
     // Extract the complexity from the GPT response
     const complexityRegex = /O\([^\)]+\)/;
     const complexityMatch = complexity.match(complexityRegex);
@@ -85,12 +105,13 @@ const postApplication = async (req, res) => {
     // Create a new application document
     const newApplication = new Application({
       job: appliedJob._id,
+      jobId: jobID,
       username: username,
     });
 
     appliedJob.applicationIds.push(newApplication._id);
 
-    user.appliedJobsIds.push(appliedJob.jobId);
+    user.appliedJobsIds.push(appliedJob._id);
 
     await user.save();
     await appliedJob.save();

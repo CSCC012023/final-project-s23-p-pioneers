@@ -107,7 +107,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
       await fetch(url, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/pdf",
+          "Content-Type": "multipart/form-data",
         },
         body: file
       });

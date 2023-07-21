@@ -23,7 +23,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/assess" element={<Assessment />} />
         <Route path="/leaderboard/:id" element={<Leaderboard />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/User" element={<UserProfile />} />
@@ -40,6 +39,12 @@ function App() {
           path="/jobpost/:id"
           element={
               <JobPosting />
+          }
+        />
+        <Route
+          path="/assess/:id"
+          element={
+            <Assessment />
           }
         />
         <Route

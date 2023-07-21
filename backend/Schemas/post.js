@@ -19,9 +19,14 @@ const jobSchema = new mongoose.Schema({
   }, // Change to Date type
   skills: [String], // Ensure skills is defined as an array of strings
   applicationIds: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Application",
+    type: [String],
   },
+  isAssessment: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = jobSchema;
+
+

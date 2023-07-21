@@ -31,9 +31,9 @@ const getLeaderboard = async (req, res) => {
         "codingQuestionResult.complexity": 1,
         "codingQuestionResult.time": -1,
       })
-      .limit(20); // Limit the results to the top 20 applications
 
     // Send the applications as a response
+    console.log("applications", applications)
     res.json(applications);
   } catch (error) {
     // Handle errors

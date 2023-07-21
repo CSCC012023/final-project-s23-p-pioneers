@@ -28,37 +28,19 @@ const createPostApi = (req, res) => {
         companyName,
         deadline: deadlineIsoDate, // Assign deadlineIsoDate to the deadline field
         datePosted,
-        skills
+        skills,
     });
-    const createJobPosting = (jobData) => {
-  fetch("http://your-api-endpoint", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(jobData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Handle the response data
-    console.log(data.message);
-  })
-  .catch(error => {
-    // Handle the error
-    console.error('Error:', error);
-  });
-};
     // Save the job to the database
     newJob.save()
         .then(() => {
         // Job saved successfully
-        res.status(201).json({ message: 'Job posting created successfully' });
-        })
+        res.status(201).json({ jobId: jobId });
+      })
         .catch((error) => {
         // Error occurred while saving the job
         res.status(500).json({ error: 'An error occurred while creating job posting' });
         });
-    };
+  };
 
 
     

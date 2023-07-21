@@ -17,6 +17,8 @@ const getUser = async (req, res) => {
         // Find the user in the database by username
         const user = await User.findOne({ username })
             .populate("bookmarkedJobsIds")
+            .populate("appliedJobsIds")
+
     
         if (!user) {
           return res.status(404).json({ error: "User not found" });

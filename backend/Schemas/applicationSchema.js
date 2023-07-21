@@ -10,6 +10,9 @@ const applicationSchema = new mongoose.Schema({
     ref: "Job",
     required: true,
   },
+  jobId: {
+    type: String,
+  },
   submissionTime: {
     type: Date,
     required: true,

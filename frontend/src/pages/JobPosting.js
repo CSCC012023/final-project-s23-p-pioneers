@@ -23,7 +23,7 @@ function JobPosting() {
         username: localStorage.getItem("username"),
         jobId: id,
       };
-  
+
       const response = await fetch("http://localhost:8000/bookmarkjob", {
         method: "POST",
         headers: {
@@ -31,7 +31,7 @@ function JobPosting() {
         },
         body: JSON.stringify(req),
       });
-  
+
       if (response.ok) {
         console.log("Job bookmarked successfully");
         setIsBookmarked(true); // Always set the local state to true when bookmarked
@@ -44,7 +44,6 @@ function JobPosting() {
       console.error("Error bookmarking the job:", error);
     }
   };
-  
 
   const handleRemoveBookmark = async () => {
     try {
@@ -52,7 +51,7 @@ function JobPosting() {
         username: localStorage.getItem("username"),
         jobId: id,
       };
-  
+
       const response = await fetch("http://localhost:8000/removebookmarkjob", {
         method: "POST",
         headers: {
@@ -60,7 +59,7 @@ function JobPosting() {
         },
         body: JSON.stringify(req),
       });
-  
+
       if (response.ok) {
         console.log("Bookmark removed successfully");
         setIsBookmarked(false); // Always set the local state to false when removed
@@ -73,7 +72,6 @@ function JobPosting() {
       console.error("Error removing bookmark:", error);
     }
   };
-  
 
   const toggleBookmark = () => {
     if (isBookmarked) {
@@ -118,6 +116,7 @@ function JobPosting() {
   const [description, setDescription] = useState();
   const [tags, setTags] = useState([]);
   const [targetDate, setTargetDate] = useState();
+  const [isAssessmemnt, setIsAssessmemnt] = useState(false)
 
   const [remainingTime, setRemainingTime] = useState({
     days: 0,
@@ -156,6 +155,7 @@ function JobPosting() {
         });
 
         const jobPostData = await response.json();
+        console.log(jobPostData[0])
         console.log(jobPostData[0].deadline);
 
         setPositionName(jobPostData[0].title);
@@ -165,6 +165,7 @@ function JobPosting() {
         setDescription(jobPostData[0].jobDescription);
         setTags(jobPostData[0].skills);
         setTargetDate(jobPostData[0].deadline);
+        setIsAssessmemnt(jobPostData[0].isAssessment);
 
         const bookmarked = localStorage.getItem("bookmark_" + id);
         if (bookmarked === "true") {
@@ -172,7 +173,6 @@ function JobPosting() {
         } else {
           setIsBookmarked(false);
         }
-
       } catch (error) {
         console.error("Error fetching job post:", error);
       }
@@ -201,11 +201,6 @@ function JobPosting() {
       const req = {
         jobID: id,
         username: localStorage.getItem("username"), // Replace with the actual userID
-        additionalFields: {
-          complexity: "O(nlog(n))",
-          space: "O(n)",
-          time: "10 mins",
-        },
       };
 
       const response = await fetch("http://localhost:8000/submitApplication", {
@@ -232,6 +227,8 @@ function JobPosting() {
       // Show an error message to the user
     }
     setOpenDialog(false);
+    navigate("/assess/" + id)
+
   };
 
   return (

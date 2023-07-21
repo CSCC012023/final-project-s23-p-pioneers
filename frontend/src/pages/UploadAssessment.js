@@ -145,8 +145,9 @@ const UploadAssessment = () => {
       description: descriptionString,
       code: finalCod,
       testCases: JSON.parse(testcasesValue),
+      boilerCode: solutionValue,
       exampleCases: "Example: input => output",
-      jobId: "12334",
+      jobId: localStorage.getItem("tempJobId"),
     };
 
     // Make the Fetch API call
@@ -161,11 +162,14 @@ const UploadAssessment = () => {
       .then((data) => {
         console.log("Assessment created successfully:", data);
         // Handle the response data here
+        localStorage.removeItem("tempJobId");
+
       })
       .catch((error) => {
         console.error("Error creating assessment:", error);
         // Handle any errors that occurred during the API call
       });
+
   };
 
   const instructions = [
