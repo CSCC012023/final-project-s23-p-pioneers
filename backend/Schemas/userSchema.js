@@ -96,6 +96,16 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+
+  // resume: {
+  //   type: String,
+  //   required: [true, "Please enter a resume"],
+  // },
+  // transcript: {
+  //   type: String,
+  //   required: [true, "Please enter a transcript"],
+  // },
+  
 });
 
 module.exports = signUpSchema;

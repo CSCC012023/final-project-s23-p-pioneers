@@ -12,6 +12,8 @@ const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser")
 
+const createAssessmentApi = require('./API/createAssessment')
+
 const userLogin = require("./API/loginUser");
 const {
   signUpRequest,
@@ -148,6 +150,7 @@ app.post("/getpost", getPost);
 
 app.post("/login", userLogin);
 app.post("/signup", signUpRequest);
+app.post("/createassessment", createAssessmentApi)
 
 app.post("/submitApplication", postApplication);
 app.post("/leaderboard", getLeaderboard);

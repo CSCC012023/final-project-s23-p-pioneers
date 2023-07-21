@@ -15,6 +15,7 @@ import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import Logo from "./assets/images/CoBuildLogo.png";
+import UploadAssessment from "./pages/UploadAssessment";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="/leaderboard/:id" element={<Leaderboard />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/User" element={<UserProfile />} />
-        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
+        <Route path="/signuprecruiter" element={ <Signuprecruiter/> } />
+        <Route path="/upload" element={<UploadAssessment />} />
         <Route path="/verfication/:id" element={<Verification />} />
         <Route
           path="/jobs"
