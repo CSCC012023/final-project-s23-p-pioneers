@@ -55,10 +55,12 @@ const signUpSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
-  appliedJobsIds: {
-    type: [String],
-    required: false,
-  },
+  appliedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
   assessmentIds: {
     type: [String],
     required: false,
@@ -80,18 +82,20 @@ const signUpSchema = new mongoose.Schema({
       type: Date,
     },
   },
-  bookmarkedJobsIds: {
-    type: [String],
+  bookmarkedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
+  resume: {
+    type: String,
     required: false,
   },
-  // resume: {
-  //   type: String,
-  //   required: [true, "Please enter a resume"],
-  // },
-  // transcript: {
-  //   type: String,
-  //   required: [true, "Please enter a transcript"],
-  // },
+  transcript: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = signUpSchema;

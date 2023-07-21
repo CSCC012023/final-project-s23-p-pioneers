@@ -30,6 +30,7 @@
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.12.1",
     "react-scripts": "5.0.1",
+    "react-timer-hook": "^3.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

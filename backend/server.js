@@ -10,6 +10,7 @@ const verifyEmail = require("./API/postEmailVerification");
 
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
+const getUser = require("./API/getUser")
 
 const userLogin = require("./API/loginUser");
 const {
@@ -154,4 +155,5 @@ app.post("/verifyEmail", verifyEmail);
 
 app.post("/bookmarkjob", postBookmarkJob);
 app.post("/removebookmarkjob", removeBookmarkJob);
+app.post("/getuser", getUser)
 

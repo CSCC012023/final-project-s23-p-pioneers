@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
 import { java } from "@codemirror/lang-java";
+import { useTimer } from "react-timer-hook";
+
 import "./Assessment.css";
 
 function Assessment() {
+
+
+
   const [problems, setProblems] = useState([
     {
       id: 1,
@@ -49,6 +54,66 @@ function Assessment() {
   const handleInputChange = (value) => {
     setInputValue(value);
   };
+
+  const {
+    seconds,
+    minutes,
+    start,
+    pause,
+    reset,
+    expiryTimestamp,
+  } = useTimer({ expiryTimestamp: null, autoStart: false });
+
+  // Set the fixed duration for the timer (e.g., 10 minutes)
+  const fixedDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+  // Function to handle timer expiration
+  const handleTimerExpiration = () => {
+    // Code to close the timer or perform any other actions when the timer expires
+    // For example, you could stop the timer and submit the code automatically here
+    pause();
+    submitCode();
+  };
+
+  // Update the timer state every second
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (expiryTimestamp) {
+        const remainingTime = Math.max(0, expiryTimestamp - new Date().getTime());
+        if (remainingTime === 0) {
+          handleTimerExpiration();
+        }
+      }
+    }, 1000);
+
+    // Cleanup function to clear the timer interval when the component unmounts
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, [expiryTimestamp]);
+
+  // Initialize the timer when the component mounts
+  useEffect(() => {
+    const savedExpiryTimestamp = localStorage.getItem("expiryTimestamp");
+    if (savedExpiryTimestamp) {
+      const remainingTime = Math.max(0, savedExpiryTimestamp - new Date().getTime());
+      if (remainingTime > 0) {
+        start(savedExpiryTimestamp);
+      } else {
+        // Timer has expired, perform actions here
+        handleTimerExpiration();
+      }
+    } else {
+      const expiryTime = new Date().getTime() + fixedDuration;
+      start(expiryTime);
+      localStorage.setItem("expiryTimestamp", expiryTime);
+    }
+
+    // Cleanup function to clear the timer when the component unmounts
+    return () => {
+      pause();
+    };
+  }, []);
 
   const addAssessment = async (code, score, username) => {
     const requestOptions = {
@@ -154,6 +219,8 @@ class Main {
 
   return (
     <div className="container">
+
+
       <div className="left-content">
         <div className="tabs">
           <div
@@ -215,7 +282,14 @@ class Main {
           )}
         </div>
       </div>
+
+
+
       <div className="codeUI">
+      <div className="timer">
+        {minutes.toString().padStart(2, "0")}:
+        {seconds.toString().padStart(2, "0")}
+      </div> 
         <CodeMirror
           value={inputValue}
           onChange={handleInputChange}
