@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const CodeExecutionStrategy = require('../CodeExecutionStrategy');
+const PythonExecutionStrategy = require('../PythonExecutionStrategy');
+const CodeExecutionContext = require('../AssesmentCodeCompilation')
 
 // const multer  = require('multer')
 // const upload = multer({ dest: 'uploads/' })
@@ -24,7 +27,7 @@ const AssesmentModel = mongoose.model('assessments', assessmentSchema);
 assesmentAPI = (req, res) => {
     const { postid, title, description, exampleCases, testCases } = req.body;
     const assesmentUUID = uuidv4();
-    console.log(uuid);
+    //console.log(assesmentUUID);
     
 
     // Create a new user instance
@@ -33,7 +36,7 @@ assesmentAPI = (req, res) => {
         title,
         description,
         exampleCases,
-        testCases
+        testCases: testCases,
         // image,
         // exampleCases,
         // testCases
@@ -50,6 +53,25 @@ assesmentAPI = (req, res) => {
     });
 }
 
+compile = async (req, res) => {
+  try {
+    const { pythonCode, tests } = req.body;
+    console.log(pythonCode)
+
+    const language = 'Python';
+    const pythonStrategy = new PythonExecutionStrategy();
+    // const context = new CodeExecutionContext(pythonStrategy);
+    const results = await pythonStrategy.executeCode(pythonCode, tests);
+    console.log(results);
+
+    return res.status(200).json({ result: results });
+  } catch (error) {
+    console.error('Error in compile:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
-module.exports = assesmentAPI;
+
+
+module.exports = { assesmentAPI, compile };
