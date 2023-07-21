@@ -1,44 +1,38 @@
-const express = require('express');
-const app = express();
-const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
+const short = require('short-uuid');
 
-const MONGODB_URI = 'mongodb://localhost:27017/mydatabase'; // Replace with your MongoDB connection string
+const Assessment = require('../Schemas/assessmentSchema');
 
-async function connectToMongoDB() {
-  const client = await MongoClient.connect(MONGODB_URI, { useNewUrlParser: true });
-  return client.db();
-}
-
-app.use(express.json());
-
-// API endpoint to store an assessment with test cases
-app.post('/assessments', async (req, res) => {
+const createAssessmentApi = async (req, res) => {
   try {
-    const db = await connectToMongoDB();
-    const collection = db.collection('assessments');
-    const assessment = req.body;
-    const result = await collection.insertOne(assessment);
-    res.json(result);
+    // Extract the assessment data from the request body
+    const { title, description, code, testCases, exampleCases, jobId } = req.body;
+    const datePosted = new Date().toISOString(); // Add this line to get the current date and time in ISO format
+
+    // Create the assessment object
+    const newAssessment = new Assessment({
+      assessmentId: short.generate(),
+      title,
+      description,
+      code,
+      testCases,
+      exampleCases,
+      datePosted,
+      jobId,
+    });
+
+    // Save the assessment to the database
+    const savedAssessment = await newAssessment.save();
+
+    // res.status(201).json({ message: 'Assessment created successfully', assessment: savedAssessment });
+    res.json(savedAssessment);
+
+
   } catch (error) {
-    console.error(error);
+    console.error('Error creating assessment:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-});
+};
 
-// API endpoint to retrieve all assessments with test cases
-app.get('/assessments', async (req, res) => {
-  try {
-    const db = await connectToMongoDB();
-    const collection = db.collection('assessments');
-    const assessments = await collection.find().toArray();
-    res.json(assessments);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+module.exports = createAssessmentApi;

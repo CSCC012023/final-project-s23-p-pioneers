@@ -8,7 +8,8 @@ const jobSchema = new mongoose.Schema({
   deadline: String,
   companyName: String,
   datePosted: String,
-  skills: [String] // Ensure skills is defined as an array of strings
+  skills: [String], // Ensure skills is defined as an array of strings
+  assessment: { type: mongoose.Schema.Types.ObjectId, ref: 'Assessment' },
 });
 
   module.exports = jobSchema;

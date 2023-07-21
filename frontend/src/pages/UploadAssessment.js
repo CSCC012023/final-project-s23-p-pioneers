@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { json } from "@codemirror/lang-json";
-import { python as codemirrorPython} from "@codemirror/lang-python"; // Update the import to use pythonLanguage
+
+import { python as codemirrorPython } from "@codemirror/lang-python"; // Update the import to use pythonLanguage
 
 import {
   Typography,
@@ -31,13 +32,16 @@ import {
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { nightOwl, dracula as draculaSyntax } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import pythonHighlightJS from 'highlight.js/lib/languages/python';
-import { json as jsonSyntaxHighlighter} from "react-syntax-highlighter/dist/esm/languages/hljs";
+import {
+  nightOwl,
+  dracula as draculaSyntax,
+} from "react-syntax-highlighter/dist/esm/styles/hljs";
+import pythonHighlightJS from "highlight.js/lib/languages/python";
+import { json as jsonSyntaxHighlighter } from "react-syntax-highlighter/dist/esm/languages/hljs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-SyntaxHighlighter.registerLanguage('python', pythonHighlightJS);
+SyntaxHighlighter.registerLanguage("python", pythonHighlightJS);
 
 const myKeyBindingFn = (e) => {
   // Check if the key pressed is the tab key and no modifier keys are pressed
@@ -64,24 +68,15 @@ const UploadAssessment = () => {
   const [solutionValue, setSolutionValue] = useState(
     "#Type your solution here"
   );
-  const [testcasesValue, setTestcasesValue] = useState(
-    "testCases = [ \n \n ]"
-  );
+  const [testcasesValue, setTestcasesValue] = useState("[ \n \n ]");
 
   const handleNext = () => {
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (activeStep == 1) {
-      console.log("Submit1");
-      handleSubmit();
-    } else if (activeStep == 2) {
-      console.log("Submit2");
-      handleSubmit();
 
-    }
-    else if (activeStep == 3) {
-      
-    }
+      //Api Call
+      // Replace 'your-backend-url' with the actual URL of your backend server
+
+  
   };
 
   const handleInputChangeSolution = (value) => {
@@ -107,41 +102,70 @@ const UploadAssessment = () => {
     setDescription(editorState);
   };
 
-  const handleSolutionChange = (editorState) => {
-    setSolution(editorState);
+  const handleSolutionChange = (value) => {
+    setSolutionValue(value);
   };
 
   const handleCodeEditorChange = (editorState) => {
     setCodeEditorState(editorState);
   };
 
-  const handleTestCasesChange = (editorState) => {
-    setTestCases(editorState);
+  const handleTestCasesChange = (value) => {
+    setTestcasesValue(value);
   };
 
-    const highlightCode = (editorState) => {
-      const contentState = editorState.getCurrentContent();
-      const code = contentState.getPlainText();
-      return (
-        <SyntaxHighlighter language="python" style={nightOwl}>
-          {code}
-        </SyntaxHighlighter>
-      );
-    };
+  const highlightCode = (editorState) => {
+    const contentState = editorState.getCurrentContent();
+    const code = contentState.getPlainText();
+    return (
+      <SyntaxHighlighter language="python" style={nightOwl}>
+        {code}
+      </SyntaxHighlighter>
+    );
+  };
 
   const handleSubmit = () => {
- 
-    setCategory("");
-    setTitle("");
-    setDescription(EditorState.createEmpty());
-    setSolution(EditorState.createEmpty());
-    setTestCases(EditorState.createEmpty());
+
 
     const boilerPlate = `\n\nimport inspect\n\ndef parse_test_case(test_case, func):\n\n    signature = inspect.signature(func)\n\n    parameters = signature.parameters\n\n    args = []\n\n    kwargs = {}\n\n\n    if len(test_case) != len(parameters):\n\n        raise ValueError("Number of arguments in the test case doesn't match the function's signature.")\n\n\n    for i, (param_name, param) in enumerate(parameters.items()):\n\n        param_type = param.annotation\n\n        arg_value = test_case[i]\n\n\n        if param_name == 'self':\n\n            continue\n\n\n        if param.default != param.empty:\n\n            kwargs[param_name] = arg_value\n\n        else:\n\n            if param_type == inspect.Parameter.empty:\n\n                raise ValueError(f"Missing type annotation for parameter '{param_name}'.")\n\n            if isinstance(arg_value, param_type):\n\n                args.append(arg_value)\n\n            else:\n\n                raise TypeError(f"Argument '{arg_value}' for parameter '{param_name}' is of incorrect type.")\n\n\n    return args, kwargs\n\n\ndef run_test_case(func):\n\n    def wrapper(test_case, expected_result):\n\n        try:\n\n            args, kwargs = parse_test_case(test_case, func)\n\n            result = func(*args, **kwargs)\n\n            print("Expected Result:", expected_result)\n\n            print("Actual Result:", result)\n\n            assert result == expected_result, "Test Failed!"\n\n            print("Test Passed!")\n\n        except Exception as e:\n\n            print("Error:", e)\n\n\n    return wrapper\n\n\n# Find the function in the module dynamically\n\nfunction_name = [name for name, obj in globals().items() if inspect.isfunction(obj)][0]\n\nfunction = globals()[function_name]\n\n\n# Read test case and expected result from stdin\n\ndef read_test_case_and_expected_result():\n\n    test_case = eval(input().strip())  # Using eval to parse the test case list\n\n    expected_result = eval(input().strip())  # Using eval to parse the expected result\n\n    return test_case, expected_result\n\n\nif __name__ == "__main__":\n\n    test_case, expected_result = read_test_case_and_expected_result()\n\n    run_test_case(function)(test_case, expected_result)
 `;
     const finalCod = solutionValue + "\n" + boilerPlate;
     const finalCod2 = testcasesValue;
     console.log(finalCod, testcasesValue);
+    const backendUrl = "http://localhost:8000/createassessment";
+    const rawContentState = convertToRaw(description.getCurrentContent());
+
+    // Convert the raw content to a JSON string
+    const descriptionString = JSON.stringify(rawContentState);
+    
+    console.log(descriptionString);
+    // Sample data for the request body
+    const requestBody = {
+      title: title,
+      description: descriptionString,
+      code: finalCod,
+      testCases: JSON.parse(testcasesValue),
+      exampleCases: "Example: input => output",
+      jobId: "12334",
+    };
+
+    // Make the Fetch API call
+    fetch(backendUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Assessment created successfully:", data);
+        // Handle the response data here
+      })
+      .catch((error) => {
+        console.error("Error creating assessment:", error);
+        // Handle any errors that occurred during the API call
+      });
   };
 
   const instructions = [
@@ -160,7 +184,7 @@ const UploadAssessment = () => {
               return match[n], idx
       return -1, -1`;
 
-   const jsonSample = `testCases = [
+  const jsonSample = `testCases = [
     {   //Test Case 1
         "input": [2, 3],
         "output": "hello"
@@ -170,7 +194,7 @@ const UploadAssessment = () => {
         "output": "hello"
     }
 
-]`
+]`;
   const renderInstructionsCard = () => {
     let title;
     let description;
@@ -204,7 +228,7 @@ const UploadAssessment = () => {
         }}
       >
         {/* Light bulb icon */}
-        <LightbulbIcon sx={{ marginRight: "10px"}} />
+        <LightbulbIcon sx={{ marginRight: "10px" }} />
 
         {/* Instructions */}
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -212,23 +236,46 @@ const UploadAssessment = () => {
         </Typography>
 
         {/*add margin */}
-        <Typography variant="body1" sx={{ marginTop: "10px" }}>{description}</Typography>
+        <Typography variant="body1" sx={{ marginTop: "10px" }}>
+          {description}
+        </Typography>
 
-      
         {activeStep === 0 && (
-          <Typography variant="body1" sx={{ whiteSpace: "pre-line", marginTop: "8px" }}>
+          <Typography
+            variant="body1"
+            sx={{ whiteSpace: "pre-line", marginTop: "8px" }}
+          >
             {/* Example input/output here */}
-            2. Clearly describe your question, and check our question set to make sure your problem isn’t already there.
+            2. Clearly describe your question, and check our question set to
+            make sure your problem isn’t already there.
             {"\n\n"} {/* Use two newline characters to create a new line */}
-            Sample: Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.
-            {"\n\n"} 
-            Example:{"\n"} 
-            Given <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>nums = [2, 7, 11, 15]</span>,  
-            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>target = 9</span>,
-          Because <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>nums[0]</span>  + <span style={{ backgroundColor: "rgba(255, 255, 0, 0.2)" }}>nums[1]</span>  = 2 + 7 = 9, return <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>[0, 1]</span> 
-            
+            Sample: Given an array of integers, return indices of the two
+            numbers such that they add up to a specific target. You may assume
+            that each input would have exactly one solution, and you may not use
+            the same element twice.
+            {"\n\n"}
+            Example:{"\n"}
+            Given{" "}
+            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>
+              nums = [2, 7, 11, 15]
+            </span>
+            ,
+            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>
+              target = 9
+            </span>
+            , Because{" "}
+            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>
+              nums[0]
+            </span>{" "}
+            +{" "}
+            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.2)" }}>
+              nums[1]
+            </span>{" "}
+            = 2 + 7 = 9, return{" "}
+            <span style={{ backgroundColor: "rgba(255, 255, 0, 0.25)" }}>
+              [0, 1]
+            </span>
           </Typography>
-
         )}
 
         {activeStep === 1 && (
@@ -243,12 +290,17 @@ const UploadAssessment = () => {
             we have found the answer. If not, we keep searching until we find
             the answer or reach the end of the array. And have a psuedocode
             field that highlights the syntax of the code:
-
-            <Box sx={{ padding: '1rem', backgroundColor: '#011627', borderRadius: '5px' }}>
-                <SyntaxHighlighter language="python" style={nightOwl}>
-                    {codeString}
-                </SyntaxHighlighter>
-              </Box>
+            <Box
+              sx={{
+                padding: "1rem",
+                backgroundColor: "#011627",
+                borderRadius: "5px",
+              }}
+            >
+              <SyntaxHighlighter language="python" style={nightOwl}>
+                {codeString}
+              </SyntaxHighlighter>
+            </Box>
           </Typography>
         )}
 
@@ -258,12 +310,18 @@ const UploadAssessment = () => {
             sx={{ whiteSpace: "pre-line", marginTop: "8px" }}
           >
             {/* Example input/output here */}
-            
-            <Box sx={{ padding: '1rem', backgroundColor: '#011627', borderRadius: '5px' }}>
-                <SyntaxHighlighter language="json" style={nightOwl}>
-                    {jsonSample}
-                </SyntaxHighlighter>
-              </Box>
+
+            <Box
+              sx={{
+                padding: "1rem",
+                backgroundColor: "#011627",
+                borderRadius: "5px",
+              }}
+            >
+              <SyntaxHighlighter language="json" style={nightOwl}>
+                {jsonSample}
+              </SyntaxHighlighter>
+            </Box>
           </Typography>
         )}
       </Box>
@@ -522,7 +580,6 @@ const UploadAssessment = () => {
               height="50vh"
               width="55vw"
               extensions={[json()]} // Update the extensions to use pythonLanguage
-
               theme={dracula}
               options={{
                 mode: "json",
@@ -653,7 +710,9 @@ const UploadAssessment = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
+            onClick={
+              activeStep === steps.length - 1 ? handleSubmit : handleNext
+            }
             sx={{
               background: "#A259FF",
               width: "120px",
