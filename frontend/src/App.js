@@ -41,7 +41,7 @@ function App() {
         <Route path="/assess/:id" element={<Assessment />} />
         <Route path="/createpost" element={<CreatePost />} />
       </Routes>
-      <BottomNavigation
+      {/* <BottomNavigation
         style={{
           background: "#3B3B3B",
           height: "195px",
@@ -140,7 +140,7 @@ function App() {
             &copy; {new Date().getFullYear()} CoBuild. All rights reserved.
           </Typography>
         </div>
-      </BottomNavigation>
+      </BottomNavigation> */}
     </div>
   );
 }

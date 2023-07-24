@@ -27,7 +27,7 @@ const Sidebar = () => {
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
-          background: "linear-gradient(180deg, #251B3B 10%, #5514B4 75%)",
+          background: "linear-gradient(180deg, #2b2b2b 10%, #2e0753 75%)",
           borderRight: "0.5px solid #5b5b5b",
           borderTop: "0.5px solid #5b5b5b",
           borderBottom: "0.5px solid #5b5b5b",
@@ -62,7 +62,7 @@ const Sidebar = () => {
             style={{
               width: "100%",
               height: "1px",
-              backgroundColor: "#5b5b5b",
+              backgroundColor: "#1a1a1a",
               margin: "1px auto 1px auto",
             }}
           />
@@ -90,7 +90,7 @@ const Sidebar = () => {
             style={{
               width: "100%",
               height: "1px",
-              backgroundColor: "#3A2F55",
+              backgroundColor: "#1a1a1a",
               margin: "1px auto",
             }}
           />
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 <ListItemButton
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#4b4b4b",
+                      backgroundColor: "#3A2F55",
                     },
                   }}
                 >
@@ -118,7 +118,7 @@ const Sidebar = () => {
             style={{
               width: "100%",
               height: "1px",
-              backgroundColor: "#5b5b5b",
+              backgroundColor: "#1a1a1a",
               margin: "1px auto",
             }}
           />
@@ -126,7 +126,7 @@ const Sidebar = () => {
             style={{
               width: "100%",
               height: "1px",
-              backgroundColor: "#5b5b5b",
+              backgroundColor: "#1a1a1a",
               margin: "9rem auto 0 auto",
             }}
           />

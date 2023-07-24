@@ -15,7 +15,7 @@ function LineGraph() {
         borderColor: "#a259ff",
         tension: 0.1,
         fill: true,
-        backgroundColor: "rgba(162, 89, 255, 0.2)",
+        backgroundColor: "rgba(162, 89, 255, 0.1)",
         pointBackgroundColor: "#a259ff", // Set the data point background color
         pointBorderColor: "#ffffff", // Set the data point border color
         pointRadius: 6, // Increase the data point radius to make them larger
