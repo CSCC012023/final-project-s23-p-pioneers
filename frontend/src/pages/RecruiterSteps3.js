@@ -69,7 +69,7 @@ const BioField = styled(TextField)(({ theme }) => ({
   width: "100%",
 }));
 
-const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
+const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [bio, setBio] = useState("");
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
       await fetch(url, {
         method: "PUT",
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/pdf",
         },
         body: file
       });
@@ -176,9 +176,18 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        Set Profile Picture & Bio
-      </Typography>
+        <Typography
+            variant="h5"
+            sx={{
+            fontFamily: "work sans",
+            fontWeight: "bold",
+            fontSize: "35px",
+            }}
+            gutterBottom paddingTop={4}
+        >
+            Set Profile Picture & Bio
+        </Typography>
+
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
@@ -247,7 +256,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
             fullWidth
             onClick={handleFinish}
           >
-            Continue
+            Finish
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -260,4 +269,4 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
   );
 };
 
-export default Step4;
+export default RecruiterSteps3;

@@ -21,10 +21,12 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  skills: [{
-    type: String,
-    required: false,
-  }],
+  skills: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
   courses: {
     type: [String],
     required: false,
@@ -46,21 +48,59 @@ const signUpSchema = new mongoose.Schema({
     required: false,
   },
   program: {
-    type: String, 
+    type: String,
     required: false,
-  }, 
+  },
   savedJobIds: {
     type: [String],
     required: false,
   },
-  appliedJobsIds: {
-    type: [String],
-    required: false,
-  },
+  appliedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
   assessmentIds: {
     type: [String],
     required: false,
   },
+  verification: {
+    verified: {
+      type: Boolean,
+      required: false,
+    },
+    uniqueString: {
+      type: String,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiresAt: {
+      type: Date,
+    },
+  },
+  bookmarkedJobsIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job", // Reference the jobSchema
+    },
+  ],
+  resume: {
+    type: String,
+    required: false,
+  },
+  transcript: {
+    type: String,
+    required: false,
+  },
+  isFirstTime: {
+    type: Boolean,
+    required: false,
+  },
+
   // resume: {
   //   type: String,
   //   required: [true, "Please enter a resume"],

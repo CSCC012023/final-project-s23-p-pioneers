@@ -7,7 +7,8 @@ const LeaderboardHeaderTab = () => {
       elevation={3}
       sx={{
         mt: "0.5rem",
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "170px 260px 270px 290px auto", // Define the column sizes here
         alignItems: "center",
         borderRadius: "50px",
         backgroundColor: "#1b1b1b",
@@ -19,7 +20,6 @@ const LeaderboardHeaderTab = () => {
     >
       <Typography
         sx={{
-          mr: "1rem",
           color: "#ffffff",
           fontSize: "1.5rem",
           fontWeight: "bold",
@@ -30,18 +30,22 @@ const LeaderboardHeaderTab = () => {
       </Typography>
       <Typography
         sx={{
-          mr: "1rem",
           color: "#ffffff",
           fontWeight: "bold",
-          ml: "4rem",
         }}
       >
         Name
       </Typography>
       <Typography
         sx={{
-          ml: "auto",
-          mr: "13rem",
+          color: "#ffffff",
+          fontWeight: "bold",
+        }}
+      >
+        Score
+      </Typography>
+      <Typography
+        sx={{
           color: "#ffffff",
           fontWeight: "bold",
         }}
@@ -50,20 +54,8 @@ const LeaderboardHeaderTab = () => {
       </Typography>
       <Typography
         sx={{
-          ml: "1rem",
-          mr: "16.5rem",
           color: "#ffffff",
           fontWeight: "bold",
-        }}
-      >
-        Space
-      </Typography>
-      <Typography
-        sx={{
-          ml: "1rem",
-          color: "#ffffff",
-          fontWeight: "bold",
-          mr: "11rem",
         }}
       >
         Time

@@ -4,9 +4,13 @@ import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from '@mui/icons-material/Instagram';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
+import JobPosting from "./components/Card";
 
+import { useState, useEffect } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -92,7 +96,8 @@ const useStyles = makeStyles({
     gap: 16,
     flex: "1 0 0",
     borderBottom: "2px solid var(--text, #FFF)",
-    background: "linear-gradient(180deg, #3B3B3B 0%, rgba(59, 59, 59, 0.00) 100%)",
+    background:
+      "linear-gradient(180deg, #3B3B3B 0%, rgba(59, 59, 59, 0.00) 100%)",
   },
   carouselContent: {
     display: "grid",
@@ -107,7 +112,33 @@ const useStyles = makeStyles({
 
 const UserProfile = () => {
   const classes = useStyles();
+  const [userData, setUserData] = useState(null);
+
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
+
+  const fetchUserData = async () => {
+    try {
+      const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
+
+      const response = await fetch("http://localhost:8000/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+
+      const data = await response.json();
+      setUserData(data.user); // Store the fetched user data in the state
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch user data when the component mounts
+    fetchUserData();
+  }, []);
 
   // Job data for Saved Jobs
   const savedJobs = [
@@ -117,7 +148,8 @@ const UserProfile = () => {
       positionName: "Software Engineer",
       location: "California, USA",
       type: "Full-time",
-      imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/793px-Tesla_Motors.svg.png",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/793px-Tesla_Motors.svg.png",
     },
     {
       id: 2,
@@ -125,58 +157,102 @@ const UserProfile = () => {
       positionName: "Automation Engineer",
       location: "California, USA",
       type: "Part-time",
-      imagePath: "https://blog.logomyway.com/wp-content/uploads/2021/11/meta-logo.png",
+      imagePath:
+        "https://blog.logomyway.com/wp-content/uploads/2021/11/meta-logo.png",
     },
     {
-        id: 3,
-        companyName: "OpenAI",
-        positionName: "ML Engineer",
-        location: "California, USA",
-        type: "Full-time",
-        imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/OpenAI_Logo_%282%29.svg/2560px-OpenAI_Logo_%282%29.svg.png",
-      },
-      {
-        id: 4,
-        companyName: "Nvidia",
-        positionName: "Cloud Engineer",
-        location: "Seattle, USA",
-        type: "Full-time",
-        imagePath: "https://upload.wikimedia.org/wikipedia/sco/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.svg.png",
-      },
+      id: 3,
+      companyName: "OpenAI",
+      positionName: "ML Engineer",
+      location: "California, USA",
+      type: "Full-time",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/OpenAI_Logo_%282%29.svg/2560px-OpenAI_Logo_%282%29.svg.png",
+    },
+    {
+      id: 4,
+      companyName: "Nvidia",
+      positionName: "Cloud Engineer",
+      location: "Seattle, USA",
+      type: "Full-time",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/sco/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.svg.png",
+    },
     // Add more job objects as needed
   ];
 
   // Job data for Applied Jobs
   const appliedJobs = [
     {
-        id: 1,
-        companyName: "OpenAI",
-        positionName: "ML Engineer",
-        location: "California, USA",
-        type: "Full-time",
-        imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/OpenAI_Logo_%282%29.svg/2560px-OpenAI_Logo_%282%29.svg.png",
-      },
-      {
-        id: 2,
-        companyName: "Tesla",
-        positionName: "Software Engineer",
-        location: "California, USA",
-        type: "Full-time",
-        imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/793px-Tesla_Motors.svg.png",
-      },
-      {
-        id: 3,
-        companyName: "Nvidia",
-        positionName: "Cloud Engineer",
-        location: "Seattle, USA",
-        type: "Full-time",
-        imagePath: "https://upload.wikimedia.org/wikipedia/sco/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.svg.png",
-      },
+      id: 1,
+      companyName: "OpenAI",
+      positionName: "ML Engineer",
+      location: "California, USA",
+      type: "Full-time",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/OpenAI_Logo_%282%29.svg/2560px-OpenAI_Logo_%282%29.svg.png",
+    },
+    {
+      id: 2,
+      companyName: "Tesla",
+      positionName: "Software Engineer",
+      location: "California, USA",
+      type: "Full-time",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/793px-Tesla_Motors.svg.png",
+    },
+    {
+      id: 3,
+      companyName: "Nvidia",
+      positionName: "Cloud Engineer",
+      location: "Seattle, USA",
+      type: "Full-time",
+      imagePath:
+        "https://upload.wikimedia.org/wikipedia/sco/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.svg.png",
+    },
     // Add more job objects as needed
   ];
 
   const getJobBoxes = (jobs) => {
     return jobs.map((job) => <JobBox key={job.id} job={job} />);
+  };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    name,
+    university,
+    program,
+    email,
+    bio,
+    profilepic,
+    bookmarkedJobsIds,
+    appliedJobsIds,
+    resume,
+    transcript,
+    jij,
+  } = userData; // Assuming these fields exist in the fetched user data
+
+  const handleResumeClick = () => {
+    const resumeLink = resume;
+
+    if (resumeLink === undefined) {
+      alert("You have not uploaded your resume yet!");
+    } else {
+      window.open(resumeLink, "_blank");
+    }
+  };
+
+  const handleTranscriptClick = () => {
+    const transcriptLink = transcript;
+
+    if (transcriptLink === undefined) {
+      alert("You have not uploaded your transcript yet!");
+    } else {
+      window.open(transcriptLink, "_blank");
+    }
   };
 
   return (
@@ -186,12 +262,11 @@ const UserProfile = () => {
           <img
             className={classes.userImage}
             alt="User Profile"
-            src="https://i0.wp.com/mynintendonews.com/wp-content/uploads/2017/07/mario.jpg?resize=630%2C620&ssl=1"
+            src={profilepic}
           />
         </div>
-        <Button 
-        
-        style = {{
+        <Button
+          style={{
             position: "fixed",
             top: "20px",
             left: "20px",
@@ -207,8 +282,8 @@ const UserProfile = () => {
             gap: "12px",
             zIndex: 2,
           }}
-
-            endIcon={<EditIcon />}>
+          endIcon={<EditIcon />}
+        >
           Edit
         </Button>
       </div>
@@ -218,7 +293,7 @@ const UserProfile = () => {
             Name
           </Typography>
           <Typography variant="h3" className={classes.userValue}>
-            Ansh Goatya
+            {name}
           </Typography>
           <div style={{ display: "flex", gap: "200px" }}>
             <div>
@@ -226,7 +301,7 @@ const UserProfile = () => {
                 University
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                University of Toronto
+                {university}
               </Typography>
             </div>
             <div>
@@ -234,7 +309,7 @@ const UserProfile = () => {
                 Program
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                Computer Science
+                {program}
               </Typography>
             </div>
             <div>
@@ -242,7 +317,7 @@ const UserProfile = () => {
                 Email
               </Typography>
               <Typography variant="h6" className={classes.userValue}>
-                ansh.goatya@mail.utoronto.ca
+                {email}
               </Typography>
             </div>
           </div>
@@ -250,40 +325,47 @@ const UserProfile = () => {
             Bio
           </Typography>
           <Typography variant="h5" className={classes.userValue}>
-            I'm Him!!!!!
+            {bio}
           </Typography>
           <Typography variant="h4" className={classes.userLabel}>
             Links
           </Typography>
           <div className={classes.socialMedia}>
-          <GitHubIcon className={classes.socialIcon} />
-          <LinkedInIcon className={classes.socialIcon} />
-          <InstagramIcon className={classes.socialIcon} />
+            <GitHubIcon className={classes.socialIcon} />
+            <PictureAsPdfIcon
+              className={classes.socialIcon}
+              onClick={handleResumeClick}
+            />
+            <AllInboxIcon
+              className={classes.socialIcon}
+              onClick={handleTranscriptClick}
+            />
           </div>
         </div>
       </div>
       <div className={classes.carousel}>
         <div className={classes.carouselButtons}>
+          <div
+            className={`${classes.carouselButton} ${
+              selectedSection === "Saved Jobs"
+                ? classes.carouselButtonActive
+                : ""
+            }`}
+            onClick={() => setSelectedSection("Saved Jobs")}
+          >
+            <Typography variant="h6">Saved Jobs</Typography>
+          </div>
+          <div
+            className={`${classes.carouselButton} ${
+              selectedSection === "Applied Jobs"
+                ? classes.carouselButtonActive
+                : ""
+            }`}
+            onClick={() => setSelectedSection("Applied Jobs")}
+          >
+            <Typography variant="h6">Applied Jobs</Typography>
+          </div>
 
-
-
-        <div
-          className={`${classes.carouselButton} ${
-            selectedSection === "Saved Jobs" ? classes.carouselButtonActive : ""
-          }`}
-          onClick={() => setSelectedSection("Saved Jobs")}
-        >
-          <Typography variant="h6">Saved Jobs</Typography>
-        </div>
-        <div
-          className={`${classes.carouselButton} ${
-            selectedSection === "Applied Jobs" ? classes.carouselButtonActive : ""
-          }`}
-          onClick={() => setSelectedSection("Applied Jobs")}
-        >
-          <Typography variant="h6">Applied Jobs</Typography>
-        </div>
-        
           <div className={classes.carouselButton}>
             <Typography variant="h6">Assessments</Typography>
           </div>
@@ -293,16 +375,11 @@ const UserProfile = () => {
         </div>
 
         {selectedSection === "Saved Jobs" && (
-          <div className={classes.carouselContent}>
-            {getJobBoxes(savedJobs)}
-          </div>
+          <JobPosting prop={bookmarkedJobsIds} />
         )}
         {selectedSection === "Applied Jobs" && (
-          <div className={classes.carouselContent}>
-            {getJobBoxes(appliedJobs)}
-          </div>
+          <JobPosting prop={appliedJobsIds} />
         )}
-
       </div>
     </div>
   );
