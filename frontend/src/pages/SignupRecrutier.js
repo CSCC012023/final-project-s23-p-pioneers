@@ -259,56 +259,7 @@ function SignUpRecruiter() {
   };
   return (
     <div style={{ background: "#2B2B2B" }}>
-      <AppBar
-        position="relative"
-        style={{ background: "#2B2B2B", height: "80px" }}
-      >
-        <Toolbar
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: "80px",
-            justifyContent: "space-between",
-          }}
-        >
-          <Avatar
-            alt="Logo"
-            src={Logo}
-            style={{ width: "35px", height: "35px" }}
-          />
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-              marginLeft: "25px",
-              fontSize: "30px",
-              fontFamily: "work sans",
-            }}
-          >
-            CoBuild
-          </Typography>
-
-          <Button
-            component={Link}
-            to="/login"
-            style={{
-              background: "#A259FF",
-              marginLeft: "auto",
-              width: "120px",
-              height: "60px",
-              borderRadius: "20px",
-              fontWeight: 600,
-              color: "#FFFFFF",
-              fontStyle: "normal",
-              fontSize: "16px",
-              lineHeight: "140%",
-              fontFamily: "work sans",
-            }}
-          >
-            Sign In
-          </Button>
-        </Toolbar>
-      </AppBar>
+      
       <body>
         <div
           style={{

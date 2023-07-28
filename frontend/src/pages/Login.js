@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AppBar,
   Avatar,
@@ -30,8 +30,11 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-
+  useEffect(() => {
+    localStorage.setItem("type", "")
+  }, [])
   const handleClick = () => {
+    localStorage.setItem("type", "user");
     navigate("/jobs");
   };
   const handleLoginFormSubmit = (event) => {
@@ -92,56 +95,6 @@ function Login() {
         fontFamily: "Work Sans, sans-serif",
       }}
     >
-      <AppBar
-        position="relative"
-        style={{ background: "#2B2B2B", height: "80px" }}
-      >
-        <Toolbar
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: "80px",
-            justifyContent: "space-between",
-          }}
-        >
-          <Avatar
-            alt="Logo"
-            src={Logo}
-            style={{ width: "35px", height: "35px" }}
-          />
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-              marginLeft: "25px",
-              fontSize: "30px",
-              fontFamily: "work sans",
-            }}
-          >
-            CoBuild
-          </Typography>
-
-          <Button
-            component={Link}
-            to="/signup"
-            style={{
-              background: "#A259FF",
-              marginLeft: "auto",
-              width: "120px",
-              height: "60px",
-              borderRadius: "20px",
-              fontWeight: 600,
-              color: "#FFFFFF",
-              fontStyle: "normal",
-              fontSize: "16px",
-              lineHeight: "140%",
-              fontFamily: "work sans",
-            }}
-          >
-            Sign Up
-          </Button>
-        </Toolbar>
-      </AppBar>
       <main style={{ display: "flex", flex: 1 }}>
         <div
           style={{

@@ -14,6 +14,7 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
+import Navbar from "./pages/components";
 
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import UploadAssessment from "./pages/UploadAssessment";
@@ -24,21 +25,22 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/leaderboard/:id" element={<Leaderboard />} />
-        <Route path="/step1" element={<Step1 />} />
-        <Route path="/User" element={<UserProfile />} />
-        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
-        <Route path="/recruiterstep1" element={<RecruiterSteps1 />} />
+        <Route path="/" element={<><Navbar userType={""} /></>} />
+        <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
+        <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
+        <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
+        <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />
+        <Route path="/User" element={<><Navbar userType={"user"} /><UserProfile /></>} />
+        <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
+        <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
 
-        <Route path="/upload" element={<UploadAssessment />} />
-        <Route path="/verfication/:id" element={<Verification />} />
-        <Route path="/application" element={<Application />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobpost/:id" element={<JobPosting />} />
-        <Route path="/assess/:id" element={<Assessment />} />
-        <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/upload" element={<><Navbar userType={"recruiter"} /><UploadAssessment /></>} />
+        <Route path="/verfication/:id" element={<><Navbar userType={"user"} /><Verification /></>} />
+        <Route path="/application" element={<><Navbar userType={"user"} /><Application /></>} />
+        <Route path="/jobs" element={<><Navbar userType={"user"} /><Jobs /></>} />
+        <Route path="/jobpost/:id" element={<><Navbar userType={"user"} /><JobPosting /></>} />
+        <Route path="/assess/:id" element={<><Navbar userType={"user"} /><Assessment /></>} />
+        <Route path="/createpost" element={<><Navbar userType={"recruiter"} /><CreatePost /></>} />
       </Routes>
       <Footer />
     </div>
