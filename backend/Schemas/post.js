@@ -11,7 +11,7 @@ const jobSchema = new mongoose.Schema({
     default: Date.now,
   }, // Change to Date type
   companyName: String,
-  
+
   datePosted: {
     type: Date,
     required: true,
@@ -29,5 +29,3 @@ const jobSchema = new mongoose.Schema({
 });
 
 module.exports = jobSchema;
-
-
