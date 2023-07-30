@@ -18,6 +18,7 @@ import Navbar from "./pages/components";
 
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import UploadAssessment from "./pages/UploadAssessment";
+import LoginPage from "./pages/components/LoginBox";
 
 import Application from "./pages/Application";
 
@@ -26,6 +27,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<><Navbar userType={""} /></>} />
+        <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
+
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
         <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
         <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />

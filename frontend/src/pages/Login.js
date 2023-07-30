@@ -180,19 +180,22 @@ function Login() {
                 // ),
               }}
             />
+          </div>
+          <div style={{ marginTop: "0px", marginLeft: "40px" }}>
+
             <TextField
-              label="Password"
-              value={password}
-              onChange={handlePasswordChange}
-              variant="filled"
-              type="password"
-              style={{
-                backgroundColor: "white",
-                borderRadius: "20px",
-                width: "330px",
-              }}
-              InputProps={{ disableUnderline: true }}
-            />
+                label="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                variant="filled"
+                type="password"
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "20px",
+                  width: "330px",
+                }}
+                InputProps={{ disableUnderline: true }}
+              />
           </div>
           <Button
             style={{
