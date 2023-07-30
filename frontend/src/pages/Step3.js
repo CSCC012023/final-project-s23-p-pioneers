@@ -163,7 +163,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       boxSizing: "border-box",
                       width: (window.innerWidth/5),
                       height: "160px",
-                      background: "#F3F0FF",
+                      background: "#e5e0fc",
                       border: "2px dashed #7A5FEC", // Adjust border color and thickness
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
@@ -324,7 +324,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       boxSizing: "border-box",
                       width: (window.innerWidth/5),
                       height: "160px",
-                      background: "#F3F0FF",
+                      background: "#e5e0fc",
                       border: "2px dashed #7A5FEC", // Adjust border color and thickness
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
