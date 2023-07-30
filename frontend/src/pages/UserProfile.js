@@ -7,6 +7,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
+import { useNavigate } from "react-router-dom";
 
 
 import {useState, useEffect} from 'react'
@@ -112,7 +113,7 @@ const useStyles = makeStyles({
 const UserProfile = () => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
 
   const fetchUserData = async () => {
@@ -215,6 +216,9 @@ const UserProfile = () => {
 
   const { name, university, program, email, bio, profilepic, bookmarkedJobsIds, appliedJobsIds} = userData; // Assuming these fields exist in the fetched user data
 
+  const handleEditClick = () => {
+    navigate("/step1");
+  };
 
   return (
     <div className={classes.root}>
@@ -245,7 +249,9 @@ const UserProfile = () => {
             zIndex: 2,
           }}
 
-            endIcon={<EditIcon />}>
+            endIcon={<EditIcon />}
+            onClick={handleEditClick}
+            >
           Edit
         </Button>
       </div>

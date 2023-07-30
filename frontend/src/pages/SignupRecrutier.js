@@ -174,11 +174,10 @@ function SignUpRecruiter() {
       setpositionError("");
     }
 
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
+    // const fileInput = document.getElementById("fileInput");
+    // const file = fileInput.files[0];
 
-    const formData = new FormData();
-    formData.append("file", file);
+    
     const user = {
       name,
       email,
@@ -212,7 +211,10 @@ function SignUpRecruiter() {
       .catch((error) => {
         console.error("Error:", error);
       });
-      navigate("/createpost");
+    
+      localStorage.setItem('recruitername', username)
+      
+      navigate("/recruiterstep1");
 
   };
 
@@ -671,7 +673,7 @@ function SignUpRecruiter() {
                 </Typography>
               )}
 
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -680,7 +682,7 @@ function SignUpRecruiter() {
                   gap: "20px",
                   width: "330px",
                   height: "355px",
-                  /* Inside auto layout */
+                  // Inside auto layout
                   flex: "none",
                   order: "4",
                   flexGrow: "0",
@@ -704,7 +706,7 @@ function SignUpRecruiter() {
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
                       transform: "scale(1)",
-                      /* Inside auto layout */
+                      // Inside auto layout 
                       flex: "none",
                       order: "0",
                       alignSelf: "stretch",
@@ -847,7 +849,7 @@ function SignUpRecruiter() {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))} */}
 
                 <TextField
                   id="jobcategoryInput"
@@ -995,7 +997,7 @@ function SignUpRecruiter() {
                 >
                   Sign Up As Candidate
                 </Button>
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>

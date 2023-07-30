@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { RxOpenInNewWindow } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 
 import {
@@ -77,6 +80,7 @@ function JobPosting() {
   const [companyName, setCompanyName] = React.useState("");
   const [deadline, setDeadline] = React.useState("");
   const [skills, setSkills] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const navigate = useNavigate()
@@ -103,8 +107,8 @@ function JobPosting() {
     setCompanyName(event.target.value);
   };
 
-  const handleDeadlineChange = (event) => {
-    setDeadline(event.target.value);
+  const handleDeadlineChange = (newValue) => {
+    setSelectedDate(newValue);
   };
 
 
@@ -121,7 +125,7 @@ function JobPosting() {
     navigate("/upload")
   };
   const createJobPosting = async (jobData) => {
-  
+
     try {
       const response = await fetch("http://localhost:8000/createpost", {
         method: "POST",
@@ -145,14 +149,19 @@ function JobPosting() {
   };
   const handleSubmit = async (event) => {
     // event.preventDefault();
+    const rname = localStorage.getItem("recruitername");
+    const { name: companyName } = await fetch(`http://localhost:8000/getcompanyname?username=${rname}`).then(res => res.json());
+    const { logo: logo } = await fetch(`http://localhost:8000/getcompanylogo?username=${rname}`).then(res => res.json());
+    console.log(logo);
     const jobData = {
       title,
       location,
       jobDescription,
       companyName,
-      deadline,
+      deadline: selectedDate,
       isAssessmemnt: false,
       skills: ["C++", "Java", "Python", "Test"],
+      companyLogo: logo,
     };
 
     try {
@@ -183,150 +192,232 @@ function JobPosting() {
       <form className="job-form" style={{ background: "transparent" }}>
         <Grid container spacing={2} >
           <Grid item xs={12}>
-          <TextField
-  label="Job Title"
-  variant="outlined"
-  value={title}
+            <TextField
+              label="Job Title"
+              variant="outlined"
+              value={title}
 
-  onChange={handleTitleChange}
-  required
-  fullWidth
-  sx={{
-    background: "transparent",
-    border: "none",
-    "& .MuiInputLabel-root": {
-      display: "block",
-      color: "#000000",
-      backgroundColor: "transparent",
-      borderRadius: "4px",
-      padding: "4px",
-      borderColor: "#4A90E2", // Set border color to blue shade
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      backgroundColor: "#FFFFFF",
-    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-      backgroundColor: "#FFFFFF", // White background when shrunk
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "20px",
-      borderColor: "transparent",
-      backgroundColor: "#FFFFFF",
-      "& fieldset": {
-        borderRadius: "20px",
-        borderColor: "transparent",
-        "&:hover": {
-          borderColor: "#A259FF !important",
-        },
-      },
-      "& input": {
-        color: "#000000",
-      },
-    },
-  }}
-/>
+              onChange={handleTitleChange}
+              required
+              fullWidth
+              sx={{
+                background: "transparent",
+                border: "none",
+                "& .MuiInputLabel-root": {
+                  display: "block",
+                  color: "#000000",
+                  backgroundColor: "transparent",
+                  borderRadius: "4px",
+                  padding: "4px",
+                  borderColor: "#4A90E2", // Set border color to blue shade
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  backgroundColor: "#FFFFFF",
+                }, "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+                  backgroundColor: "#FFFFFF", // White background when shrunk
+                },
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "20px",
+                  borderColor: "transparent",
+                  backgroundColor: "#FFFFFF",
+                  "& fieldset": {
+                    borderRadius: "20px",
+                    borderColor: "transparent",
+                    "&:hover": {
+                      borderColor: "#A259FF !important",
+                    },
+                  },
+                  "& input": {
+                    color: "#000000",
+                  },
+                },
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
 
+            <TextField
+              label="Job Location"
+              variant="outlined"
+              value={location}
 
-
-
-
-
-
-
+              onChange={handleLocationChange}
+              required
+              fullWidth
+              sx={{
+                background: "transparent",
+                border: "none",
+                "& .MuiInputLabel-root": {
+                  display: "block",
+                  color: "#000000",
+                  backgroundColor: "transparent",
+                  borderRadius: "4px",
+                  padding: "4px",
+                  borderColor: "#4A90E2", // Set border color to blue shade
+                }, "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+                  backgroundColor: "#FFFFFF", // White background when shrunk
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  backgroundColor: "#FFFFFF",
+                },
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "20px",
+                  borderColor: "transparent",
+                  backgroundColor: "#FFFFFF",
+                  "& fieldset": {
+                    borderRadius: "20px",
+                    borderColor: "transparent",
+                    "&:hover": {
+                      borderColor: "#A259FF !important",
+                    },
+                  },
+                  "& input": {
+                    color: "#000000",
+                  },
+                },
+              }}
+            />
 
           </Grid>
           <Grid item xs={12}>
 
-          <TextField
-  label="Job Location"
-  variant="outlined"
-  value={location}
-
-  onChange={handleLocationChange}
-  required
-  fullWidth
-  sx={{
-    background: "transparent",
-    border: "none",
-    "& .MuiInputLabel-root": {
-      display: "block",
-      color: "#000000",
-      backgroundColor: "transparent",
-      borderRadius: "4px",
-      padding: "4px",
-      borderColor: "#4A90E2", // Set border color to blue shade
-    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-      backgroundColor: "#FFFFFF", // White background when shrunk
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      backgroundColor: "#FFFFFF",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "20px",
-      borderColor: "transparent",
-      backgroundColor: "#FFFFFF",
-      "& fieldset": {
-        borderRadius: "20px",
-        borderColor: "transparent",
-        "&:hover": {
-          borderColor: "#A259FF !important",
-        },
-      },
-      "& input": {
-        color: "#000000",
-      },
-    },
-  }}
-/>
-
+            <TextField
+              label="Job Description"
+              variant="outlined"
+              value={jobDescription}
+              onChange={handleDescriptionChange}
+              required
+              multiline
+              fullWidth
+              sx={{
+                background: "transparent",
+                border: "none",
+                "& .MuiInputLabel-root": {
+                  display: "block",
+                  color: "#000000",
+                  backgroundColor: "transparent",
+                  borderRadius: "4px",
+                  padding: "4px",
+                  borderColor: "#4A90E2", // Set border color to blue shade
+                },
+                "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+                  backgroundColor: "#FFFFFF", // White background when shrunk
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  backgroundColor: "#FFFFFF",
+                },
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "20px",
+                  borderColor: "transparent",
+                  backgroundColor: "#FFFFFF",
+                  "& fieldset": {
+                    borderRadius: "20px",
+                    borderColor: "transparent",
+                    "&:hover": {
+                      borderColor: "#A259FF !important",
+                    },
+                  },
+                  "& input": {
+                    color: "#000000",
+                  },
+                },
+              }}
+            />
           </Grid>
           <Grid item xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Deadline"
+                value={selectedDate}
+                onChange={handleDeadlineChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params.inputProps}
+                    fullWidth
+                    variant="outlined"
+                    sx={{
+                      // Styles for dark theme with white preview text and better contrast colors
+                      "& .MuiInputLabel-root": {
+                        color: "#FFFFFF", // Set the preview text (label) color to white
+                      },
+                      "& .MuiInputBase-input": {
+                        color: "#FFFFFF", // Set the input text color to white
+                      },
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#FFFFFF", // Set the outline color to white
+                      },
+                      "& .MuiPickersBasePicker-container": {
+                        backgroundColor: "#111111", // Set the background color to black
+                      },
+                      "& .MuiPickersToolbar-toolbar": {
+                        backgroundColor: "#111111", // Set the toolbar background color to black
+                        color: "#FFFFFF", // Set the toolbar text color to white
+                      },
+                      "& .MuiPickersDay-day": {
+                        color: "#FFFFFF", // Set the day text color to white
+                      },
+                      "& .MuiPickersDay-daySelected": {
+                        backgroundColor: "#A259FF", // Set the selected day background color to a contrast color
+                        color: "#FFFFFF", // Set the selected day text color to white
+                      },
+                      "& .MuiPickersDay-dayDisabled": {
+                        color: "#8B8B8B", // Set the disabled day text color to a softer contrast color
+                      },
+                      "& .MuiPickersClock-pin": {
+                        backgroundColor: "#A259FF", // Set the clock pin color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-thumb": {
+                        backgroundColor: "#A259FF", // Set the clock pointer thumb color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-noPoint": {
+                        backgroundColor: "#A259FF", // Set the clock pointer no point color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-pointer": {
+                        backgroundColor: "#A259FF", // Set the clock pointer color to a contrast color
+                      },
+                      "& .MuiPickersCalendarHeaderRoot": {
+                        backgroundColor: "#000000",
+                      },
+                    }}
+                    // sx={{
+                    //   background: "transparent",
+                    //   border: "none",
+                    //   "& .MuiInputLabel-root": {
+                    //     display: "block",
+                    //     color: "#000000",
+                    //     backgroundColor: "transparent",
+                    //     borderRadius: "4px",
+                    //     padding: "4px",
+                    //     borderColor: "#00000", // Set border color to blue shade
+                    //   },
+                    //   "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+                    //     backgroundColor: "#FFFFFF", // White background when shrunk
+                    //   },
+                    //   "& .MuiInputLabel-root.Mui-focused": {
+                    //     backgroundColor: "#FFFFFF",
+                    //   },
+                    //   "& .MuiOutlinedInput-root": {
+                    //     borderRadius: "20px",
+                    //     borderColor: "transparent",
+                    //     backgroundColor: "#FFFFFF",
+                    //     "& fieldset": {
+                    //       borderRadius: "20px",
+                    //       borderColor: "transparent",
+                    //       "&:hover": {
+                    //         borderColor: "#A259FF !important",
+                    //       },
+                    //     },
+                    //     "& input": {
+                    //       color: "#000000",
+                    //     },
+                    //   },
+                    // }}
+                  />
+                )}
+              />
+            </LocalizationProvider>
 
-          <TextField
-  label="Job Description"
-  variant="outlined"
-  value={jobDescription}
-  onChange={handleDescriptionChange}
-  required
-  multiline
-  fullWidth
-  sx={{
-    background: "transparent",
-    border: "none",
-    "& .MuiInputLabel-root": {
-      display: "block",
-      color: "#000000",
-      backgroundColor: "transparent",
-      borderRadius: "4px",
-      padding: "4px",
-      borderColor: "#4A90E2", // Set border color to blue shade
-    },
-    "& .MuiInputLabel-root.MuiInputLabel-shrink": {
-      backgroundColor: "#FFFFFF", // White background when shrunk
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      backgroundColor: "#FFFFFF",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "20px",
-      borderColor: "transparent",
-      backgroundColor: "#FFFFFF",
-      "& fieldset": {
-        borderRadius: "20px",
-        borderColor: "transparent",
-        "&:hover": {
-          borderColor: "#A259FF !important",
-        },
-      },
-      "& input": {
-        color: "#000000",
-      },
-    },
-  }}
-/>
-          </Grid>
-          <Grid item xs={12}>
-
-          <TextField
+            {/* <TextField
   label="Deadline"
   variant="outlined"
   value={deadline}
@@ -357,7 +448,7 @@ function JobPosting() {
       "& fieldset": {
         borderRadius: "20px",
         borderColor: "transparent",
-        "&:hover": {
+        "&:hover": {s
           borderColor: "#A259FF !important",
         },
       },
@@ -366,8 +457,8 @@ function JobPosting() {
       },
     },
   }}
-/>
-          </Grid>
+/> */}
+            {/* </Grid>
           <Grid item xs={12}>
           <TextField
   label="Company Name"
@@ -421,26 +512,7 @@ function JobPosting() {
                   type="file"
                   onChange={handleFileChange}
                 />
-                {/* <label
-                  htmlFor="file-upload"
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <TextField
-                    label="Upload Files"
-                    variant="outlined"
-                    value={selectedFile ? selectedFile.name : ""}
-                    fullWidth
-                    disabled
-                    style={{
-                      boxSizing: "border-box",
-                      width: "804px",
-                      height: "160px",
-                      background: "#F3F0FF",
-                      border: "1px dashed #C1B2FA",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </label> */}
+            
                 <label
                   htmlFor="fileInput"
                   style={{
@@ -462,7 +534,7 @@ function JobPosting() {
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
                       transform: "scale(1)",
-                      /* Inside auto layout */
+                      // Inside auto layout 
                       flex: "none",
                       order: "0",
                       alignSelf: "stretch",
@@ -538,13 +610,12 @@ function JobPosting() {
       {Math.round(file.size / 1024)} KB
     </p>
   </div>
-))}
+))} */}
 
-
-              </Grid>
-            </Grid>
           </Grid>
         </Grid>
+        {/* </Grid>
+        </Grid> */}
       </form>
 
       <div
