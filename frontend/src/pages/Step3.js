@@ -258,7 +258,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                           alignItems: "flex-start",
                           padding: "0px",
                           gap: "4px",
-                          width: (window.innerWidth/5),
+                          width: (window.innerWidth/5) - 80,
                           height: "56px",
                           flex: "none",
                           order: "1",
@@ -267,7 +267,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       >
                         <p
                           style={{
-                            width: (window.innerWidth/5), // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "18px",
                             fontFamily: "Inter",
                             fontStyle: "normal",
@@ -287,7 +287,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                         </p>
                         <p
                           style={{
-                            width: (window.innerWidth/5), // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "16px",
                             fontFamily: "'Inter'",
                             fontStyle: "normal",
@@ -420,7 +420,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                           alignItems: "flex-start",
                           padding: "0px",
                           gap: "4px",
-                          width: (window.innerWidth/5),
+                          width: (window.innerWidth/5) - 80,
                           height: "56px",
                           flex: "none",
                           order: "1",
@@ -429,7 +429,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       >
                         <p
                           style={{
-                            width: (window.innerWidth/5) , // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "18px",
                             fontFamily: "Inter",
                             fontStyle: "normal",
@@ -449,7 +449,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                         </p>
                         <p
                           style={{
-                            width: (window.innerWidth/5), // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "16px",
                             fontFamily: "'Inter'",
                             fontStyle: "normal",

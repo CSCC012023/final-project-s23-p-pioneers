@@ -194,7 +194,7 @@ function JobPosting() {
     <Container maxWidth="md">
       <Box height={window.innerHeight}>
         <Box textAlign="center" marginBottom={2}>
-          <Typography marginTop={(window.innerHeight/8)/16}
+          <Typography marginTop={(window.innerHeight/8)/32}
             variant="h2"
             sx={{ color: "white", }}
           >
