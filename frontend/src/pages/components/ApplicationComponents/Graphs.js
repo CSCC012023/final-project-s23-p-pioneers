@@ -51,7 +51,9 @@ const Graphs = () => {
                 <>
                   <Grid container justifyContent={"center"}>
                     <LineGraph height={"500px"} />
-                    <Typography sx={{ color: "#fff", mt: 2 }}>
+                    <Typography
+                      sx={{ color: "#fff", mt: 2, textAlign: "center", p: 2 }}
+                    >
                       {graphWordings[0]}
                     </Typography>
                   </Grid>
@@ -97,7 +99,13 @@ const Graphs = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Typography sx={{ color: "#fff", mt: 4 }}>
+                  <Typography
+                    sx={{
+                      color: "#fff",
+                      mt: 4,
+                      textAlign: "center",
+                    }}
+                  >
                     {graphWordings[1]}
                   </Typography>
                 </div>
@@ -107,7 +115,14 @@ const Graphs = () => {
                 <>
                   <Grid container justifyContent={"center"}>
                     <ComplexityGraph width={"1000px"} height={"500px"} />
-                    <Typography sx={{ color: "#fff", mt: 2 }}>
+                    <Typography
+                      sx={{
+                        color: "#fff",
+                        mt: 2,
+                        textAlign: "center",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       {graphWordings[2]}
                     </Typography>
                   </Grid>
@@ -116,10 +131,14 @@ const Graphs = () => {
             default:
               return (
                 <>
-                  <LineGraph height={"500px"} />
-                  <Typography sx={{ color: "#fff", mt: 2 }}>
-                    {graphWordings[0]}
-                  </Typography>
+                  <Grid container justifyContent={"center"}>
+                    <LineGraph height={"500px"} />
+                    <Typography
+                      sx={{ color: "#fff", mt: 2, textAlign: "center", p: 2 }}
+                    >
+                      {graphWordings[0]}
+                    </Typography>
+                  </Grid>
                 </>
               );
           }
