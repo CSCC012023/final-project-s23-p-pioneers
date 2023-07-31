@@ -17,11 +17,8 @@ const CoverLetterDisplay = () => {
     container: {
       maxWidth: "900px",
       margin: "0 auto",
-    },
-    page: {
-      display: "block",
-      margin: "0 auto",
-      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+      overflowY: "hidden",
+      height: "170vh",
     },
   };
 
