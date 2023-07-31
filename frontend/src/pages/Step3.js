@@ -315,6 +315,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
           <Button variant="outlined" onClick={handlePrevious}>
             Previous
           </Button>
+        </Box>
         </Grid>
       </Grid>
     </div>
