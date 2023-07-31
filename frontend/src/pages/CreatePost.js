@@ -192,7 +192,7 @@ function JobPosting() {
 
   return (
     <Container maxWidth="md">
-      <Box height={window.innerHeight}>
+      <Box>
         <Box textAlign="center" marginBottom={2}>
           <Typography marginTop={(window.innerHeight/8)/32}
             variant="h2"
