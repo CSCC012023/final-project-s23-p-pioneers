@@ -1,5 +1,6 @@
 import "./App.css";
 import JobPosting from "./pages/JobPosting";
+import HomePage from "./pages/HomePage";
 import Jobs from "./pages/Jobs";
 import Leaderboard from "./pages/Leaderboard";
 import Verification from "./pages/Verification";
@@ -30,12 +31,14 @@ function App() {
         <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
-        <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
+<Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
         <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
         <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />
         <Route path="/User" element={<><Navbar userType={"user"} /><UserProfile /></>} />
         <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
         <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
+        <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
+
 
         <Route path="/upload" element={<><Navbar userType={"recruiter"} /><UploadAssessment /></>} />
         <Route path="/verfication/:id" element={<><Navbar userType={"user"} /><Verification /></>} />
