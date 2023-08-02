@@ -8,6 +8,7 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
+
 const Navbar = ({ userType }) => {
 
 
@@ -32,7 +33,7 @@ const Navbar = ({ userType }) => {
                   <NavLink to="/user" activeStyle>
                     Profile
                   </NavLink>
-                  <NavLink to="/contact-us" activeStyle>
+                  <NavLink to="/search" activeStyle>
                     Search
                   </NavLink>
                   {/* Second Nav */}

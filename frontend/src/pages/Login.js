@@ -80,6 +80,8 @@ function Login() {
         });
         // handleClick();
         localStorage.setItem("username", user.username);
+        localStorage.setItem("password", user.password);
+
         handleClick();
       })
       .catch((error) => {

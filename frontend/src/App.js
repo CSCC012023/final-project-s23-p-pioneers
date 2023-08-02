@@ -14,11 +14,14 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
-import Navbar from "./pages/components";
+import Navbar from "./pages/components/Navbar";
 
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import UploadAssessment from "./pages/UploadAssessment";
 import LoginPage from "./pages/components/LoginBox";
+import SearchBar from "./pages/components/SearchBar";
+import ViewUser from "./pages/ViewUser";
+import Chat from "./pages/Chat";
 
 import Application from "./pages/Application";
 
@@ -28,6 +31,9 @@ function App() {
       <Routes>
         <Route path="/" element={<><Navbar userType={""} /></>} />
         <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
+        <Route path="/search" element={<><Navbar userType={"user"} /><SearchBar /></>} />
+        <Route path="/viewprofile/:id" element={<ViewUser />} />
+        <Route path="/chat" element={<><Navbar userType={"user"} /><Chat /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
         <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
@@ -45,7 +51,7 @@ function App() {
         <Route path="/assess/:id" element={<><Navbar userType={"user"} /><Assessment /></>} />
         <Route path="/createpost" element={<><Navbar userType={"recruiter"} /><CreatePost /></>} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

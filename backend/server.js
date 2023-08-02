@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
+const { followUser, unfollowUser, checkFollowStatus } = require("./API/followaction")
 const getPost = require("./API/getpost");
 const signUpEmployer = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
-
+const searchusers = require("./API/searchusers")
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser")
@@ -72,7 +73,10 @@ app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
 app.post("/signuprecruiter", signUpEmployer);
 app.post("/addcode", addAssessment);
-
+app.post("/search", searchusers);
+app.post("/followuser", followUser)
+app.post("/checkfollowstatus",checkFollowStatus)
+app.post("/unfollowuser", unfollowUser)
 app.get("/s3Url", async (req, res) => {
   console.log("hello");
 
