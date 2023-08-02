@@ -106,7 +106,7 @@ function Jobs() {
   }, [shouldFilter, search, location]);
 
   return (
-    <div style={{ backgroundColor: "#3B3B3B" }}>
+    <div style={{ backgroundColor: "#3B3B3B", color: "#FFFFFF"}}>
       {/* Render job list or perform actions with jobIds */}
       
       <div style={{ paddingTop: "20px", backgroundColor: "#2B2B2B" }}>
