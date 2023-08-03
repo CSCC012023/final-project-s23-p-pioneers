@@ -4,7 +4,13 @@ const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
 const getPost = require("./API/getpost");
-const signUpEmployer = require("./API/signupRecruiter");
+const {
+  signUpEmployer,
+  updateParamsRecruiter,
+  setLogoRecruiter,
+  getCompanyName,
+  getCompanyLogo,
+} = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
 
@@ -73,7 +79,12 @@ app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
 app.post("/signuprecruiter", signUpEmployer);
+app.post("/updaterecruiter", updateParamsRecruiter);
+app.post("/setlogo", setLogoRecruiter);
 app.post("/addcode", addAssessment);
+
+app.get("/getcompanyname", getCompanyName);
+app.get("/getcompanylogo", getCompanyLogo);
 
 app.get("/s3Url", async (req, res) => {
   console.log("hello");

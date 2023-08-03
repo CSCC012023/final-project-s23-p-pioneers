@@ -2,6 +2,8 @@ import React from "react";
 import { Typography, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
+import MessageIcon from "@mui/icons-material/Message";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -9,11 +11,20 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
 const useStyles = makeStyles({
+    
+  buttonContainer: {
+    display: "flex",
+    gap: "20px",
+    position: "fixed",
+    top: "20px",
+    left: "20px",
+    zIndex: 2,
+  },
   root: {
     display: "flex",
     flexDirection: "column",
@@ -111,7 +122,7 @@ const useStyles = makeStyles({
   },
 });
 
-const UserProfile = () => {
+const ViewUser = () => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
@@ -119,7 +130,7 @@ const UserProfile = () => {
 
   const fetchUserData = async () => {
     try {
-      const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
+      //const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
 
       const response = await fetch("http://localhost:8000/getuser", {
         method: "POST",
@@ -141,6 +152,8 @@ const UserProfile = () => {
     fetchUserData();
   }, []);
 
+  const { id: username } = useParams();
+  
   // Job data for Saved Jobs
   const savedJobs = [
     {
@@ -269,29 +282,47 @@ const UserProfile = () => {
             src={profilepic}
           />
         </div>
-        <Button
-          style={{
-            position: "fixed",
-            top: "20px",
-            left: "20px",
-            borderRadius: "20px",
-            background: "#A259FF",
-            color: "white",
-            width: "145px",
-            height: "60px",
-            padding: "0px 50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "12px",
-            zIndex: 2,
-          }}
+        <div className={classes.buttonContainer}>
+            <Button
+            style={{
+                borderRadius: "20px",
+                background: "#A259FF",
+                color: "white",
+                width: "145px",
+                height: "60px",
+                padding: "0px 50px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "12px",
+            }}
 
-            endIcon={<EditIcon />}
-            onClick={handleEditClick}
-            >
-          Edit
-        </Button>
+                endIcon={<AddBoxIcon />}
+                onClick={handleEditClick}
+                >
+            Follow
+            </Button>
+            <Button
+            style={{
+                borderRadius: "20px",
+                background: "#A259FF",
+                color: "white",
+                width: "145px",
+                height: "60px",
+                padding: "0px 50px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "12px",
+
+            }}
+
+                endIcon={<MessageIcon />}
+                onClick={handleEditClick}
+                >
+            Message
+            </Button>
+        </div>
       </div>
       <div className={classes.userProfile}>
         <div className={classes.userDetails}>
@@ -349,46 +380,8 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div className={classes.carousel}>
-        <div className={classes.carouselButtons}>
-          <div
-            className={`${classes.carouselButton} ${
-              selectedSection === "Saved Jobs"
-                ? classes.carouselButtonActive
-                : ""
-            }`}
-            onClick={() => setSelectedSection("Saved Jobs")}
-          >
-            <Typography variant="h6">Saved Jobs</Typography>
-          </div>
-          <div
-            className={`${classes.carouselButton} ${
-              selectedSection === "Applied Jobs"
-                ? classes.carouselButtonActive
-                : ""
-            }`}
-            onClick={() => setSelectedSection("Applied Jobs")}
-          >
-            <Typography variant="h6">Applied Jobs</Typography>
-          </div>
-
-          <div className={classes.carouselButton}>
-            <Typography variant="h6">Assessments</Typography>
-          </div>
-          <div className={classes.carouselButton}>
-            <Typography variant="h6">Records</Typography>
-          </div>
-        </div>
-
-        {selectedSection === "Saved Jobs" && (
-          <JobPosting prop={bookmarkedJobsIds} />
-        )}
-        {selectedSection === "Applied Jobs" && (
-          <JobPosting prop={appliedJobsIds} />
-        )}
-      </div>
     </div>
   );
 };
 
-export default UserProfile;
+export default ViewUser;

@@ -53,7 +53,7 @@ const JobGrid = ({ jobs }) => {
               >
                 <div style={{ position: "relative" }}>
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png"
+                    src={job.companyLogo || "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png"}
                     alt={job.title}
                     style={{
                       width: "100%",

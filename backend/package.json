@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mui/lab": "^5.0.0-alpha.137",
+    "@mui/x-date-pickers": "^6.10.2",
     "aws-sdk": "^2.1412.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
