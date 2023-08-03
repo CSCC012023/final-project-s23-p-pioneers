@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
 const mailgen = require("mailgen");
+const EdenaiAPIParserStrategy = require("../EdenaiAPIParserStrategy");
 
 require("dotenv").config();
 
@@ -103,7 +104,13 @@ const updateParams = async (req, res) => {
     if (fieldToUpdate === "skills") {
       // Handle skills field separately as an array
       user.skills = Array.isArray(value) ? value : [value];
-    } else {
+    } 
+    else if (fieldToUpdate === "resume") {
+      user[fieldToUpdate] = value;
+      const edenaiAPIParser = new EdenaiAPIParserStrategy();
+      edenaiAPIParser.parseResume(value, username);
+    }
+    else {
       // Handle other fields normally
       user[fieldToUpdate] = value;
     }
@@ -115,6 +122,34 @@ const updateParams = async (req, res) => {
     res.status(500).json({ error: "Failed to update field" });
   }
 };
+
+  const addSkillsToUser = async (req, res) => {
+    const { username } = req.body;
+    const { newSkills } = req.body;
+
+    try {
+      const user = await User.findOne({ username: username });
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      if (!Array.isArray(newSkills)) {
+        return res.status(400).json({ error: "New skills must be provided as an array" });
+      }
+
+      // Remove duplicates and add new skills to the existing skills array
+      const uniqueNewSkills = [...new Set(newSkills)];
+      user.skills.push(...uniqueNewSkills);
+
+      await user.save();
+
+      res.status(200).json({ message: "Skills added successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to add skills" });
+    }
+};
+
 
 const setProfilePic = async (req, res) => {
   const { username, link } = req.body;
@@ -264,4 +299,5 @@ module.exports = {
   setCoverLetter,
   setProfilePic,
   updateParams,
+  addSkillsToUser,
 };
