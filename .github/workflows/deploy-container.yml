@@ -1,0 +1,39 @@
+name: Docker Hub Webhook
+
+on:
+  push:
+    # Trigger the workflow when a push is made to the default branch
+    branches:
+      - main
+
+  # Docker Hub webhook event
+  docker:
+    types:
+      - push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Deploy container
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+          CONTAINER_ENGINE: # Fill in the name of your containerized engine
+        run: |
+          # Authenticate with the containerized engine if required
+          # For example, for Docker Engine:
+          # echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin
+
+          # Pull the latest image from Docker Hub
+          docker pull your_dockerhub_username/your_image_name:${GITHUB_SHA}
+
+          # Run a script or command to deploy the new image to your containerized engine
+          # For example, for Docker Engine:
+          # docker stop your_container_name
+          # docker rm your_container_name
+          # docker run -d -p 80:80 --name your_container_name your_dockerhub_username/your_image_name:${GITHUB_SHA}
