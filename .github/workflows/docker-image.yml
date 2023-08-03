@@ -19,12 +19,12 @@ jobs:
     - name: Login to docker hub
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: vedatgoktepe
+        password: iamverycool
         
     - name: Build and push the Docker image
       env:
         DOCKER_IMAGE_TAG: latest
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:${DOCKER_IMAGE_TAG} .
-        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:${DOCKER_IMAGE_TAG}
+        docker build -t vedatgoktepe/myapp:${DOCKER_IMAGE_TAG} .
+        docker push vedatgoktepe/myapp:${DOCKER_IMAGE_TAG}
