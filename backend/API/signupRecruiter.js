@@ -76,10 +76,18 @@ const getCompanyLogo = async (req, res) => {
   res.send({ logo: recruiter.logo });
 };
 
+const getRecruiter = async (req, res) => {
+  const { username } = req.query;
+  console.log(username);
+  const recruiter = await User.findOne({ username: username });
+  console.log(recruiter);
+  res.send({ user: recruiter });
+}
 module.exports = {
   signUpEmployer,
   updateParamsRecruiter,
   setLogoRecruiter,
   getCompanyName,
   getCompanyLogo,
+  getRecruiter,
 };

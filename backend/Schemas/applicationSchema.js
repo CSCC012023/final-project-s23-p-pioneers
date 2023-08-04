@@ -43,6 +43,23 @@ const applicationSchema = new mongoose.Schema({
       default: "Unknown",
     },
   },
+  codingQuestionResultArray: [{
+    code: {
+      type: String,
+    },
+    score: {
+      type: String,
+      default: 0,
+    },
+    complexity: {
+      type: String,
+      default: "Unknown",
+    },
+    time: {
+      type: String,
+      default: "Unknown",
+    },
+  }],
 });
 
 module.exports = applicationSchema;

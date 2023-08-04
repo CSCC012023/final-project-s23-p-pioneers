@@ -91,17 +91,17 @@ const Statistics = ({appStats}) => {
       <AttemptCard
         colour={"#a259ff"}
         icon={<TerminalIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.complexity}
+        body={appStats.codingQuestionResult.complexity}
       />
       <AttemptCard
         colour={"#ff5a5a"}
         icon={<ScoreIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.score}
+        body={appStats.codingQuestionResult.score}
       />
       <AttemptCard
         colour={"#87CEEB"}
         icon={<AccessTimeIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.time + " mins"}
+        body={appStats.codingQuestionResult.time + " mins"}
       />
       <Typography
         mt={2}

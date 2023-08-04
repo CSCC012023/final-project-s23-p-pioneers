@@ -18,7 +18,9 @@ const getApplication = async (req, res) => {
     if (!applications) {
       return res.status(404).json({ error: "Application not found" });
     }
-
+    console.log("testttt\n\n");
+    console.log(applications);
+    console.log("test\n\n\n\n");
     res.json(applications);
   } catch (error) {
     console.error("Error retrieving applications:", error);

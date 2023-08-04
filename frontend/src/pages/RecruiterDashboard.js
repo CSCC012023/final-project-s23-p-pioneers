@@ -16,14 +16,15 @@ import {
 } from "@mui/material";
 import Logo from "../assets/images/CoBuildLogo.png";
 
-function RecruiterDashboard() {
+function RecruiterDashboard({userData}) {
   const [jobs, setJobs] = useState([]);
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [shouldFilter, setShouldFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
-
+  const name = userData.name;
+  
   const handleLocationChange = (event) => {
     const { value } = event.target;
     setLocation(value);
@@ -79,7 +80,8 @@ function RecruiterDashboard() {
         const filtered = data.filter((job) => {
           const titleMatch = search ? job.title.toLowerCase().includes(search.toLowerCase()) : true;
           const locationMatch = location ? job.location.toLowerCase().includes(location.toLowerCase()) : true;
-          return titleMatch && locationMatch;
+          const companyMatch = name ? job.companyName.toLowerCase() === name.toLowerCase() : true;
+          return titleMatch && locationMatch && companyMatch;
         });
 
         setFilteredJobs(filtered);
@@ -108,49 +110,6 @@ function RecruiterDashboard() {
   return (
     <div style={{ backgroundColor: "#3B3B3B" }}>
       {/* Render job list or perform actions with jobIds */}
-      <AppBar position="relative" style={{ background: "#2B2B2B", height: "80px" }}>
-        <Toolbar
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: "80px",
-            justifyContent: "space-between",
-          }}
-        >
-          <Avatar alt="Logo" src={Logo} style={{ width: "35px", height: "35px" }} />
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-              marginLeft: "25px",
-              fontSize: "30px",
-              fontFamily: "work sans",
-            }}
-          >
-            CoBuild
-          </Typography>
-
-          <Button
-            component={Link}
-            to="/login"
-            style={{
-              background: "#A259FF",
-              marginLeft: "auto",
-              width: "120px",
-              height: "60px",
-              borderRadius: "20px",
-              fontWeight: 600,
-              color: "#FFFFFF",
-              fontStyle: "normal",
-              fontSize: "16px",
-              lineHeight: "140%",
-              fontFamily: "work sans",
-            }}
-          >
-            Sign In
-          </Button>
-        </Toolbar>
-      </AppBar>
       <div style={{ paddingTop: "20px", backgroundColor: "#2B2B2B" }}>
         <div
           style={{
@@ -174,11 +133,6 @@ function RecruiterDashboard() {
             }}
           >
             My Job Postings
-          </Typography>
-          <Typography
-            style={{ float: "left", fontFamily: "work sans", fontSize: "25px" }}
-          >
-            Browse through more than 100s of job postings on CoBuild Job Board
           </Typography>
 
           <TextField

@@ -11,6 +11,7 @@ const {
   setLogoRecruiter,
   getCompanyName,
   getCompanyLogo,
+  getRecruiter,
 } = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
@@ -87,7 +88,7 @@ app.post("/addcode", addAssessment);
 
 app.get("/getcompanyname", getCompanyName);
 app.get("/getcompanylogo", getCompanyLogo);
-
+app.get("/getrecruiter", getRecruiter);
 app.post("/search", searchusers);
 app.post("/followuser", followUser)
 app.post("/checkfollowstatus",checkFollowStatus)

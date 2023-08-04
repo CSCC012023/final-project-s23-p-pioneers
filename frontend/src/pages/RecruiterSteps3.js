@@ -97,17 +97,17 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
       };
       reader.readAsDataURL(file);
 
-      const uname = localStorage.getItem('recruiterhame');
+      const uname = localStorage.getItem('recruitername');
       const type = "profilepic";
       const extension = "png";
-      const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
+      const {url} = await fetch(`http://localhost:8000/s3Url?username=recruiter${uname}&type=${type}&extension=${extension}`).then(res => res.json());
       const finalUrl = url.split("?")[0];
       console.log("frontend", finalUrl)
 
       await fetch(url, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/pdf",
+          "Content-Type": "multipart/form-data",
         },
         body: file
       });
@@ -162,7 +162,7 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            username: localStorage.getItem("username"),
+            username: localStorage.getItem("recruitername"),
             field: 'bio',
             value: bio, // Replace with the desired program value
           })
@@ -175,7 +175,7 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
             console.error('Error:', error);
           });
 
-    navigate("/User"); // Navigate to the final page
+    navigate("/home"); // Navigate to the final page
   };
 
   return (
