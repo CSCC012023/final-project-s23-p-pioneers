@@ -4,6 +4,8 @@ const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
 const { followUser, unfollowUser, checkFollowStatus } = require("./API/followaction")
+const getSimilarityScore = require("./API/getSimilarity");
+
 const getPost = require("./API/getpost");
 const {
   signUpEmployer,
@@ -36,6 +38,9 @@ const {
   setCoverLetter,
   setProfilePic,
   updateParams,
+  addSkillsToUser,
+  addGithubToUser,
+  addLinkedinToUser,
 } = require("./API/signUp.js");
 
 const generateUploadURL = require("./s3.js");
@@ -86,6 +91,10 @@ app.post("/signuprecruiter", signUpEmployer);
 app.post("/updaterecruiter", updateParamsRecruiter);
 app.post("/setlogo", setLogoRecruiter);
 app.post("/addcode", addAssessment);
+app.post("/addskills", addSkillsToUser);
+app.post("/addGithub", addGithubToUser);
+app.post("/addLinkedin", addLinkedinToUser);
+app.post("/getSimilarity", getSimilarityScore);
 
 app.get("/getcompanyname", getCompanyName);
 app.get("/getcompanylogo", getCompanyLogo);
