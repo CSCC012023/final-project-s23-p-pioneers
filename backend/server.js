@@ -27,6 +27,8 @@ const {
   setProfilePic,
   updateParams,
   addSkillsToUser,
+  addGithubToUser,
+  addLinkedinToUser,
 } = require("./API/signUp.js");
 
 const generateUploadURL = require("./s3.js");
@@ -74,6 +76,8 @@ app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
 app.post("/addskills", addSkillsToUser);
+app.post("/addGithub", addGithubToUser);
+app.post("/addLinkedin", addLinkedinToUser);
 app.post("/signuprecruiter", signUpEmployer);
 app.post("/addcode", addAssessment);
 

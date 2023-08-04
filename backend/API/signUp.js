@@ -150,6 +150,53 @@ const updateParams = async (req, res) => {
     }
 };
 
+const addGithubToUser = async (req, res) => {
+  const { username, github } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+  
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the user's GitHub link
+    user.github = github;
+
+    
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({ message: "GitHub link added successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add GitHub link" });
+  }
+};
+
+const addLinkedinToUser = async (req, res) => {
+  const { username, linkedin } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the user's LinkedIn link
+    user.linkedin = linkedin;
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({ message: "LinkedIn link added successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add LinkedIn link" });
+  }
+};
+
 
 const setProfilePic = async (req, res) => {
   const { username, link } = req.body;
@@ -300,4 +347,6 @@ module.exports = {
   setProfilePic,
   updateParams,
   addSkillsToUser,
+  addGithubToUser,
+  addLinkedinToUser,
 };

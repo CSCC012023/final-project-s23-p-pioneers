@@ -21,7 +21,7 @@ class EdenaiAPIParserStrategy extends ResumeParserStrategy {
               }
               return response.json();
             })
-            .then((data) => {
+            .then(async (data) => {
 
               // Assuming your JSON data is stored in a variable called 'responseData'
               const skills = data.affinda.extracted_data.skills;
@@ -31,6 +31,30 @@ class EdenaiAPIParserStrategy extends ResumeParserStrategy {
                             
               // Adding the skills to the database
               this.addSkillsToDatabase(skillNames, username);
+
+              // Extracting the github link
+              const urls = data.affinda.extracted_data.personal_infos.urls
+
+              // Iterate through the response data array
+              for (const url of urls) {
+                if (url.includes("github.com")) {
+                  try {
+                    await this.addGithubToDatabase(url, username);
+                    console.log("GitHub link added successfully:", url);
+                  } catch (error) {
+                    console.error("Error adding GitHub link:", error.message);
+                  }
+                }
+            
+                if (url.includes("linkedin.com")) {
+                  try {
+                    await this.addLinkedInToDatabase(url, username);
+                    console.log("LinkedIn link added successfully:", url);
+                  } catch (error) {
+                    console.error("Error adding LinkedIn link:", error.message);
+                  }
+                }
+              }
               
               console.log("------------------------------------");
               console.log(data);
