@@ -9,6 +9,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
+import "UserProfile.css"
 
 import { useState, useEffect } from "react";
 
