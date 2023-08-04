@@ -188,7 +188,7 @@ function SignUpRecruiter() {
     } else {
       setjobcategoryError("");
     }
-    if (positions.length == 0) {
+    if (positions.length == 0 && positionList.length == 0) {
       setpositionError("Positions category cannot be empty");
       return;
     } else {
@@ -228,7 +228,7 @@ function SignUpRecruiter() {
       .catch((error) => {
         console.error("Error:", error);
       });
-      navigate("/createpost");
+      navigate("/recruiterstep1");
 
   };
 
