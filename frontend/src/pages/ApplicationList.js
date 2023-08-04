@@ -2,59 +2,62 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {   AppBar, Avatar, Card, CardContent, TextField, Toolbar, CardActions, InputAdornment, Button, Grid, Typography, Paper } from "@mui/material";
 import Logo from "../assets/images/CoBuildLogo.png";
+import "./ApplicationList.css";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
-const TestCard = ({ body, job, width, radius, height }) => {
+const TestCard = ({ body, name, width, radius, height, linkTo, image, courses, university }) => {
+
   return (
-    <Paper
-      sx={{
-        borderRadius: `${radius}px`,
-        minWidth: `${width}px`,
-        height: `${height}px`,
-        background: "#202123",
-        // border: "0.1px solid #808080",
-      }}
-      elevation={4}
-    >
-      <Grid
-        container
-        wrap="nowrap"
+    <Link to={linkTo} style={{ textDecoration: "none" }}>
+      <Paper
         sx={{
-          height: "100%",
+          borderRadius: `${radius}px`,
+          minWidth: `${width}px`,
+          height: `${height}px`,
+          background: "#3B3B3B",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          alignItems: "center",
         }}
+        elevation={0}
       >
-        <Grid
-          container
-          item
-          direction="column"
-          md={3.5}
-          alignItems="center"
-          justifyContent={"center"}
+        <Avatar
+          src={image}
           sx={{
-            background: "#a259ff",
-            borderTopLeftRadius: `${radius}px`,
-            borderBottomLeftRadius: `${radius}px`,
+            width: "70px",
+            height: "70px",
+            margin: "0 20px",
           }}
-        >
-    
-        </Grid>
-        <Grid
-          container
-          item
-          direction="column"
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <Grid item>
-            <Typography variant="h4" sx={{ color: "#808080" }}>
-              Username: {body}
+        />
+        <div>
+          <Typography variant="h5" sx={{ color: "#FFFFFF", fontWeight: "bold" }}>
+            {body}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#CCCCCC", marginBottom: "8px" }}>
+            Name: {name}
+          </Typography>
+          {courses && courses.length > 0 && (
+            <Typography variant="body1" sx={{ color: "#CCCCCC", marginBottom: "8px" }}>
+              Courses:{" "}
+              {courses.map((course, index) => (
+                <span key={index} className="comma">
+                  {course}
+                  {index !== courses.length - 1 && <span className="comma">, </span>}
+                </span>
+              ))}
             </Typography>
-            <Typography variant="h4" sx={{ color: "#808080" }}>
-              Title: {job}
+          )}
+          {university && (
+            <Typography variant="body1" sx={{ color: "#CCCCCC" }}>
+              University: {university}
             </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Paper>
+          )}
+        </div>
+        <div style={{ marginLeft: "auto", marginRight: "20px" }}>
+          <OpenInNewIcon fontSize="small" sx={{ color: "#CCCCCC" }} />
+        </div>
+      </Paper>
+    </Link>
   );
 };
 
@@ -68,6 +71,10 @@ const ApplicationList = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [shouldFilter, setShouldFilter] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const [userData, setUserData] = useState("");
+  const [imageData, setImageData] = useState("");
+  const [university, setUniversity] = useState("");
+  const [courses, setCourses] = useState([]);
 
   const handleLocationChange = (event) => {
     const { value } = event.target;
@@ -149,7 +156,56 @@ const ApplicationList = () => {
   useEffect(() => {
     fetchJobIds();
   }, [shouldFilter, search, location]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const userDataPromises = applications.map((application) =>
+        fetchUserData(application.username)
+      );
+  
+      const userDataArray = await Promise.all(userDataPromises);
+      
+      // Extract name and profilePic data from the returned userDataArray
+      const names = userDataArray.map((data) => data.name);
+      const images = userDataArray.map((data) => data.profilePic);
+      const university = userDataArray.map((data) => data.university || "Undefined");
+      const courses = userDataArray.map((data) => data.courses || ["None"]);
 
+      setUserData(names);
+      setImageData(images);
+      setUniversity(university);
+      setCourses(courses);
+    };
+  
+    fetchData();
+  }, [applications]);
+
+  const fetchUserData = async (username) => {
+    try {
+
+      const response = await fetch("http://localhost:8000/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+
+      const data = await response.json();
+      console.log(data.user.name);
+      const name = data.user.name;
+      const profilePic = data.user.profilepic;
+      const university = data.user.university;  
+  
+      const courses = data.user.courses;
+
+      return {name, profilePic, university, courses};
+
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return { name: "", profilePic: "" };
+    }
+  };
 
   // Function to fetch applications
   const fetchApplications = async (days) => {
@@ -261,7 +317,7 @@ const ApplicationList = () => {
           <Typography
             style={{ float: "left", fontFamily: "work sans", fontSize: "25px" }}
           >
-            Browse through more than 100s of job postings on CoBuild Job Board
+            Browse through applicants for the job application
           </Typography>
 
           <TextField
@@ -393,22 +449,32 @@ const ApplicationList = () => {
       </div>
     </div>
     
-    <Grid container item justifyContent="center">
+    <div style={{ marginBottom: "20px" }}></div>
+
+  <Grid container item justifyContent="center">
         <Grid container item direction="column" md={8}>
-          {applications.length === 0 ? (
-            <Typography variant="h6">No applications found</Typography>
-          ) : (
-            applications.map((application) => (
+        {applications.length === 0 ? (
+       
+       <Typography variant="h6">No applications found</Typography>
+        ) : (
+          applications.map((application, index) => (
+            <div key={index} style={{ marginBottom: "20px" }}>
               <TestCard
                 title={"Application"}
                 body={application.username}
-                job={application.job.title}
+                name={userData[index]}
                 width={450}
                 radius={20}
                 height={130}
+                linkTo={`/application/` +  application.applicationId}
+                image={imageData[index]}
+                courses={courses[index]}
+                university={university[index]}
               />
-            ))
-          )}
+            </div>
+          ))
+        )}
+
         </Grid>
       </Grid>
     </div>
