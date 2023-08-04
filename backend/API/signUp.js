@@ -211,6 +211,34 @@ const signUpRequest = async (req, res) => {
     // resume: resume,
     // transcript: transcript,
   } = req.body;
+
+  const url = "https://api.chatengine.io/users/";
+  const privateKey = "e9cddeb1-93b9-43fd-ac8c-8dd75adc6bb2";
+
+  const userData = {
+    username: username,
+    first_name: name,
+    secret: password,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "PRIVATE-KEY": privateKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  };
+
+  fetch(url, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Response:", data);
+    })
+    .catch((error) => {
+      console.error("User Already Registered:", error);
+    });
+
   // console.log(req)
   // Validate the input data
   // const validationErrors = validate(req.body);

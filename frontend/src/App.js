@@ -1,10 +1,11 @@
 import "./App.css";
 import JobPosting from "./pages/JobPosting";
+import HomePage from "./pages/HomePage";
 import Jobs from "./pages/Jobs";
 import Leaderboard from "./pages/Leaderboard";
 import Verification from "./pages/Verification";
 import { Routes, Route } from "react-router-dom";
-
+import Footer from "./Footer";
 import { RequireAuth } from "react-auth-kit";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -14,10 +15,14 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
+import Navbar from "./pages/components/Navbar";
 
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
-import Logo from "./assets/images/CoBuildLogo.png";
 import UploadAssessment from "./pages/UploadAssessment";
+import LoginPage from "./pages/components/LoginBox";
+import SearchBar from "./pages/components/SearchBar";
+import ViewUser from "./pages/ViewUser";
+import Chat from "./pages/Chat";
 
 import Application from "./pages/Application";
 import RecruiterScreen from "./pages/Recruiterscreen";
@@ -29,13 +34,22 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/leaderboard/:id" element={<Leaderboard />} />
-        <Route path="/step1" element={<Step1 />} />
-        <Route path="/User" element={<UserProfile />} />
-        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
-        <Route path="/recruiterstep1" element={<RecruiterSteps1 />} />
+        <Route path="/" element={<><Navbar userType={""} /></>} />
+        <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
+        <Route path="/search" element={<><Navbar userType={"user"} /><SearchBar /></>} />
+        <Route path="/viewprofile/:id" element={<ViewUser />} />
+        <Route path="/chat" element={<><Navbar userType={"user"} /><Chat /></>} />
+
+        <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
+<Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
+        <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
+        <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />
+        <Route path="/User" element={<><Navbar userType={"user"} /><UserProfile /></>} />
+        <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
+        <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
+        <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
+
+
 
         <Route path="/upload" element={<UploadAssessment />} />
         <Route path="/verfication/:id" element={<Verification />} />
@@ -151,6 +165,11 @@ function App() {
           </Typography>
         </div>
       </BottomNavigation> */}
+
+      
+      </Routes>
+      {/* <Footer /> */}
+
     </div>
   );
 }

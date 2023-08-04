@@ -1,0 +1,64 @@
+/* List.css */
+
+.main {
+    display: flex;
+    height: 100vh;
+    justify-content: center; /* Center the content horizontally */
+  }
+
+  .search-left {
+    /* Remove the margin-left and use auto margin to center horizontally */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the items horizontally */
+    justify-content: flex-start;
+  }
+
+  .users-list {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the items horizontally */
+  }
+
+  .user-item {
+    margin-bottom: 5px; /* Add 5px spacing between each user */
+  }
+
+  .users-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the items horizontally */
+    overflow-y: auto;
+  }
+
+  .search-left h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 45px;
+    /* Remove margin-left */
+  }
+
+  .search-left .MuiInputBase-root {
+    width: 400px; /* Set the width of the search bar to 400px */
+    margin-bottom: 20px;
+  }
+
+  .search-left .MuiInputBase-root input {
+    color: white;
+    outline: none; /* Remove the outline when clicked */
+  }
+
+  .search-left .MuiInputLabel-root {
+    color: white;
+  }
+
+  .search-left .MuiOutlinedInput-notchedOutline {
+    border-color: white;
+  }
+
+  .Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: white !important; /* Remove the yellow outline on focus */
+  }

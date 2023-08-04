@@ -148,6 +148,7 @@ const Step2 = ({ handleNext, handlePrevious }) => {
               "& .MuiInputLabel-root": {color: 'primary.main'},
               "& .MuiOutlinedInput-root": {
                 "& > fieldset": { borderColor: "primary.main" },
+                "&:hover fieldset": { borderColor: "secondary.main" },
               },
             }}
             label="University"
@@ -171,6 +172,7 @@ const Step2 = ({ handleNext, handlePrevious }) => {
           "& .MuiInputLabel-root": {color: 'primary.main'},
           "& .MuiOutlinedInput-root": {
             "& > fieldset": { borderColor: "primary.main" },
+            "&:hover fieldset": { borderColor: "secondary.main" },
           },
         }}
         fullWidth
@@ -197,6 +199,7 @@ const Step2 = ({ handleNext, handlePrevious }) => {
               "& .MuiInputLabel-root": {color: 'primary.main'},
               "& .MuiOutlinedInput-root": {
                 "& > fieldset": { borderColor: "primary.main"},
+                "&:hover fieldset": { borderColor: "secondary.main" },
               },
             }}
             fullWidth
