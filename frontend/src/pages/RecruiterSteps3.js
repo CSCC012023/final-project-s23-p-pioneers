@@ -97,7 +97,7 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
       };
       reader.readAsDataURL(file);
 
-      const uname = localStorage.getItem('username');
+      const uname = localStorage.getItem('recruiterhame');
       const type = "profilepic";
       const extension = "png";
       const {url} = await fetch(`http://localhost:8000/s3Url?username=${uname}&type=${type}&extension=${extension}`).then(res => res.json());
@@ -112,12 +112,16 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
         body: file
       });
 
-      await fetch('http://localhost:8000/profilepic', {
+      await fetch('http://localhost:8000/updaterecruiter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username: localStorage.getItem("username"), link: finalUrl }) // Replace with actual data
+        body: JSON.stringify({ 
+          username: localStorage.getItem("recruitername"),
+          field: 'profilepic',
+          value: finalUrl,
+        })
       })
         .then(response => response.json())
         .then(data => {
@@ -152,7 +156,7 @@ const RecruiterSteps3 = ({ handleSetProfileImage, handlePrevious }) => {
 
   const handleFinish = () => {
     // Handle the finish button logic
-    fetch('http://localhost:8000/update', {
+    fetch('http://localhost:8000/updaterecruiter', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

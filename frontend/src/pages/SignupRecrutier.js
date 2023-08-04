@@ -228,6 +228,7 @@ function SignUpRecruiter() {
       .catch((error) => {
         console.error("Error:", error);
       });
+      localStorage.setItem('recruitername', username)
       navigate("/recruiterstep1");
 
   };

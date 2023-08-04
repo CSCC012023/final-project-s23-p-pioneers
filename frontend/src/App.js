@@ -23,7 +23,7 @@ import LoginPage from "./pages/components/LoginBox";
 import SearchBar from "./pages/components/SearchBar";
 import ViewUser from "./pages/ViewUser";
 import Chat from "./pages/Chat";
-
+import RecruiterSteps3 from "./pages/RecruiterSteps3"
 import Application from "./pages/Application";
 import RecruiterScreen from "./pages/Recruiterscreen";
 import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
@@ -43,12 +43,13 @@ function App() {
         <Route path="/chat" element={<><Navbar userType={"user"} /><Chat /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
-<Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
+        <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
         <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
         <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />
         <Route path="/User" element={<><Navbar userType={"user"} /><UserProfile /></>} />
         <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
         <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
+        <Route path="/recruiterstep3" element={<><Navbar userType={"recruiter"} /><RecruiterSteps3 /></>} />
         <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
 
 

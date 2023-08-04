@@ -13,6 +13,9 @@ const recruiterSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter a email"],
   },
+  profilepic: {
+    type: String,
+  },
   jobCategories: {
     type: String,
   },
