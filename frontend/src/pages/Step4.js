@@ -224,6 +224,7 @@ const Step4 = ({ handleSetProfileImage, handlePrevious }) => {
               "& .MuiInputLabel-root": {color: 'primary.main'},
               "& .MuiOutlinedInput-root": {
                 "& > fieldset": { borderColor: "primary.main"},
+                "&:hover fieldset": { borderColor: "secondary.main" },
               },
             }}
             label="Bio"
