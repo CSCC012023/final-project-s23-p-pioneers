@@ -63,6 +63,12 @@ const addAssessment = async (req, res) => {
     application.submissionTime = new Date();
     application.codingQuestionStatus = "done";
 
+    application.codingQuestionResultArray.push({
+      code: codingQuestionResult.code,
+      score: codingQuestionResult.score,
+      complexity: complexityValue,
+      time: new Date().toString(),
+    });
     // Extract the complexity from the GPT response
     const complexityRegex = /O\([^\)]+\)/;
     const complexityMatch = complexity.match(complexityRegex);

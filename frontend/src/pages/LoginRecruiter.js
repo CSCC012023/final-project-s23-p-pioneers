@@ -72,15 +72,20 @@ function Login() {
           setUsername("");
           setPassword("");
           setLoginError("");
-  
+
+
+
           signIn({
             token: data.accessToken,
             expiresIn: 3600,
             tokenType: "Bearer",
             authState: { username: user.username },
           });
-  
+
+
           localStorage.setItem("recruitername", user.username);
+          localStorage.setItem("recruiterpassword", user.password);
+
           handleClick();
         } else {
           throw new Error("User is not logged in");
@@ -91,7 +96,7 @@ function Login() {
         console.error(error);
       });
   };
-  
+
 
   return (
     <div

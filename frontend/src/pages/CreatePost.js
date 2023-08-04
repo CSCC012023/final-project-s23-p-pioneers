@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { RxOpenInNewWindow } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 import {
   Container,
@@ -73,6 +75,7 @@ const jobsData = [
 
 function JobPosting() {
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [title, setTitle] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [jobDescription, setJobDescription] = React.useState("");
@@ -105,8 +108,8 @@ function JobPosting() {
     setCompanyName(event.target.value);
   };
 
-  const handleDeadlineChange = (event) => {
-    setDeadline(event.target.value);
+  const handleDeadlineChange = (newValue) => {
+    setSelectedDate(newValue);
   };
 
 
@@ -147,14 +150,19 @@ function JobPosting() {
   };
   const handleSubmit = async (event) => {
     // event.preventDefault();
+    const rname = localStorage.getItem("recruitername");
+    const { name: companyName } = await fetch(`http://localhost:8000/getcompanyname?username=${rname}`).then(res => res.json());
+    const { logo: logo } = await fetch(`http://localhost:8000/getcompanylogo?username=${rname}`).then(res => res.json());
+    console.log(logo);
     const jobData = {
       title,
       location,
       jobDescription,
       companyName,
-      deadline,
+      deadline: selectedDate,
       isAssessmemnt: false,
       skills: ["C++", "Java", "Python", "Test"],
+      companyLogo: logo,
     };
 
     try {
@@ -366,110 +374,97 @@ function JobPosting() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  label="Deadline"
-                  variant="outlined"
-                  value={deadline}
-
-                  onChange={handleDeadlineChange}
-                  required
-                  fullWidth
-                  color="primary"
-                  sx={{
-                    "& .MuiInputLabel-root": {color: 'primary.main'},
-                    "& .MuiOutlinedInput-root": {
-                      "& > fieldset": { borderColor: "primary.main" },
-                    },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  // sx={{
-                  //   background: "transparent",
-                  //   border: "none",
-                  //   "& .MuiInputLabel-root": {
-                  //     display: "block",
-                  //     color: "#000000",
-                  //     backgroundColor: "transparent",
-                  //     borderRadius: "4px",
-                  //     padding: "4px",
-                  //     borderColor: "#4A90E2", // Set border color to blue shade
-                  //   },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                  //     backgroundColor: "#FFFFFF", // White background when shrunk
-                  //   },
-                  //   "& .MuiInputLabel-root.Mui-focused": {
-                  //     backgroundColor: "#FFFFFF",
-                  //   },
-                  //   "& .MuiOutlinedInput-root": {
-                  //     borderRadius: "20px",
-                  //     borderColor: "transparent",
-                  //     backgroundColor: "#FFFFFF",
-                  //     "& fieldset": {
-                  //       borderRadius: "20px",
-                  //       borderColor: "transparent",
-                  //       "&:hover": {
-                  //         borderColor: "#A259FF !important",
-                  //       },
-                  //     },
-                  //     "& input": {
-                  //       color: "#000000",
-                  //     },
-                  //   },
-                  // }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Company Name"
-                  variant="outlined"
-                  value={companyName}
-
-                  onChange={handleCompanyNameChange}
-                  required
-                  fullWidth
-                  color="primary"
-                  sx={{
-                    "& .MuiInputLabel-root": {color: 'primary.main'},
-                    "& .MuiOutlinedInput-root": {
-                      "& > fieldset": { borderColor: "primary.main" },
-                    },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  // sx={{
-                  //   background: "transparent",
-                  //   border: "none",
-                  //   "& .MuiInputLabel-root": {
-                  //     display: "block",
-                  //     color: "#000000",
-                  //     backgroundColor: "transparent",
-                  //     borderRadius: "4px",
-                  //     padding: "4px",
-                  //     borderColor: "#4A90E2", // Set border color to blue shade
-                  //   },
-                  //   "& .MuiInputLabel-root.Mui-focused": {
-                  //     backgroundColor: "#FFFFFF",
-                  //   },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                  //     backgroundColor: "#FFFFFF", // White background when shrunk
-                  //   },
-                  //   "& .MuiOutlinedInput-root": {
-                  //     borderRadius: "20px",
-                  //     borderColor: "transparent",
-                  //     backgroundColor: "#FFFFFF",
-                  //     "& fieldset": {
-                  //       borderRadius: "20px",
-                  //       borderColor: "transparent",
-                  //       "&:hover": {
-                  //         borderColor: "#A259FF !important",
-                  //       },
-                  //     },
-                  //     "& input": {
-                  //       color: "#000000",
-                  //     },
-                  //   },
-                  // }}
-                />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Deadline"
+                value={selectedDate}
+                onChange={handleDeadlineChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params.inputProps}
+                    fullWidth
+                    variant="outlined"
+                    sx={{
+                      // Styles for dark theme with white preview text and better contrast colors
+                      "& .MuiInputLabel-root": {
+                        color: "#FFFFFF", // Set the preview text (label) color to white
+                      },
+                      "& .MuiInputBase-input": {
+                        color: "#FFFFFF", // Set the input text color to white
+                      },
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#FFFFFF", // Set the outline color to white
+                      },
+                      "& .MuiPickersBasePicker-container": {
+                        backgroundColor: "#111111", // Set the background color to black
+                      },
+                      "& .MuiPickersToolbar-toolbar": {
+                        backgroundColor: "#111111", // Set the toolbar background color to black
+                        color: "#FFFFFF", // Set the toolbar text color to white
+                      },
+                      "& .MuiPickersDay-day": {
+                        color: "#FFFFFF", // Set the day text color to white
+                      },
+                      "& .MuiPickersDay-daySelected": {
+                        backgroundColor: "#A259FF", // Set the selected day background color to a contrast color
+                        color: "#FFFFFF", // Set the selected day text color to white
+                      },
+                      "& .MuiPickersDay-dayDisabled": {
+                        color: "#8B8B8B", // Set the disabled day text color to a softer contrast color
+                      },
+                      "& .MuiPickersClock-pin": {
+                        backgroundColor: "#A259FF", // Set the clock pin color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-thumb": {
+                        backgroundColor: "#A259FF", // Set the clock pointer thumb color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-noPoint": {
+                        backgroundColor: "#A259FF", // Set the clock pointer no point color to a contrast color
+                      },
+                      "& .MuiPickersClockPointer-pointer": {
+                        backgroundColor: "#A259FF", // Set the clock pointer color to a contrast color
+                      },
+                      "& .MuiPickersCalendarHeaderRoot": {
+                        backgroundColor: "#000000",
+                      },
+                    }}
+                    // sx={{
+                    //   background: "transparent",
+                    //   border: "none",
+                    //   "& .MuiInputLabel-root": {
+                    //     display: "block",
+                    //     color: "#000000",
+                    //     backgroundColor: "transparent",
+                    //     borderRadius: "4px",
+                    //     padding: "4px",
+                    //     borderColor: "#00000", // Set border color to blue shade
+                    //   },
+                    //   "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+                    //     backgroundColor: "#FFFFFF", // White background when shrunk
+                    //   },
+                    //   "& .MuiInputLabel-root.Mui-focused": {
+                    //     backgroundColor: "#FFFFFF",
+                    //   },
+                    //   "& .MuiOutlinedInput-root": {
+                    //     borderRadius: "20px",
+                    //     borderColor: "transparent",
+                    //     backgroundColor: "#FFFFFF",
+                    //     "& fieldset": {
+                    //       borderRadius: "20px",
+                    //       borderColor: "transparent",
+                    //       "&:hover": {
+                    //         borderColor: "#A259FF !important",
+                    //       },
+                    //     },
+                    //     "& input": {
+                    //       color: "#000000",
+                    //     },
+                    //   },
+                    // }}
+                  />
+                )}
+              />
+            </LocalizationProvider>
               </Grid>
             </ThemeProvider>
             <Grid item xs={12}>

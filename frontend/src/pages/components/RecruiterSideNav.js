@@ -24,7 +24,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function RecruiterSideNav(props) {
     // Extract props from the parent component, if needed
-    const { foldedView, handleSidebarToggle, userData, applicationData, selectedItem, handleItemClick } = props;
+    const { foldedView, handleSidebarToggle, userData, selectedItem, handleItemClick } = props;
     const activeIconStyle = {
         backgroundColor: "#3A2F55",
     };
@@ -57,7 +57,7 @@ function RecruiterSideNav(props) {
           }}
         >
             <Avatar
-            alt="User Avatar"
+            src={userData.profilepic}
             sx={{
                 width: foldedView ? 40 : 60, // Conditionally set the width based on foldedView
                 height: foldedView ? 40 : 60, // Conditionally set the height based on foldedView
@@ -70,7 +70,7 @@ function RecruiterSideNav(props) {
               fontFamily={"Work Sans"}
               sx={{ mb: "0.5rem" }}
             >
-              {applicationData.username}
+              {userData.username}
             </Typography>
             <Typography
               variant="body2"

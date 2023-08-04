@@ -10,16 +10,15 @@ import RecruiterSideNav from "./components/RecruiterSideNav";
 import Calendar from "./components/ApplicationComponents/Calendar";
 import RecruiterDashboard from "./RecruiterDashboard";
 import UserProfile from "./UserProfile"; 
-
+import RecruiterProfile from "./RecruiterProfile";
 import { useState } from "react";
 
 function RecruiterScreen() {
   const [selectedItem, setSelectedItem] = useState("Overview");
-  const [applicationData, setApplicationData] = useState({});
   const [formattedDate, setFormattedDate] = useState("None");
   const [userData, setUserData] = useState({});
   const [foldedView, setFoldedView] = useState(false);
-
+  const username = localStorage.getItem("recruitername");
   const handleItemClick = (itemText) => {
     setSelectedItem(itemText);
   };
@@ -28,72 +27,26 @@ function RecruiterScreen() {
     setFoldedView(!foldedView);
   };
 
-  const fetchApplicationData = async (username, id) => {
-    const req = {
-      username: username,
-      jobID: id,
-    };
-
-    try {
-      const response = await fetch("http://localhost:8000/getApplication", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-      });
-      if (response.status === 404) {
-        console.error("Job not found");
-        return;
-      }
-
-      const appData = await response.json();
-      setApplicationData(appData);
-      console.log(appData);
-      const date = new Date(appData.submissionTime);
-      const day = date.getDate();
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      const monthName = monthNames[date.getMonth()];
-      const year = date.getFullYear();
-      const formattedDate = `${monthName} ${day}, ${year}`;
-      setFormattedDate(formattedDate);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchUser = async (username) => {
+  const fetchUser = async () => {
     const req = {
       username: username,
     };
 
     try {
-      const response = await fetch("http://localhost:8000/getUser", {
-        method: "POST",
+      const response = await fetch(`http://localhost:8000/getrecruiter?username=${username}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(req),
+        //body: JSON.stringify(req),
       });
       if (response.status === 404) {
         console.error("User not found");
         return;
       }
-
       const userData = await response.json();
+      console.log(userData);
+
       setUserData(userData.user);
       console.log(userData);
     } catch (error) {
@@ -102,11 +55,7 @@ function RecruiterScreen() {
   };
 
   useEffect(() => {
-    fetchApplicationData("mini", "6wpXhEFnyLxbZjVcyRJzh3");
-  }, []);
-
-  useEffect(() => {
-    fetchUser("mini");
+    fetchUser();
   }, []);
 
   return (
@@ -116,7 +65,6 @@ function RecruiterScreen() {
         foldedView={foldedView}
         handleSidebarToggle={handleSidebarToggle}
         userData={userData}
-        applicationData={applicationData}
         selectedItem={selectedItem}
         handleItemClick={handleItemClick}
         />
@@ -131,19 +79,17 @@ function RecruiterScreen() {
         {(() => {
           switch (selectedItem) {
             case "Overview":
-              return  <RecruiterDashboard/>;
+              return  <RecruiterDashboard userData={userData}/>;
             case "Events":
                 return <Calendar />;
             case "Graphs":
               return <Graphs />;
             case "Statistics":
               return <Statistics />;
-            case "Code":
-              return <Code appCode={applicationData.codingQuestionResult} />;
             case "New Application":
               return <CreatePost />;
             case "Profile":
-              return <UserProfile />;
+              return <RecruiterProfile userData={userData}/>;
             default:
               return <RecruiterDashboard/>;
           }

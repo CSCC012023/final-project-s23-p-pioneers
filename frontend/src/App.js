@@ -29,6 +29,8 @@ import RecruiterScreen from "./pages/Recruiterscreen";
 import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
 import Calendar from "./pages/components/ApplicationComponents/Calendar";
 import ApplicationList from "./pages/ApplicationList";
+import LoginRecruiter from "./pages/LoginRecruiter";
+import RecruiterChat from "./pages/RecruiterChat";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
         <Route path="/search" element={<><Navbar userType={"user"} /><SearchBar /></>} />
         <Route path="/viewprofile/:id" element={<ViewUser />} />
         <Route path="/chat" element={<><Navbar userType={"user"} /><Chat /></>} />
+        <Route path="/loginrecruiter" element={<><Navbar userType={""} /><LoginRecruiter /></>} />
+        <Route path="/recruiterchat" element={<><Navbar userType={"user"} /><RecruiterChat /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
         <Route path="/loginrecruiter" element={<><Navbar userType={""} /><LoginRecruiter /></>} />
