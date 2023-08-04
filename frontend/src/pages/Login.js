@@ -93,9 +93,13 @@ function Login() {
       style={{
         background: "#2B2B2B",
         fontFamily: "Work Sans, sans-serif",
+        display: "flex",
+        justifyContent: "center", // Horizontally center the content
+        alignItems: "center", // Vertically center the content
+        height: "100vh", // Set the height to fill the entire screen
       }}
     >
-      <main style={{ display: "flex", flex: 1 }}>
+      <main style={{ display: "flex" }}>
         <div
           style={{
             flex: 1,
@@ -120,46 +124,43 @@ function Login() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            alignItems: "flex-start", // Align to the left (from the image's right)
             padding: "0 30px",
+            maxWidth: "500px", // Limit the maximum width of the centered content
           }}
         >
           <h1
             style={{
               color: "white",
               fontSize: "51px",
-              width: "460px",
-              height: "56px",
               fontWeight: 600,
               lineHeight: "110%",
               marginTop: "-10px",
-              marginLeft: "40px",
             }}
           >
             Sign In
           </h1>
           <Typography
             style={{
-              marginLeft: "40px",
               color: "white",
-              width: "400px",
               fontSize: "22px",
               fontFamily: "work sans",
+              textAlign: "center", // Center the text
             }}
           >
-            Welcome Back! enter your details and start applying, Searching and
-            Coding on CoBuild.
+            Welcome Back! Enter your details and start applying, searching and
+            coding on CoBuild.
           </Typography>
           {loginError && (
             <Typography
               variant="caption"
               color="error"
-              marginLeft={5}
               marginTop={1}
             >
               {loginError}
             </Typography>
           )}
-          <div style={{ marginTop: "20px", marginLeft: "40px" }}>
+          <div style={{ marginTop: "20px" }}>
             <TextField
               label="Username"
               value={username}
@@ -181,21 +182,20 @@ function Login() {
               }}
             />
           </div>
-          <div style={{ marginTop: "0px", marginLeft: "40px" }}>
-
+          <div>
             <TextField
-                label="Password"
-                value={password}
-                onChange={handlePasswordChange}
-                variant="filled"
-                type="password"
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: "20px",
-                  width: "330px",
-                }}
-                InputProps={{ disableUnderline: true }}
-              />
+              label="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              variant="filled"
+              type="password"
+              style={{
+                backgroundColor: "white",
+                borderRadius: "20px",
+                width: "330px",
+              }}
+              InputProps={{ disableUnderline: true }}
+            />
           </div>
           <Button
             style={{
@@ -205,12 +205,11 @@ function Login() {
               borderRadius: "20px",
               color: "white",
               marginTop: "30px",
-              marginLeft: "40px",
               fontFamily: "work sans",
             }}
             onClick={handleLoginFormSubmit}
           >
-            sign in
+            Sign In
           </Button>
           <Typography
             variant="caption"
@@ -218,12 +217,8 @@ function Login() {
               color: "white",
               fontSize: "14px",
               marginTop: "20px",
-              marginLeft: "40px",
-              width: "610px",
-              height: "35px",
               fontStyle: "normal",
               fontWeight: 400,
-              fontSize: "22px",
               lineHeight: "160%",
               fontFamily: "work sans",
               textDecorationLine: "underline",
