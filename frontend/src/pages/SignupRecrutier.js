@@ -221,14 +221,39 @@ function SignUpRecruiter() {
       })
       .then((data) => {
         console.log(data); // handle the response from the server
-        setUsername("");
-        setEmail("");
-        setPassword("");
+
       })
       .catch((error) => {
         console.error("Error:", error);
       });
       localStorage.setItem('recruitername', username)
+      
+      const url = "https://api.chatengine.io/users/";
+      const privateKey = "e9cddeb1-93b9-43fd-ac8c-8dd75adc6bb2";
+    
+      const userData = {
+        username: username,
+        first_name: name,
+        secret: password,
+      };
+    
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "PRIVATE-KEY": privateKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      };
+    
+      fetch(url, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response:", data);
+        })
+        .catch((error) => {
+          console.error("User Already Registered:", error);
+        });
       navigate("/recruiterstep1");
 
   };
