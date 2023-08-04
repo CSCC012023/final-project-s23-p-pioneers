@@ -254,6 +254,7 @@ const UserProfile = () => {
       window.open(resumeLink, "_blank");
     }
   };
+  const whiteCircleClass = classes.userImage + " white-circle";
 
   const handleTranscriptClick = () => {
     const transcriptLink = transcript;
