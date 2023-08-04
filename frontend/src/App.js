@@ -29,7 +29,6 @@ import RecruiterScreen from "./pages/Recruiterscreen";
 import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
 import Calendar from "./pages/components/ApplicationComponents/Calendar";
 import ApplicationList from "./pages/ApplicationList";
-import LoginRecruiter from "./pages/LoginRecruiter";
 import RecruiterChat from "./pages/RecruiterChat";
 
 function App() {
@@ -47,7 +46,6 @@ function App() {
         <Route path="/recruiterchat" element={<><Navbar userType={"user"} /><RecruiterChat /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
-        <Route path="/loginrecruiter" element={<><Navbar userType={""} /><LoginRecruiter /></>} />
 
         <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
         <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
