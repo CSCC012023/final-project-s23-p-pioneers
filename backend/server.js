@@ -89,7 +89,13 @@ app.post("/addcode", addAssessment);
 
 app.get("/getcompanyname", getCompanyName);
 app.get("/getcompanylogo", getCompanyLogo);
+
 app.get("/getrecruiter", getRecruiter);
+
+
+app.post("/loginrecruiter", recruiterLogin);
+
+
 app.post("/search", searchusers);
 app.post("/followuser", followUser)
 app.post("/loginrecruiter", recruiterLogin);

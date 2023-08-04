@@ -16,7 +16,7 @@ import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
 import Navbar from "./pages/components/Navbar";
-
+import LoginRecruiter from "./pages/LoginRecruiter";
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
 import UploadAssessment from "./pages/UploadAssessment";
 import LoginPage from "./pages/components/LoginBox";
@@ -47,6 +47,8 @@ function App() {
         <Route path="/recruiterchat" element={<><Navbar userType={"user"} /><RecruiterChat /></>} />
 
         <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
+        <Route path="/loginrecruiter" element={<><Navbar userType={""} /><LoginRecruiter /></>} />
+
         <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
         <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
         <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />

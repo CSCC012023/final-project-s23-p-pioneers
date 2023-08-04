@@ -352,7 +352,7 @@ const UserProfile = () => {
                     fontSize: "1.2rem",
                     marginTop: "3px",
                   }}
-                ></span>
+                >{university}</span>
               </Typography>
             </div>
             <div
