@@ -2,6 +2,8 @@ import React from "react";
 import { Typography, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
+import MessageIcon from "@mui/icons-material/Message";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -9,11 +11,21 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
-import "./UserProfile.css"
+import { useNavigate, useParams } from "react-router-dom";
+import "./ViewUser.css";
 
 import { useState, useEffect } from "react";
+import { Password } from "@mui/icons-material";
 
 const useStyles = makeStyles({
+  buttonContainer: {
+    display: "flex",
+    gap: "20px",
+    position: "fixed",
+    top: "20px",
+    left: "20px",
+    zIndex: 2,
+  },
   root: {
     display: "flex",
     flexDirection: "column",
@@ -32,12 +44,11 @@ const useStyles = makeStyles({
     height: "500px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "50px",
+    gap: "30px",
     flexShrink: 0,
     borderRadius: "20px",
     padding: "20px",
     position: "relative",
-    marginBottom: "25px",
     zIndex: 1,
     margin: "0 auto",
     // background: "#2B2B2B",
@@ -60,6 +71,14 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "10px",
+  },
+  userLabelsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "100px",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: "10px",
   },
   userLabel: {
     color: "#8E24AA",
@@ -101,14 +120,6 @@ const useStyles = makeStyles({
     background:
       "linear-gradient(180deg, #3B3B3B 0%, rgba(59, 59, 59, 0.00) 100%)",
   },
-  userLabelsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "100px",
-    justifyContent: "space-between",
-    width: "100%",
-    marginBottom: "10px",
-  },
   carouselContent: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
@@ -120,15 +131,18 @@ const useStyles = makeStyles({
   },
 });
 
-const UserProfile = () => {
+const ViewUser = () => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  const [isFollowing, setIsFollowing] = useState(false); // State variable to track if the user is being followed
 
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
 
   const fetchUserData = async () => {
     try {
-      const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
+      //const username = localStorage.getItem("username"); // Replace "exampleUser" with the actual username you want to retrieve
 
       const response = await fetch("http://localhost:8000/getuser", {
         method: "POST",
@@ -144,11 +158,42 @@ const UserProfile = () => {
       console.error("Error fetching user data:", error);
     }
   };
+  const checkFollowStatus = async () => {
+    try {
+      const currentUser = localStorage.getItem("username"); // Assuming you store the current user's username in localStorage
+      const targetUser = username; // The target user's username is already available from useParams()
+
+      // Make the API call using fetch
+      const response = await fetch("http://localhost:8000/checkfollowstatus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user1: currentUser,
+          user2: targetUser,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setIsFollowing(data.isFollowing); // Update the state with the result of the API call
+    } catch (error) {
+      // Handle errors from the API call
+      console.error("Error checking follow status:", error);
+    }
+  };
 
   useEffect(() => {
     // Fetch user data when the component mounts
     fetchUserData();
+    checkFollowStatus();
   }, []);
+
+  const { id: username } = useParams();
 
   // Job data for Saved Jobs
   const savedJobs = [
@@ -245,6 +290,111 @@ const UserProfile = () => {
     jij,
   } = userData; // Assuming these fields exist in the fetched user data
 
+  const handleEditClick = () => {
+    navigate("/step1");
+  };
+
+  const handleMessageClick = async () => {
+    const url = "https://api.chatengine.io/chats/";
+    const projectId = "211d0b46-aff7-4e68-8206-304093e6abbf";
+    const userName = localStorage.getItem("username");
+    const userSecret = localStorage.getItem("password");
+
+    const chatData = {
+      usernames: [username],
+      title:
+        "Chat with " + username + " and " + localStorage.getItem("username"),
+      is_direct_chat: true,
+    };
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Project-ID": projectId,
+        "User-Name": userName,
+        "User-Secret": userSecret,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(chatData),
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Response:", data);
+        navigate("/chat");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const handleFollowClick = async () => {
+    try {
+      const currentUser = localStorage.getItem("username");
+      const targetUser = username; // The target user's username is already available from useParams()
+
+      // Make the API call using fetch
+      const response = await fetch("http://localhost:8000/followuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          currentUserId: currentUser,
+          userId: targetUser,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      // Handle the response if needed (e.g., show a success message)
+      console.log(data);
+      setIsFollowing(true);
+      // You can also update the UI to reflect the user has been followed (if needed)
+    } catch (error) {
+      // Handle errors from the API call
+      console.error("Error following user:", error);
+    }
+  };
+  const unfollowUser = async () => {
+    try {
+      const currentUser = localStorage.getItem("username"); // Assuming you store the current user's username in localStorage
+      const targetUser = username; // The target user's username is already available from useParams()
+
+      // Make the API call using fetch
+      const response = await fetch("http://localhost:8000/unfollowuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          currentUserId: currentUser,
+          userId: targetUser,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log(data); // Handle the response if needed (e.g., show a success message)
+
+      // After successfully unfollowing, update the state to reflect the change
+      setIsFollowing(false);
+    } catch (error) {
+      // Handle errors from the API call
+      console.error("Error unfollowing user:", error);
+    }
+  };
+
+  const handleUnfollowClick = () => {
+    unfollowUser();
+  };
   const handleResumeClick = () => {
     const resumeLink = resume;
 
@@ -270,7 +420,7 @@ const UserProfile = () => {
     <div className={classes.root}>
       <div className={classes.banner}>
         <div className={classes.userImageContainer}>
-        {profilepic ? (
+          {profilepic ? (
             <img
               className={classes.userImage}
               alt="User Profile"
@@ -280,27 +430,44 @@ const UserProfile = () => {
             <div className={whiteCircleClass}></div>
           )}
         </div>
-        <Button
-          style={{
-            position: "fixed",
-            top: "10px",
-            left: "10px",
-            borderRadius: "20px",
-            background: "#A259FF",
-            color: "white",
-            width: "145px",
-            height: "60px",
-            padding: "0px 50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "12px",
-            zIndex: 2,
-          }}
-          endIcon={<EditIcon />}
-        >
-          Edit
-        </Button>
+        <div className={classes.buttonContainer}>
+          <Button
+            style={{
+              borderRadius: "20px",
+              background: "#3B3B3B",
+              color: "white",
+              width: "145px",
+              height: "50px",
+              padding: "0px 50px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "12px",
+            }}
+            endIcon={<AddBoxIcon />}
+            onClick={isFollowing ? handleUnfollowClick : handleFollowClick}
+          >
+            {isFollowing ? "Unfollow" : "Follow"}
+          </Button>
+          <Button
+            style={{
+              borderRadius: "20px",
+              background: "#3B3B3B",
+              color: "white",
+              width: "145px",
+              height: "50px",
+              padding: "0px 50px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "12px",
+            }}
+            endIcon={<MessageIcon />}
+            onClick={handleMessageClick}
+          >
+            Message
+          </Button>
+        </div>
       </div>
       <div className={classes.userProfile}>
         <div className={classes.userDetails}>
@@ -309,7 +476,7 @@ const UserProfile = () => {
               style={{
                 background: "#3B3B3B",
                 borderRadius: "20px",
-                padding: "30px 30px 30px 30px",
+                padding: "30px 50px 30px 30px",
                 color: "white", // Added white text color
               }}
             >
@@ -442,46 +609,8 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div className={classes.carousel}>
-        <div className={classes.carouselButtons}>
-          <div
-            className={`${classes.carouselButton} ${
-              selectedSection === "Saved Jobs"
-                ? classes.carouselButtonActive
-                : ""
-            }`}
-            onClick={() => setSelectedSection("Saved Jobs")}
-          >
-            <Typography variant="h6">Saved Jobs</Typography>
-          </div>
-          <div
-            className={`${classes.carouselButton} ${
-              selectedSection === "Applied Jobs"
-                ? classes.carouselButtonActive
-                : ""
-            }`}
-            onClick={() => setSelectedSection("Applied Jobs")}
-          >
-            <Typography variant="h6">Applied Jobs</Typography>
-          </div>
-
-          <div className={classes.carouselButton}>
-            <Typography variant="h6">Assessments</Typography>
-          </div>
-          <div className={classes.carouselButton}>
-            <Typography variant="h6">Records</Typography>
-          </div>
-        </div>
-
-        {selectedSection === "Saved Jobs" && (
-          <JobPosting prop={bookmarkedJobsIds} />
-        )}
-        {selectedSection === "Applied Jobs" && (
-          <JobPosting prop={appliedJobsIds} />
-        )}
-      </div>
     </div>
   );
 };
 
-export default UserProfile;
+export default ViewUser;

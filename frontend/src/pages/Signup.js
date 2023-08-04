@@ -197,6 +197,7 @@ function SignUp() {
       });
 
       localStorage.setItem('username', username)
+      localStorage.setItem("password", password)
       const uname = localStorage.getItem('username');
       const type = "resume";
       const extension = "pdf";
