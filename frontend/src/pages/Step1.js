@@ -203,11 +203,7 @@ const Step1 = ({ handleNext }) => {
                     "& .MuiInputLabel-root": {color: 'primary.main'},
                     "& .MuiOutlinedInput-root": {
                       "& > fieldset": { borderColor: "primary.main" },
-                      "&:hover fieldset": { borderColor: "secondary.main" },
                     },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
                   }}
                   fullWidth
                   onKeyDown={handleKeyDown}
