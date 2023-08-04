@@ -11,9 +11,15 @@ const verifyEmail = require("./API/postEmailVerification");
 const searchusers = require("./API/searchusers")
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
-const getUser = require("./API/getUser")
+const getUser = require("./API/getUser");
 
-const { createAssessmentApi, getAssessmentApi } = require('./API/createAssessment')
+const getApplication = require("./API/getApplication");
+const getApplicants = require("./API/applicants");
+
+const {
+  createAssessmentApi,
+  getAssessmentApi,
+} = require("./API/createAssessment");
 
 const userLogin = require("./API/loginUser");
 const {
@@ -63,10 +69,7 @@ const logRequestResponse = (req, res, next) => {
   next(); // Call the next middleware or route handler
 };
 
-
-
-
-app.use(logRequestResponse)
+app.use(logRequestResponse);
 app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
@@ -154,13 +157,14 @@ app.post("/getpost", getPost);
 
 app.post("/login", userLogin);
 app.post("/signup", signUpRequest);
-app.post("/createassessment", createAssessmentApi)
-app.post("/getassessment", getAssessmentApi)
+app.post("/createassessment", createAssessmentApi);
+app.post("/getassessment", getAssessmentApi);
 app.post("/submitApplication", postApplication);
 app.post("/leaderboard", getLeaderboard);
 app.post("/verifyEmail", verifyEmail);
 
 app.post("/bookmarkjob", postBookmarkJob);
 app.post("/removebookmarkjob", removeBookmarkJob);
-app.post("/getuser", getUser)
-
+app.post("/getuser", getUser);
+app.post("/getapplication", getApplication);
+app.post("/getapplicants", getApplicants);

@@ -25,6 +25,10 @@ import ViewUser from "./pages/ViewUser";
 import Chat from "./pages/Chat";
 
 import Application from "./pages/Application";
+import RecruiterScreen from "./pages/Recruiterscreen";
+import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
+import Calendar from "./pages/components/ApplicationComponents/Calendar";
+import ApplicationList from "./pages/ApplicationList";
 
 function App() {
   return (
@@ -46,15 +50,126 @@ function App() {
         <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
 
 
-        <Route path="/upload" element={<><Navbar userType={"recruiter"} /><UploadAssessment /></>} />
-        <Route path="/verfication/:id" element={<><Navbar userType={"user"} /><Verification /></>} />
-        <Route path="/application" element={<><Navbar userType={"user"} /><Application /></>} />
-        <Route path="/jobs" element={<><Navbar userType={"user"} /><Jobs /></>} />
-        <Route path="/jobpost/:id" element={<><Navbar userType={"user"} /><JobPosting /></>} />
-        <Route path="/assess/:id" element={<><Navbar userType={"user"} /><Assessment /></>} />
-        <Route path="/createpost" element={<><Navbar userType={"recruiter"} /><CreatePost /></>} />
+
+        <Route path="/upload" element={<UploadAssessment />} />
+        <Route path="/verfication/:id" element={<Verification />} />
+        <Route path="/application" element={<Application />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/jobpost/:id" element={<JobPosting />} />
+        <Route path="/applicants/:id" element={<ApplicationList />} />
+        <Route path="/assess/:id" element={<Assessment />} />
+        <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/home" element={<RecruiterScreen />} />
+        <Route path="/document" element={<PDFviewer />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/list" element={<ApplicationList />} />
+
+      </Routes>
+      {/* <BottomNavigation
+        style={{
+          background: "#3B3B3B",
+          height: "195px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "Work Sans",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            alt="Logo"
+            src={Logo}
+            style={{
+              width: "60px",
+              height: "60px",
+              marginRight: "10px",
+              marginLeft: "40px",
+            }}
+          />
+          <Typography
+            variant="body1"
+            style={{
+              color: "white",
+              fontSize: "28px",
+              fontFamily: "Work Sans",
+              borderBottom: "1px solid white",
+            }}
+          >
+            CoBuild
+          </Typography>
+          <Typography
+            variant="body2"
+            style={{
+              color: "white",
+              fontSize: "28px",
+              fontFamily: "Work Sans",
+              marginLeft: "150px",
+            }}
+          >
+            <a href="#" style={{ color: "white" }}>
+              Join Our Community
+            </a>{" "}
+          </Typography>
+          <Typography
+            variant="body2"
+            style={{
+              color: "white",
+              fontSize: "28px",
+              fontFamily: "Work Sans",
+              marginLeft: "150px",
+            }}
+          >
+            <a href="#" style={{ color: "white" }}>
+              About
+            </a>{" "}
+          </Typography>
+          <Typography
+            variant="body2"
+            style={{
+              color: "white",
+              fontSize: "28px",
+              fontFamily: "Work Sans",
+              marginLeft: "150px",
+            }}
+          >
+            <a href="#" style={{ color: "white" }}>
+              Explore
+            </a>{" "}
+          </Typography>
+        </div>
+        <div
+          style={{
+            borderTop: "1px solid white",
+            marginTop: "20px",
+            paddingTop: "10px",
+            display: "flex",
+            justifyContent: "center",
+            width: "50%",
+          }}
+        >
+          <Typography
+            variant="body2"
+            style={{
+              color: "white",
+              fontSize: "14px",
+              fontFamily: "Work Sans",
+            }}
+          >
+            &copy; {new Date().getFullYear()} CoBuild. All rights reserved.
+          </Typography>
+        </div>
+      </BottomNavigation> */}
+
+      
       </Routes>
       {/* <Footer /> */}
+
     </div>
   );
 }

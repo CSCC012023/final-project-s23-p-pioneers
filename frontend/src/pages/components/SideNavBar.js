@@ -1,11 +1,4 @@
-import React, { useEffect } from "react";
-import Overview from "./components/ApplicationComponents/Overview";
-import Graphs from "./components/ApplicationComponents/Graphs";
-import Statistics from "./components/ApplicationComponents/Statistics";
-import Code from "./components/ApplicationComponents/CodeDisplay";
-import Resume from "./components/ApplicationComponents/ResumeDisplay";
-import CoverLetter from "./components/ApplicationComponents/CoverLetterDisplay";
-
+import React, { } from "react";
 import Drawer from "@mui/material/Drawer";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -14,119 +7,38 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import Logo from "../assets/images/CoBuildLogo.png";
+import Logo from "../../assets/images/CoBuildLogo.png";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import CodeIcon from "@mui/icons-material/Code";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-import { useState } from "react";
 
-function Application() {
-  const [selectedItem, setSelectedItem] = useState("Overview");
-  const [applicationData, setApplicationData] = useState({});
-  const [formattedDate, setFormattedDate] = useState("None");
-  const [userData, setUserData] = useState({});
-
-  const handleItemClick = (itemText) => {
-    setSelectedItem(itemText);
-  };
-
-  const fetchApplicationData = async (username, id) => {
-    const req = {
-      username: username,
-      jobID: id,
+function SideNavBar(props) {
+    // Extract props from the parent component, if needed
+    const { foldedView, handleSidebarToggle, userData, applicationData, selectedItem, handleItemClick } = props;
+    const activeIconStyle = {
+        backgroundColor: "#3A2F55",
     };
 
-    try {
-      const response = await fetch("http://localhost:8000/getApplication", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-      });
-      if (response.status === 404) {
-        console.error("Job not found");
-        return;
-      }
+    return (
 
-      const appData = await response.json();
-      setApplicationData(appData);
-      console.log(appData);
-      const date = new Date(appData.submissionTime);
-      const day = date.getDate();
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      const monthName = monthNames[date.getMonth()];
-      const year = date.getFullYear();
-      const formattedDate = `${monthName} ${day}, ${year}`;
-      setFormattedDate(formattedDate);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchUser = async (username) => {
-    const req = {
-      username: username,
-    };
-
-    try {
-      const response = await fetch("http://localhost:8000/getUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-      });
-      if (response.status === 404) {
-        console.error("User not found");
-        return;
-      }
-
-      const userData = await response.json();
-      setUserData(userData.user);
-      console.log(userData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchApplicationData("mini", "6wpXhEFnyLxbZjVcyRJzh3");
-  }, []);
-
-  useEffect(() => {
-    fetchUser("mini");
-  }, []);
-
-  return (
-    <div style={{ display: "flex" }}>
-      {/* Sidebar */}
-      <Drawer
+        <Drawer
         variant="permanent"
         anchor="left"
+        open={!foldedView} 
         sx={{
-          width: 240,
+          width: foldedView ? 97 : 240,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: 240,
+            width: foldedView ? 97 : 240,
             boxSizing: "border-box",
             background: "linear-gradient(180deg, #050911 10%, #050911 75%)",
             borderRight: "0.5px solid #5b5b5b",
@@ -143,10 +55,14 @@ function Application() {
             flexDirection: "column",
           }}
         >
-          <Avatar
+            <Avatar
             alt="User Avatar"
-            sx={{ width: 60, height: 60, mt: "2rem" }}
-          />
+            sx={{
+                width: foldedView ? 40 : 60, // Conditionally set the width based on foldedView
+                height: foldedView ? 40 : 60, // Conditionally set the height based on foldedView
+                mt: "2rem",
+            }}
+            />
           <div style={{ marginTop: "0.5rem", textAlign: "center" }}>
             <Typography
               variant="h6"
@@ -160,7 +76,8 @@ function Application() {
               fontFamily={"Work Sans"}
               sx={{ mb: "1rem" }}
             >
-              {userData.email}
+              
+              {!foldedView && userData.email} {/* Conditionally render text */}
             </Typography>
             <div
               style={{
@@ -187,10 +104,22 @@ function Application() {
                       "&:hover": {
                         backgroundColor: "#3A2F55",
                       },
+                      display: "flex", // Use Flexbox layout for the container
+                      justifyContent: "center", // Center the content horizontally
+                      ...(item.text === selectedItem && activeIconStyle),
                     }}
-                  >
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
+                    > 
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        {foldedView && ( // Conditionally apply margin to icons when in folded view
+                        <ListItemIcon sx={{ marginLeft: "0.5rem" }}>
+                            {item.icon}
+                        </ListItemIcon>
+                        )}
+                        {!foldedView && <ListItemIcon>{item.icon}</ListItemIcon>}
+                    </div>
+                    {/* Show text only when not in folded view */}
+                    {!foldedView && <ListItemText primary={item.text} />}
+
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -220,11 +149,24 @@ function Application() {
                       "&:hover": {
                         backgroundColor: "#3A2F55",
                       },
+                        display: "flex", // Use Flexbox layout for the container
+                        justifyContent: "center", // Center the content horizontally
+                      ...(item.text === selectedItem && activeIconStyle),
                     }}
                   >
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
-                  </ListItemButton>
+
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        {foldedView && ( // Conditionally apply margin to icons when in folded view
+                        <ListItemIcon sx={{ marginLeft: "0.5rem" }}>
+                            {item.icon}
+                        </ListItemIcon>
+                        )}
+                        {!foldedView && <ListItemIcon>{item.icon}</ListItemIcon>}
+                    </div>
+                    {/* Show text only when not in folded view */}
+                    {!foldedView && <ListItemText primary={item.text} />}
+
+                    </ListItemButton>
                 </ListItem>
               ))}
             </List>
@@ -236,14 +178,14 @@ function Application() {
                 margin: "1px auto",
               }}
             />
-            <div
+            {/* <div
               style={{
                 width: "100%",
                 height: "1px",
                 backgroundColor: "#1a1a1a",
                 margin: "9rem auto 0 auto",
               }}
-            />
+            /> */}
             <div
               style={{
                 display: "flex",
@@ -257,59 +199,47 @@ function Application() {
                 alt="CoBuild Logo"
                 style={{ width: "40px", height: "40px", marginRight: "8px" }}
               />
-              <Typography
+            {!foldedView && ( // Conditional check: Show Typography only when sidebar is not folded
+                <Typography
                 variant="h5"
                 fontFamily={"Work Sans"}
                 fontWeight={"Bold"}
-                sx={{ color: "#fff" }}
-              >
+                sx={{ color: "#fff"}}
+                // sx={{ color: "#fff", marginLeft: "1rem", marginTop: "1rem" }}
+                >
                 CoBuild
-              </Typography>
+                </Typography>
+            )}
             </div>
           </div>
         </div>
-      </Drawer>{" "}
-      {/* Actual Content */}
-      <div
-        style={{
-          background: "#151718",
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        {(() => {
-          switch (selectedItem) {
-            case "Overview":
-              return (
-                <Overview
-                  user={userData}
-                  application={applicationData}
-                  date={formattedDate}
-                />
-              );
-            case "Graphs":
-              return <Graphs />;
-            case "Statistics":
-              return <Statistics />;
-            case "Code":
-              return <Code appCode={applicationData.codingQuestionResult} />;
-            case "Resume":
-              return <Resume />;
-            case "Cover Letter":
-              return <CoverLetter />;
-            default:
-              return (
-                <Overview
-                  user={userData}
-                  application={applicationData}
-                  date={formattedDate}
-                />
-              );
-          }
-        })()}
-      </div>
-    </div>
-  );
-}
+        <div
+            style={{
+                position: "absolute",
+                bottom: "0",
+                width: "100%",
+                display: "flex",
+                justifyContent: foldedView ? "center" : "flex-end", // Center when folded, right-align when expanded
+                paddingRight: "8px",
+            }}
+            >
+            <IconButton
+                sx={{
+                backgroundColor: "#3A2F55",
+                "&:hover": {
+                    backgroundColor: "#3A2F55",
+                },
+                }}
+                onClick={handleSidebarToggle}
+            >
+                {!foldedView ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+        </div>
 
-export default Application;
+
+      </Drawer>
+    );
+  }
+  
+  // Export the SideNavBar component
+  export default SideNavBar;
