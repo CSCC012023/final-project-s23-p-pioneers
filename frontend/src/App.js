@@ -20,6 +20,10 @@ import Logo from "./assets/images/CoBuildLogo.png";
 import UploadAssessment from "./pages/UploadAssessment";
 
 import Application from "./pages/Application";
+import RecruiterScreen from "./pages/Recruiterscreen";
+import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
+import Calendar from "./pages/components/ApplicationComponents/Calendar";
+import ApplicationList from "./pages/ApplicationList";
 
 function App() {
   return (
@@ -38,8 +42,14 @@ function App() {
         <Route path="/application" element={<Application />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobpost/:id" element={<JobPosting />} />
+        <Route path="/applicants/:id" element={<ApplicationList />} />
         <Route path="/assess/:id" element={<Assessment />} />
         <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/home" element={<RecruiterScreen />} />
+        <Route path="/document" element={<PDFviewer />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/list" element={<ApplicationList />} />
+
       </Routes>
       {/* <BottomNavigation
         style={{
