@@ -28,7 +28,8 @@ const {
   getAssessmentApi,
 } = require("./API/createAssessment");
 
-const userLogin = require("./API/loginUser");
+const { userLogin, recruiterLogin} = require("./API/loginUser");
+
 const {
   signUpRequest,
   setResume,
@@ -91,6 +92,7 @@ app.get("/getcompanylogo", getCompanyLogo);
 app.get("/getrecruiter", getRecruiter);
 app.post("/search", searchusers);
 app.post("/followuser", followUser)
+app.post("/loginrecruiter", recruiterLogin);
 app.post("/checkfollowstatus",checkFollowStatus)
 app.post("/unfollowuser", unfollowUser)
 app.get("/s3Url", async (req, res) => {

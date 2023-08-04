@@ -227,6 +227,7 @@ function SignUpRecruiter() {
         console.error("Error:", error);
       });
       localStorage.setItem('recruitername', username)
+      localStorage.setItem('recruiterpassword', password);
       
       const url = "https://api.chatengine.io/users/";
       const privateKey = "e9cddeb1-93b9-43fd-ac8c-8dd75adc6bb2";
