@@ -109,6 +109,8 @@ const signUpSchema = new mongoose.Schema({
   //   type: String,
   //   required: [true, "Please enter a transcript"],
   // },
+  followers: [String],
+  following: [String],
 });
 
 module.exports = signUpSchema;

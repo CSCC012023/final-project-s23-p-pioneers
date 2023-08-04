@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import JobPosting from "./components/Card";
+import JobPosting from "./components/RecruiterCard";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Logo from "../assets/images/CoBuildLogo.png";
 
-function Jobs() {
+function RecruiterDashboard() {
   const [jobs, setJobs] = useState([]);
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState("");
@@ -106,9 +106,51 @@ function Jobs() {
   }, [shouldFilter, search, location]);
 
   return (
-    <div style={{ backgroundColor: "#3B3B3B", color: "#FFFFFF"}}>
+    <div style={{ backgroundColor: "#3B3B3B" }}>
       {/* Render job list or perform actions with jobIds */}
-      
+      <AppBar position="relative" style={{ background: "#2B2B2B", height: "80px" }}>
+        <Toolbar
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "80px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Avatar alt="Logo" src={Logo} style={{ width: "35px", height: "35px" }} />
+          <Typography
+            variant="h6"
+            style={{
+              fontWeight: "bold",
+              marginLeft: "25px",
+              fontSize: "30px",
+              fontFamily: "work sans",
+            }}
+          >
+            CoBuild
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/login"
+            style={{
+              background: "#A259FF",
+              marginLeft: "auto",
+              width: "120px",
+              height: "60px",
+              borderRadius: "20px",
+              fontWeight: 600,
+              color: "#FFFFFF",
+              fontStyle: "normal",
+              fontSize: "16px",
+              lineHeight: "140%",
+              fontFamily: "work sans",
+            }}
+          >
+            Sign In
+          </Button>
+        </Toolbar>
+      </AppBar>
       <div style={{ paddingTop: "20px", backgroundColor: "#2B2B2B" }}>
         <div
           style={{
@@ -131,7 +173,7 @@ function Jobs() {
               fontSize: "45px",
             }}
           >
-            Browse Job Postings
+            My Job Postings
           </Typography>
           <Typography
             style={{ float: "left", fontFamily: "work sans", fontSize: "25px" }}
@@ -139,31 +181,6 @@ function Jobs() {
             Browse through more than 100s of job postings on CoBuild Job Board
           </Typography>
 
-          <TextField
-            fullWidth
-            label="Location"
-            variant="outlined"
-            value={location}
-            onChange={handleLocationChange}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#FFFFFF", // White border color
-                  "&:hover": {
-                    borderColor: "#A259FF !important", // Purple border color on hover
-                  },
-                },
-                "& input": {
-                  color: "#FFFFFF", // White text color
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "#FFFFFF", // White text color for the label
-              },
-            }}
-          >
-            Location
-          </TextField>
           <TextField
             fullWidth
             label="Search For Jobs"
@@ -288,7 +305,7 @@ function Jobs() {
               Jobs
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          {/* <Grid item xs={4}>
             <Button
               variant="contained"
               fullWidth
@@ -304,7 +321,7 @@ function Jobs() {
             >
               Assessments
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
 
       </div>
@@ -313,4 +330,4 @@ function Jobs() {
   );
 }
 
-export default Jobs;
+export default RecruiterDashboard;

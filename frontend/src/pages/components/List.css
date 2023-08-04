@@ -1,0 +1,40 @@
+/* List.css */
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #3B3B3B; /* Add the background color */
+  border-radius: 10px; /* Add rounded corners */
+  padding: 10px; /* Add padding to create space between items */
+  width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s; /* Add transition for smooth hover effect */
+}
+
+li:hover {
+  transform: scale(1.1); /* Increase the size on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 16px #A259FF;
+}
+
+li img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+li div {
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  margin: 0;
+  font-size: 16px;
+}

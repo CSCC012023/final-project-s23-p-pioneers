@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
+const { followUser, unfollowUser, checkFollowStatus } = require("./API/followaction")
 const getPost = require("./API/getpost");
 const {
   signUpEmployer,
@@ -13,12 +14,13 @@ const {
 } = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
-
+const searchusers = require("./API/searchusers")
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser");
 
 const getApplication = require("./API/getApplication");
+const getApplicants = require("./API/applicants");
 
 const {
   createAssessmentApi,
@@ -86,6 +88,10 @@ app.post("/addcode", addAssessment);
 app.get("/getcompanyname", getCompanyName);
 app.get("/getcompanylogo", getCompanyLogo);
 
+app.post("/search", searchusers);
+app.post("/followuser", followUser)
+app.post("/checkfollowstatus",checkFollowStatus)
+app.post("/unfollowuser", unfollowUser)
 app.get("/s3Url", async (req, res) => {
   console.log("hello");
 
@@ -173,3 +179,4 @@ app.post("/bookmarkjob", postBookmarkJob);
 app.post("/removebookmarkjob", removeBookmarkJob);
 app.post("/getuser", getUser);
 app.post("/getapplication", getApplication);
+app.post("/getapplicants", getApplicants);

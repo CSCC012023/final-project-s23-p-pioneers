@@ -163,7 +163,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       boxSizing: "border-box",
                       width: (window.innerWidth/5),
                       height: "160px",
-                      background: "#F3F0FF",
+                      background: "#e5e0fc",
                       border: "2px dashed #7A5FEC", // Adjust border color and thickness
                       borderRadius: "8px",
                       transition: "transform 0.3s ease",
@@ -207,6 +207,160 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       }
 
                       setUploadedFiles(updatedFiles);
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      paddingTop: "8px",
+                      gap: "12px",
+                      width: (window.innerWidth/5),
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        padding: "8px",
+                        gap: "12px",
+                        width: (window.innerWidth/5),
+                        height: "72px",
+                        background: "#FFFFFF",
+                        boxShadow: "4px #EAE2FD",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "48px",
+                          height: "56px",
+                          background: "#DAF2D9",
+                          borderRadius: "4px",
+                          flex: "none",
+                          order: "0",
+                          flexGrow: "0",
+                        }}
+                      ></div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "flex-start",
+                          padding: "0px",
+                          gap: "4px",
+                          width: (window.innerWidth/5) - 80,
+                          height: "56px",
+                          flex: "none",
+                          order: "1",
+                          flexGrow: "1",
+                        }}
+                      >
+                        <p
+                          style={{
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
+                            height: "18px",
+                            fontFamily: "Inter",
+                            fontStyle: "normal",
+                            fontWeight: 700,
+                            fontSize: "14px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#575361",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                          title={file.name} // Add the title attribute to display the full name on hover
+                        >
+                          {file.name}
+                        </p>
+                        <p
+                          style={{
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
+                            height: "16px",
+                            fontFamily: "'Inter'",
+                            fontStyle: "normal",
+                            fontWeight: "500",
+                            fontSize: "12px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#857E95",
+                            flex: "none",
+                            order: "1",
+                            alignSelf: "stretch",
+                            flexGrow: "0",
+                          }}
+                        >
+                          {Math.round(file.size / 1024)} KB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+        </Grid>
+        <Grid item xs={12} md={6}>
+        <label
+                  htmlFor="transcriptInput"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      boxSizing: "border-box",
+                      width: (window.innerWidth/5),
+                      height: "160px",
+                      background: "#e5e0fc",
+                      border: "2px dashed #7A5FEC", // Adjust border color and thickness
+                      borderRadius: "8px",
+                      transition: "transform 0.3s ease",
+                      transform: "scale(1)",
+                      /* Inside auto layout */
+                      flex: "none",
+                      order: "0",
+                      alignSelf: "stretch",
+                      flexGrow: "0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#7A5FEC",
+                      WebkitTextStrokeWidth: "1px",
+                      fontWeight: "normal",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.animation = "circle 1s infinite linear";
+                      e.target.style.transform = "scale(1.05)"; // Increase the scale on hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.animation = "none";
+                      e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
+                    }}
+                  >
+                    Import Transcript
+                  </span>
+                  <input
+                    type="file"
+                    id="transcriptInput"
+                    accept="application/pdf"
+                    style={{ display: "none" }}
+                    required
+                    capture="user"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      const updatedFiles = [...uploadedFiles];
+
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
+
+                      setUploadedTranscript(updatedFiles);
                     }}
                   />
                 </label>
@@ -259,7 +413,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                           alignItems: "flex-start",
                           padding: "0px",
                           gap: "4px",
-                          width: (window.innerWidth/5),
+                          width: (window.innerWidth/5) - 80,
                           height: "56px",
                           flex: "none",
                           order: "1",
@@ -268,7 +422,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       >
                         <p
                           style={{
-                            width: (window.innerWidth/5) , // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "18px",
                             fontFamily: "Inter",
                             fontStyle: "normal",
@@ -288,7 +442,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                         </p>
                         <p
                           style={{
-                            width: (window.innerWidth/5), // Adjusted width to match the previous div width
+                            width: (window.innerWidth/5) - 80, // Adjusted width to match the previous div width
                             height: "16px",
                             fontFamily: "'Inter'",
                             fontStyle: "normal",
