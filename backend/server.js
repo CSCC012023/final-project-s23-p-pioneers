@@ -7,7 +7,7 @@ const getPost = require("./API/getpost");
 const signUpEmployer = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
-
+const getSimilarityScore = require("./API/getSimilarity");
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser");
@@ -154,6 +154,7 @@ app.post("/compile", compile);
 app.post("/createassesment", assesmentAPI);
 app.post("/createpost", createPost);
 
+app.post("/getSimilarity", getSimilarityScore);
 app.post("/getpost", getPost);
 
 app.post("/login", userLogin);
