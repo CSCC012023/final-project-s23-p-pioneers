@@ -5,7 +5,7 @@ import LineGraph from "./LineGraph";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import DoughnutChart from "./Doughnut";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import GradeIcon from "@mui/icons-material/Grade";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -83,7 +83,7 @@ const TestCard = ({ body, width, radius, height }) => {
         >
           <Grid item>
             <Typography variant="h4" sx={{ color: "#808080" }}>
-              Submission Date: August 8th 2023
+              Submission Date: {body}
             </Typography>
           </Grid>
         </Grid>
@@ -121,6 +121,7 @@ const BarGraphCard = () => {
       item
       direction="column"
       md={12}
+      lg={12}
       justifyContent={"center"}
       mt={"1.5rem"}
       sx={{
@@ -149,7 +150,44 @@ const BarGraphCard = () => {
   );
 };
 
-const ProfileCard = () => {
+const ProfileCard = ({ user }) => {
+  const handleResumeClick = () => {
+    const resumeLink = user.resume;
+
+    if (resumeLink === undefined) {
+      alert("You have not uploaded your resume yet!");
+    } else {
+      window.open(resumeLink, "_blank");
+    }
+  };
+
+  const handleTranscriptClick = () => {
+    const transcriptLink = user.transcript;
+
+    if (transcriptLink === undefined) {
+      alert("You have not uploaded your transcript yet!");
+    } else {
+      window.open(transcriptLink, "_blank");
+    }
+  };
+
+  const MAX_CHAR_LIMIT = 80;
+  const MAX_ITEMS_TO_DISPLAY = 3;
+
+  function truncateString(str, limit) {
+    return str.length > limit ? str.slice(0, limit) : str;
+  }
+
+  const limitedSkills = user.skills
+    ? user.skills.slice(0, MAX_ITEMS_TO_DISPLAY).join(", ")
+    : "Unknown Skills";
+  const truncatedSkills = truncateString(limitedSkills, MAX_CHAR_LIMIT);
+
+  const limitedCourses = user.courses
+    ? user.courses.slice(0, MAX_ITEMS_TO_DISPLAY).join(", ")
+    : "Unknown Courses";
+  const truncatedCourses = truncateString(limitedCourses, MAX_CHAR_LIMIT);
+
   return (
     <Grid
       container
@@ -157,6 +195,7 @@ const ProfileCard = () => {
       direction={"column"}
       alignItems={"center"}
       md={3.8}
+      lg={3.8}
       mt={"1rem"}
       ml={"1rem"}
       wrap="nowrap"
@@ -176,12 +215,12 @@ const ProfileCard = () => {
         </Grid>
         <Grid item mt={"1rem"}>
           <Typography variant="h7" sx={{ color: "#fff" }}>
-            {"Ashwin Mallik"}
+            {user.username}
           </Typography>
         </Grid>
         <Grid item mt={"0.5rem"}>
           <Typography variant="body2" sx={{ color: "#808080" }}>
-            {"University of Toronto"}
+            {user.university ? user.university : "Unknown University"}
           </Typography>
         </Grid>
         {/* Resume, LinkedIn, Transcript */}
@@ -189,17 +228,22 @@ const ProfileCard = () => {
           <Grid item>
             <Avatar
               children={<PictureAsPdfIcon />}
-              sx={{ background: "#FF0000" }}
+              sx={{ background: "#FF0000", cursor: "pointer" }}
+              onClick={handleResumeClick}
             />
           </Grid>
           <Grid item>
             <Avatar
-              children={<LinkedInIcon />}
-              sx={{ background: "#027ffe" }}
+              children={<GitHubIcon />}
+              sx={{ background: "#02040a", cursor: "pointer" }}
             />
           </Grid>
           <Grid item>
-            <Avatar children={<GradeIcon />} sx={{ background: "#00C000" }} />
+            <Avatar
+              children={<GradeIcon />}
+              sx={{ background: "#00C000", cursor: "pointer" }}
+              onClick={handleTranscriptClick}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -219,25 +263,25 @@ const ProfileCard = () => {
           icon={<PersonSearchIcon />}
           color="#D5B77A"
           type="Username:"
-          body="Ashwin1523"
+          body={user.username}
         />
         <ProfileCardAttributes
           icon={<AccountBalanceIcon />}
           color="#AA336A"
           type="Program:"
-          body="Computer Science"
+          body={user.program ? user.program : "Unknown Program"}
         />
         <ProfileCardAttributes
           icon={<BorderColorIcon />}
           color="#f0b702"
           type="Skills:"
-          body="Python, Java, C"
+          body={truncatedSkills}
         />
         <ProfileCardAttributes
           icon={<AlignVerticalBottomIcon />}
           color="#FFA500"
           type="Courses:"
-          body="CS50, CSCC01, CSCB63"
+          body={truncatedCourses}
         />
       </Grid>
     </Grid>
@@ -338,7 +382,7 @@ const TableCard = () => {
   );
 };
 
-const Overview = () => {
+const Overview = ({ user, application, date }) => {
   return (
     <Container>
       <Grid
@@ -352,7 +396,7 @@ const Overview = () => {
           <Grid item md={12}>
             <TestCard
               title={"Submission"}
-              body={"July 21, 2023"}
+              body={date}
               width={450}
               radius={20}
               height={130}
@@ -362,7 +406,7 @@ const Overview = () => {
           <BarGraphCard />
         </Grid>
         {/* Profile Card */}
-        <ProfileCard />
+        <ProfileCard user={user} />
         {/* Doughnut Graph Card */}
         <ResumeParserCard />
 

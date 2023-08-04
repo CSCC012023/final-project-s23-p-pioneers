@@ -6,6 +6,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import ScoreIcon from "@mui/icons-material/Score";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const TableData = [
   { attempts: 1, complexity: "O(1)", score: 90, time: "30m" },
@@ -15,69 +18,111 @@ const TableData = [
   { attempts: 5, complexity: "O(log(n))", score: 95, time: "30m" },
 ];
 
+const AttemptCard = ({ colour, icon, body }) => {
+  return (
+    <>
+      <Grid
+        container
+        item
+        md={3.5}
+        ml={1}
+        mr={1}
+        sx={{
+          background: "#202123",
+          borderRadius: "20px",
+          height: "305px",
+          width: "100%",
+        }}
+      >
+        <Grid
+          container
+          item
+          md={13}
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{
+            background: colour,
+            height: "100px",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          }}
+          ml={-2}
+          mt={-1.5}
+        >
+          {icon}
+        </Grid>
+        <Grid
+          container
+          item
+          md={12}
+          justifyContent={"center"}
+          alignItems={"center"}
+          mb={6}
+        >
+          <Typography variant="h2" fontWeight={"bold"}>
+            {body}{" "}
+          </Typography>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
 const Statistics = () => {
   return (
     <Grid container spacing={2} mt={1} justifyContent={"center"}>
-      <Grid container item md={12} mb={1} justifyContent={"center"}>
-        <Typography variant="h4">Best Attempt</Typography>
+      <Grid container item md={12} mb={1} pb={1} justifyContent={"center"}>
+        <Typography
+          sx={{
+            background: "#202123",
+            width: "50%",
+            borderRadius: "20px",
+            height: "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#808080",
+            fontSize: "28px",
+          }}
+        >
+          Best Attempt
+        </Typography>
       </Grid>
-      <Grid
-        container
-        item
-        md={3.5}
-        direction={"column"}
-        alignItems={"center"}
-        ml={"1rem"}
+      <AttemptCard
+        colour={"#a259ff"}
+        icon={<TerminalIcon sx={{ fontSize: "4rem" }} />}
+        body={"O(n)"}
+      />
+      <AttemptCard
+        colour={"#ff5a5a"}
+        icon={<ScoreIcon sx={{ fontSize: "4rem" }} />}
+        body={"100"}
+      />
+      <AttemptCard
+        colour={"#87CEEB"}
+        icon={<AccessTimeIcon sx={{ fontSize: "4rem" }} />}
+        body={"30  mins"}
+      />
+      <Typography
+        mt={2}
         sx={{
           background: "#202123",
+          width: "50%",
           borderRadius: "20px",
-          height: "305px",
-          width: "100%",
+          height: "50px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#808080",
+          fontSize: "28px",
         }}
       >
-        <Typography>Hi</Typography>
-      </Grid>
+        All Attempts
+      </Typography>
       <Grid
         container
         item
-        md={3.5}
-        direction={"column"}
-        alignItems={"center"}
-        ml={"1rem"}
-        sx={{
-          background: "#202123",
-          borderRadius: "20px",
-          height: "305px",
-          width: "100%",
-        }}
-      >
-        {" "}
-        <Typography>Hi</Typography>
-      </Grid>
-      <Grid
-        container
-        item
-        md={3.5}
-        direction={"column"}
-        alignItems={"center"}
-        ml={"1rem"}
-        sx={{
-          background: "#202123",
-          borderRadius: "20px",
-          height: "305px",
-          width: "100%",
-        }}
-      >
-        {" "}
-        <Typography>Hi</Typography>
-      </Grid>
-      <Grid container item md={12} mb={1} justifyContent={"center"}>
-        <Typography variant="h4">All Attempts</Typography>
-      </Grid>
-      <Grid
-        container
-        item
-        md={12}
+        md={11}
         mb={"1rem"}
         mt={"1rem"}
         ml={"1rem"}
