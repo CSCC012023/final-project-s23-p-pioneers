@@ -151,7 +151,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <label
-                  htmlFor="fileInput"
+                  htmlFor="resumeInput"
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -189,11 +189,11 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
                     }}
                   >
-                    Import Files
+                    Import Resume
                   </span>
                   <input
                     type="file"
-                    id="fileInput"
+                    id="resumeInput"
                     accept="application/pdf"
                     style={{ display: "none" }}
                     required
@@ -205,8 +205,15 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       for (let i = 0; i < files.length; i++) {
                         updatedFiles.push(files[i]);
                       }
+                      setUploadedResume(updatedFiles);
+                    }}
+                  />
+                </label>
+                {uploadedResume.map((file, index) => (
+                  // <div key={index}>
+                  //   <span>{file.name}</span>
+                  // </div>
 
-                      setUploadedFiles(updatedFiles);
                   <div
                     key={index}
                     style={{
@@ -364,7 +371,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                     }}
                   />
                 </label>
-                {uploadedFiles.map((file, index) => (
+                {uploadedTranscript.map((file, index) => (
                   // <div key={index}>
                   //   <span>{file.name}</span>
                   // </div>
@@ -375,7 +382,7 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "flex-start",
-                      padding: "0px",
+                      paddingTop: "8px",
                       gap: "12px",
                       width: (window.innerWidth/5),
                     }}
@@ -464,12 +471,26 @@ const Step3 = ({ handleSetProfileImage, handleNext, handlePrevious }) => {
                     </div>
                   </div>
                 ))}
+        </Grid>
+      </Grid>
 
-        <Box marginTop={2}>
-          <Button variant="outlined" onClick={handlePrevious}>
+      
+
+      <Grid container spacing={2} paddingTop={2}>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={handleNextClick}
+          >
+            Continue
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="outlined" color="secondary" fullWidth onClick={handlePrevious}>
             Previous
           </Button>
-        </Box>
         </Grid>
       </Grid>
     </div>

@@ -3,7 +3,6 @@ import { Typography, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import MessageIcon from "@mui/icons-material/Message";
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -13,11 +12,6 @@ import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
 import { useNavigate, useParams } from "react-router-dom";
-
-import { useState, useEffect } from "react";
-
-const useStyles = makeStyles({
-    
 import "./ViewUser.css";
 
 import { useState, useEffect } from "react";
@@ -78,7 +72,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "10px",
   },
-
   userLabelsContainer: {
     display: "flex",
     flexDirection: "row",
@@ -143,7 +136,6 @@ const ViewUser = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-
   const [isFollowing, setIsFollowing] = useState(false); // State variable to track if the user is being followed
 
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
@@ -166,7 +158,6 @@ const ViewUser = () => {
       console.error("Error fetching user data:", error);
     }
   };
-
   const checkFollowStatus = async () => {
     try {
       const currentUser = localStorage.getItem("username"); // Assuming you store the current user's username in localStorage
@@ -199,10 +190,6 @@ const ViewUser = () => {
   useEffect(() => {
     // Fetch user data when the component mounts
     fetchUserData();
-  }, []);
-
-  const { id: username } = useParams();
-  
     checkFollowStatus();
   }, []);
 
@@ -417,7 +404,6 @@ const ViewUser = () => {
       window.open(resumeLink, "_blank");
     }
   };
-
   const whiteCircleClass = classes.userImage + " white-circle";
 
   const handleTranscriptClick = () => {
@@ -434,52 +420,6 @@ const ViewUser = () => {
     <div className={classes.root}>
       <div className={classes.banner}>
         <div className={classes.userImageContainer}>
-          <img
-            className={classes.userImage}
-            alt="User Profile"
-            src={profilepic}
-          />
-        </div>
-        <div className={classes.buttonContainer}>
-            <Button
-            style={{
-                borderRadius: "20px",
-                background: "#A259FF",
-                color: "white",
-                width: "145px",
-                height: "60px",
-                padding: "0px 50px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "12px",
-            }}
-
-                endIcon={<AddBoxIcon />}
-                onClick={handleEditClick}
-                >
-            Follow
-            </Button>
-            <Button
-            style={{
-                borderRadius: "20px",
-                background: "#A259FF",
-                color: "white",
-                width: "145px",
-                height: "60px",
-                padding: "0px 50px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "12px",
-
-            }}
-
-                endIcon={<MessageIcon />}
-                onClick={handleEditClick}
-                >
-            Message
-            </Button>
           {profilepic ? (
             <img
               className={classes.userImage}
@@ -531,57 +471,6 @@ const ViewUser = () => {
       </div>
       <div className={classes.userProfile}>
         <div className={classes.userDetails}>
-          <Typography variant="h4" className={classes.userLabel}>
-            Name
-          </Typography>
-          <Typography variant="h3" className={classes.userValue}>
-            {name}
-          </Typography>
-          <div style={{ display: "flex", gap: "200px" }}>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                University
-              </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {university}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                Program
-              </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {program}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                Email
-              </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {email}
-              </Typography>
-            </div>
-          </div>
-          <Typography variant="h4" className={classes.userLabel}>
-            Bio
-          </Typography>
-          <Typography variant="h5" className={classes.userValue}>
-            {bio}
-          </Typography>
-          <Typography variant="h4" className={classes.userLabel}>
-            Links
-          </Typography>
-          <div className={classes.socialMedia}>
-            <GitHubIcon className={classes.socialIcon} />
-            <PictureAsPdfIcon
-              className={classes.socialIcon}
-              onClick={handleResumeClick}
-            />
-            <AllInboxIcon
-              className={classes.socialIcon}
-              onClick={handleTranscriptClick}
-            />
           <div className={classes.userLabelsContainer}>
             <div
               style={{

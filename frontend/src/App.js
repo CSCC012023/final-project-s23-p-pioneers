@@ -15,7 +15,6 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
-import ViewUser from "./pages/ViewUser";
 import Navbar from "./pages/components/Navbar";
 
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
@@ -36,14 +35,6 @@ function App() {
   
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/leaderboard/:id" element={<Leaderboard />} />
-        <Route path="/step1" element={<Step1 />} />
-        <Route path="/User" element={<UserProfile />} />
-        <Route path="/viewprofile/:id" element={<ViewUser />} />
-        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
-        <Route path="/recruiterstep1" element={<RecruiterSteps1 />} />
 
         <Route path="/" element={<><Navbar userType={""} /></>} />
         <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
@@ -76,7 +67,7 @@ function App() {
         <Route path="/list" element={<ApplicationList />} />
 
       </Routes>
-      { <BottomNavigation
+      {/* { <BottomNavigation
         style={{
           background: "#3B3B3B",
           height: "195px",
@@ -176,10 +167,9 @@ function App() {
           </Typography>
         </div>
       </BottomNavigation>}
-      </BottomNavigation> */}
+      </BottomNavigation>  */}
 
       
-      </Routes>
       {/* <Footer /> */}
 
     </div>

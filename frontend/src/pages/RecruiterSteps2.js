@@ -9,7 +9,6 @@ import {
   Grid,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -85,11 +84,10 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
   const [university, setUniversity] = useState("");
   const [program, setProgram] = useState("");
   const [courses, setCourses] = useState([]);
-  const [activeStep, setActiveStep] = useState(2);
   const [selectedDegrees, setSelectedDegrees] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedPositions, setSelectedPositions] = useState([]);
-  const navigate = useNavigate();
+
 
 
     const handleDegreeChange = (event, value) => {
@@ -104,17 +102,17 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
         setSelectedPositions(value);
     };
 
-  const handleNextClick = async (event) => {
+  const handleNextClick = () => {
     // Execute the intermediate function here
-    fetch('http://localhost:8000/updaterecruiter', {
+    fetch('http://localhost:8000/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'positionList',
-        value: selectedPositions, // Replace with the desired university value
+        username: localStorage.getItem("username"),
+        field: 'university',
+        value: university, // Replace with the desired university value
       })
     })
       .then(response => response.json())
@@ -126,15 +124,15 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
       });
   
     // Update program
-    fetch('http://localhost:8000/updaterecruiter', {
+    fetch('http://localhost:8000/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'degrees',
-        value: selectedDegrees, // Replace with the desired program value
+        username: localStorage.getItem("username"),
+        field: 'program',
+        value: program, // Replace with the desired program value
       })
     })
       .then(response => response.json())
@@ -152,9 +150,9 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'tags',
-        value: selectedTags, // Replace with the desired courses value (can be an array or string)
+        username: localStorage.getItem("username"),
+        field: 'courses',
+        value: courses, // Replace with the desired courses value (can be an array or string)
       })
     })
       .then(response => response.json())
@@ -165,8 +163,7 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
         console.error('Error:', error);
       });
     // Call the parent class handler
-    navigate("/User");
-    //handleNext();
+    handleNext();
   };
 
   const handleAddPosition = (event, value) => {
@@ -231,10 +228,6 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
 
   const handleRemoveTag = (tag) => {
     setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag));
-  };
-
-  const handleNextContinueClick = (event) => {
-    handleNextClick(event);
   };
 
   const handlePreviousClick = () => {
@@ -458,7 +451,7 @@ const RecruiterSteps2 = ({ handleNext, handlePrevious }) => {
             variant="contained"
             color="secondary"
             fullWidth
-            onClick={handleNextContinueClick}
+            onClick={handleNextClick}
           >
             Continue
           </Button>
