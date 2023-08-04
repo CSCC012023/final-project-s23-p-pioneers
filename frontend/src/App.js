@@ -23,6 +23,7 @@ import Application from "./pages/Application";
 
 function App() {
   return (
+  
     <div className="App">
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -36,13 +37,13 @@ function App() {
 
         <Route path="/upload" element={<UploadAssessment />} />
         <Route path="/verfication/:id" element={<Verification />} />
-        <Route path="/application" element={<Application />} />
+        <Route path="/application/:id" element={<Application />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobpost/:id" element={<JobPosting />} />
         <Route path="/assess/:id" element={<Assessment />} />
         <Route path="/createpost" element={<CreatePost />} />
       </Routes>
-      {/* <BottomNavigation
+      { <BottomNavigation
         style={{
           background: "#3B3B3B",
           height: "195px",
@@ -141,7 +142,7 @@ function App() {
             &copy; {new Date().getFullYear()} CoBuild. All rights reserved.
           </Typography>
         </div>
-      </BottomNavigation> */}
+      </BottomNavigation>}
     </div>
   );
 }

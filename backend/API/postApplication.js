@@ -100,6 +100,7 @@ const postApplication = async (req, res) => {
     }
     // Create a new application document
     const newApplication = new Application({
+      applicationId: short.generate(),
       job: appliedJob._id,
       jobId: jobID,
       username: username,
