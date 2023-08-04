@@ -268,11 +268,15 @@ const UserProfile = () => {
     <div className={classes.root}>
       <div className={classes.banner}>
         <div className={classes.userImageContainer}>
-          <img
-            className={classes.userImage}
-            alt="User Profile"
-            src={profilepic}
-          />
+        {profilepic ? (
+            <img
+              className={classes.userImage}
+              alt="User Profile"
+              src={profilepic}
+            />
+          ) : (
+            <div className={whiteCircleClass}></div>
+          )}
         </div>
         <Button
           style={{
