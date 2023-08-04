@@ -2,6 +2,7 @@ const applicationSchema = require("../Schemas/applicationSchema");
 const jobSchema = require("../Schemas/post");
 const mongoose = require("mongoose");
 const signUpSchema = require("../Schemas/userSchema");
+const short = require('short-uuid');
 
 const Application = mongoose.model("Application", applicationSchema);
 const Job = mongoose.model("Job", jobSchema);
