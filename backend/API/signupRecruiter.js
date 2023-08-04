@@ -23,4 +23,63 @@ const signUpEmployer = (req, res) => {
     });
 };
 
-module.exports = signUpEmployer;
+const updateParamsRecruiter = async (req, res) => {
+  const username = req.body.username;
+  const fieldToUpdate = req.body.field;
+  const value = req.body.value;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user[fieldToUpdate] = value;
+
+    await user.save();
+
+    res.status(200).json({ message: "Field updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update field" });
+  }
+};
+
+const setLogoRecruiter = async (req, res) => {
+  const { username, link } = req.body;
+  console.log(req.body);
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      { $set: { logo: link } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to update profile picture" });
+  }
+};
+
+const getCompanyName = async (req, res) => {
+  const { username } = req.query;
+  const recruiter = await User.findOne({ username: username });
+  console.log(recruiter.name);
+  res.send({ name: recruiter.name });
+};
+
+const getCompanyLogo = async (req, res) => {
+  const { username } = req.query;
+  const recruiter = await User.findOne({ username: username });
+  console.log(recruiter.logo);
+  res.send({ logo: recruiter.logo });
+};
+
+module.exports = {
+  signUpEmployer,
+  updateParamsRecruiter,
+  setLogoRecruiter,
+  getCompanyName,
+  getCompanyLogo,
+};

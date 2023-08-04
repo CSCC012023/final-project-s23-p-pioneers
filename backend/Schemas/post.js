@@ -25,6 +25,7 @@ const jobSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  companyLogo: String,
 });
 
 module.exports = jobSchema;

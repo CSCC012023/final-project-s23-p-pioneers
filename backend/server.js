@@ -5,7 +5,13 @@ const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
 const { followUser, unfollowUser, checkFollowStatus } = require("./API/followaction")
 const getPost = require("./API/getpost");
-const signUpEmployer = require("./API/signupRecruiter");
+const {
+  signUpEmployer,
+  updateParamsRecruiter,
+  setLogoRecruiter,
+  getCompanyName,
+  getCompanyLogo,
+} = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
 const searchusers = require("./API/searchusers")
@@ -75,7 +81,13 @@ app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
 app.post("/signuprecruiter", signUpEmployer);
+app.post("/updaterecruiter", updateParamsRecruiter);
+app.post("/setlogo", setLogoRecruiter);
 app.post("/addcode", addAssessment);
+
+app.get("/getcompanyname", getCompanyName);
+app.get("/getcompanylogo", getCompanyLogo);
+
 app.post("/search", searchusers);
 app.post("/followuser", followUser)
 app.post("/checkfollowstatus",checkFollowStatus)

@@ -5,15 +5,14 @@ const Application = mongoose.model("Application", applicationSchema);
 
 const getApplication = async (req, res) => {
   try {
-    const { username, jobID } = req.body;
-
-    if (!username || !jobID) {
-      return res.status(400).json({ error: "Missing username or jobID" });
+    const { applicationId } = req.body;
+    console.log(applicationId);
+    if (!applicationId) {
+      return res.status(400).json({ error: "Missing appID" });
     }
 
     const applications = await Application.findOne({
-      username: username,
-      jobId: jobID,
+      applicationId: applicationId,
     });
 
     if (!applications) {

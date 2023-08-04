@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const CoverLetterDisplay = () => {
+const CoverLetterDisplay = ({resume}) => {
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [file, setFile] = useState(null);
@@ -32,6 +32,7 @@ const CoverLetterDisplay = () => {
 
   useEffect(() => {
     onFileChange(
+      resume ||
       "https://ppioneerbucket.s3.amazonaws.com/aefaf/resume/94d1ab502f60e43c5698eec250f49640.pdf"
     );
   }, []);

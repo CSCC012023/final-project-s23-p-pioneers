@@ -195,6 +195,11 @@ function SignUpRecruiter() {
       setpositionError("");
     }
 
+    // const fileInput = document.getElementById("fileInput");
+    // const file = fileInput.files[0];
+
+    
+
     const user = {
       name,
       email,
@@ -228,6 +233,9 @@ function SignUpRecruiter() {
       .catch((error) => {
         console.error("Error:", error);
       });
+    
+      localStorage.setItem('recruitername', username)
+      
       navigate("/recruiterstep1");
 
   };
@@ -415,6 +423,216 @@ function SignUpRecruiter() {
                 flexGrow: "0",
               }}
             >
+              <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="name"
+                id="name"
+                value={name}
+                onChange={handleNameChange}
+                required
+                placeholder="Name"
+              />
+              {nameError && (
+                <Typography variant="caption" color="error">
+                  {nameError}
+                </Typography>
+              )}
+              <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                required
+                placeholder="Email"
+              />
+              {emailError && (
+                <Typography variant="caption" color="error">
+                  {emailError}
+                </Typography>
+              )}
+              <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color:
+                    (username.length === 0 ||
+                      username.length < 3 ||
+                      username.length > 6) &&
+                    usernameError
+                      ? "red"
+                      : "#000000",
+
+                  // color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="text"
+                id="username"
+                value={username}
+                onChange={handleUsernameChange}
+                required
+                placeholder="Username"
+              />
+              {usernameError && (
+                <Typography variant="caption" color="error">
+                  {usernameError}
+                </Typography>
+              )}
+              <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="password"
+                id="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+                placeholder="Password"
+              />
+              {passwordError && (
+                <Typography variant="caption" color="error">
+                  {passwordError}
+                </Typography>
+              )}
+              <input
+                style={{
+                  boxSizing: "border-box",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  gap: "12px",
+                  width: "330px",
+                  height: "46px",
+                  background: "#FFFFFF",
+                  border: "1px solid #858584",
+                  borderRadius: "20px",
+                  flex: "none",
+                  order: "0",
+                  alignSelf: "stretch",
+                  flexGrow: "0",
+                  color: "#000000",
+                  transition: "transform 0.5s ease",
+                }}
+                onClick={(e) => {
+                  e.target.style.animation = "circle 1s infinite linear";
+                  e.target.style.transform = "scale(1.05)"; // Increase the scale on click
+                }}
+                onBlur={(e) => {
+                  e.target.style.animation = "none";
+                  e.target.style.transform = "scale(1)"; // Reset the scale when focus is lost
+                }}
+                type="password"
+                id="cpass"
+                value={cpass}
+                onChange={handleCPasswordChange}
+                required
+                placeholder="Confirm Password"
+              />
+              {cpassError && (
+                <Typography variant="caption" color="error">
+                  {cpassError}
+                </Typography>
+              )}
+
+              {/* <div
               <div
                 style={{
                   display: "flex",
@@ -423,6 +641,8 @@ function SignUpRecruiter() {
                   padding: "0px",
                   gap: "10px",
                   width: "330px",
+                  height: "355px",
+                  // Inside auto layout
                   height: "782px",
                   flex: "none",
                   order: "0",
@@ -430,6 +650,170 @@ function SignUpRecruiter() {
                   flexGrow: "0",
                 }}
               >
+                <label
+                  htmlFor="fileInput"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      boxSizing: "border-box",
+                      width: "330px",
+                      height: "160px",
+                      background: "#F3F0FF",
+                      border: "2px dashed #7A5FEC", // Adjust border color and thickness
+                      borderRadius: "8px",
+                      transition: "transform 0.3s ease",
+                      transform: "scale(1)",
+                      // Inside auto layout 
+                      flex: "none",
+                      order: "0",
+                      alignSelf: "stretch",
+                      flexGrow: "0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#7A5FEC",
+                      WebkitTextStrokeWidth: "1px",
+                      fontWeight: "normal",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.animation = "circle 1s infinite linear";
+                      e.target.style.transform = "scale(1.05)"; // Increase the scale on hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.animation = "none";
+                      e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
+                    }}
+                  >
+                    Import Files
+                  </span>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="application/pdf/png/jpeg"
+                    style={{ display: "none" }}
+                    required
+                    capture="user"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      const updatedFiles = [...uploadedFiles];
+
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
+
+                      setUploadedFiles(updatedFiles);
+                    }}
+                  />
+                </label>
+
+                {uploadedFiles.map((file, index) => (
+                  // <div key={index}>
+                  //   <span>{file.name}</span>
+                  // </div>
+
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      padding: "0px",
+                      gap: "12px",
+                      width: "330px",
+                      height: "160px", // Adjusted height to match the previous div length
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        padding: "8px",
+                        gap: "12px",
+                        width: "330px",
+                        height: "72px",
+                        background: "#FFFFFF",
+                        boxShadow: "4px #EAE2FD",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "48px",
+                          height: "56px",
+                          background: "#DAF2D9",
+                          borderRadius: "4px",
+                          flex: "none",
+                          order: "0",
+                          flexGrow: "0",
+                        }}
+                      ></div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "flex-start",
+                          padding: "0px",
+                          gap: "4px",
+                          width: "254px",
+                          height: "56px",
+                          flex: "none",
+                          order: "1",
+                          flexGrow: "1",
+                        }}
+                      >
+                        <p
+                          style={{
+                            width: "254px", // Adjusted width to match the previous div width
+                            height: "18px",
+                            fontFamily: "Inter",
+                            fontStyle: "normal",
+                            fontWeight: 700,
+                            fontSize: "14px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#575361",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                          title={file.name} // Add the title attribute to display the full name on hover
+                        >
+                          {file.name}
+                        </p>
+                        <p
+                          style={{
+                            width: "254px", // Adjusted width to match the previous div width
+                            height: "16px",
+                            fontFamily: "'Inter'",
+                            fontStyle: "normal",
+                            fontWeight: "500",
+                            fontSize: "12px",
+                            lineHeight: "130%",
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#857E95",
+                            flex: "none",
+                            order: "1",
+                            alignSelf: "stretch",
+                            flexGrow: "0",
+                          }}
+                        >
+                          {Math.round(file.size / 1024)} KB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))} */}
+
+
                 <TextField
                   color="primary"
                   sx={{
@@ -677,6 +1061,68 @@ function SignUpRecruiter() {
                     Sign Up
                   </button>
 
+                <button
+                  onClick={handleSubmit}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={{
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center", // Add this line for center alignment
+                    padding: "16px 20px",
+                    gap: "12px",
+                    width: "330px",
+                    height: "46px",
+                    background: isHovered ? "#FFFFFF" : "#A259FF",
+                    color: isHovered ? "#A259FF" : "#FFFFFF",
+                    border: "3px solid #A259FF",
+                    // border: isHovered
+                    //   ? "3px solid #A259FF"
+                    //   : "3px solid #FFFFFF",
+                    borderRadius: "20px",
+                    flex: "none",
+                    order: "0",
+                    alignSelf: "stretch",
+                    flexGrow: "0",
+                    transition: "background-color 0.3s ease, color 0.3s ease",
+                    fontWeight: "bold", // Add this line for bold text
+                  }}
+                >
+                  Sign Up
+                </button>
+
+                <Button
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  fullWidth
+                  style={{
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "16px 20px",
+                    gap: "12px",
+                    width: "330px",
+                    height: "46px",
+                    background: isHovered ? "#A259FF" : "#FFFFFF",
+                    color: isHovered ? "#FFFFFF" : "#A259FF",
+                    border: `3px solid #A259FF`,
+                    borderRadius: "20px",
+                    flex: "none",
+                    order: "0",
+                    alignSelf: "stretch",
+                    flexGrow: "0",
+                    fontWeight: "bold",
+                  }}
+                  component={Link}
+                  to="/signup"
+                >
+                  Sign Up As Candidate
+                </Button>
+              {/* </div> */}
                   <Button
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}

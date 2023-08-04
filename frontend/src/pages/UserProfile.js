@@ -9,6 +9,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import JobBox from "./components/JobBox";
 import JobPosting from "./components/Card";
+import { useNavigate } from "react-router-dom";
 import "./UserProfile.css"
 
 import { useState, useEffect } from "react";
@@ -123,7 +124,7 @@ const useStyles = makeStyles({
 const UserProfile = () => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = React.useState("Saved Jobs");
 
   const fetchUserData = async () => {
@@ -245,6 +246,9 @@ const UserProfile = () => {
     jij,
   } = userData; // Assuming these fields exist in the fetched user data
 
+  const handleEditClick = () => {
+    navigate("/step1")
+  };
   const handleResumeClick = () => {
     const resumeLink = resume;
 
@@ -297,8 +301,10 @@ const UserProfile = () => {
             gap: "12px",
             zIndex: 2,
           }}
-          endIcon={<EditIcon />}
-        >
+
+            endIcon={<EditIcon />}
+            onClick={handleEditClick}
+            >
           Edit
         </Button>
       </div>
