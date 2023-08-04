@@ -92,6 +92,14 @@ const signUpSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  github: {
+    type: String,
+    required: false,
+  },
+  linkedin: {
+    type: String,
+    required: false,
+  },
   transcript: {
     type: String,
     required: false,
@@ -109,8 +117,6 @@ const signUpSchema = new mongoose.Schema({
   //   type: String,
   //   required: [true, "Please enter a transcript"],
   // },
-  followers: [String],
-  following: [String],
 });
 
 module.exports = signUpSchema;

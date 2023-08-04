@@ -8,11 +8,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const ResumeDisplay = ({resume}) => {
+const ResumeDisplay = () => {
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [file, setFile] = useState(null);
-  console.log(resume)
+
   const styles = {
     container: {
       maxWidth: "900px",
@@ -32,7 +32,7 @@ const ResumeDisplay = ({resume}) => {
 
   useEffect(() => {
     onFileChange(
-      resume
+      "https://ppioneerbucket.s3.amazonaws.com/four/resume/c183af38452c277d09332246225d13d5.pdf"
     );
   }, []);
 

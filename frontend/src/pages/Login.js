@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   AppBar,
   Avatar,
@@ -30,11 +30,8 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  useEffect(() => {
-    localStorage.setItem("type", "")
-  }, [])
+
   const handleClick = () => {
-    localStorage.setItem("type", "user");
     navigate("/jobs");
   };
   const handleLoginFormSubmit = (event) => {
@@ -93,13 +90,59 @@ function Login() {
       style={{
         background: "#2B2B2B",
         fontFamily: "Work Sans, sans-serif",
-        display: "flex",
-        justifyContent: "center", // Horizontally center the content
-        alignItems: "center", // Vertically center the content
-        height: "100vh", // Set the height to fill the entire screen
       }}
     >
-      <main style={{ display: "flex" }}>
+      <AppBar
+        position="relative"
+        style={{ background: "#2B2B2B", height: "80px" }}
+      >
+        <Toolbar
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "80px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Avatar
+            alt="Logo"
+            src={Logo}
+            style={{ width: "35px", height: "35px" }}
+          />
+          <Typography
+            variant="h6"
+            style={{
+              fontWeight: "bold",
+              marginLeft: "25px",
+              fontSize: "30px",
+              fontFamily: "work sans",
+            }}
+          >
+            CoBuild
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/signup"
+            style={{
+              background: "#A259FF",
+              marginLeft: "auto",
+              width: "120px",
+              height: "60px",
+              borderRadius: "20px",
+              fontWeight: 600,
+              color: "#FFFFFF",
+              fontStyle: "normal",
+              fontSize: "16px",
+              lineHeight: "140%",
+              fontFamily: "work sans",
+            }}
+          >
+            Sign Up
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <main style={{ display: "flex", flex: 1 }}>
         <div
           style={{
             flex: 1,
@@ -124,43 +167,46 @@ function Login() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "flex-start", // Align to the left (from the image's right)
             padding: "0 30px",
-            maxWidth: "500px", // Limit the maximum width of the centered content
           }}
         >
           <h1
             style={{
               color: "white",
               fontSize: "51px",
+              width: "460px",
+              height: "56px",
               fontWeight: 600,
               lineHeight: "110%",
               marginTop: "-10px",
+              marginLeft: "40px",
             }}
           >
             Sign In
           </h1>
           <Typography
             style={{
+              marginLeft: "40px",
               color: "white",
+              width: "400px",
               fontSize: "22px",
               fontFamily: "work sans",
-              textAlign: "center", // Center the text
             }}
           >
-            Welcome Back! Enter your details and start applying, searching and
-            coding on CoBuild.
+            Welcome Back! enter your details and start applying, Searching and
+            Coding on CoBuild.
           </Typography>
           {loginError && (
             <Typography
               variant="caption"
               color="error"
+              marginLeft={5}
               marginTop={1}
             >
               {loginError}
             </Typography>
           )}
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", marginLeft: "40px" }}>
             <TextField
               label="Username"
               value={username}
@@ -181,8 +227,6 @@ function Login() {
                 // ),
               }}
             />
-          </div>
-          <div>
             <TextField
               label="Password"
               value={password}
@@ -205,11 +249,12 @@ function Login() {
               borderRadius: "20px",
               color: "white",
               marginTop: "30px",
+              marginLeft: "40px",
               fontFamily: "work sans",
             }}
             onClick={handleLoginFormSubmit}
           >
-            Sign In
+            sign in
           </Button>
           <Typography
             variant="caption"
@@ -217,8 +262,12 @@ function Login() {
               color: "white",
               fontSize: "14px",
               marginTop: "20px",
+              marginLeft: "40px",
+              width: "610px",
+              height: "35px",
               fontStyle: "normal",
               fontWeight: 400,
+              fontSize: "22px",
               lineHeight: "160%",
               fontFamily: "work sans",
               textDecorationLine: "underline",

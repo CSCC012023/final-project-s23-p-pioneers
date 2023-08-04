@@ -9,7 +9,7 @@ import DoughnutChart from "./Doughnut";
 const Graphs = () => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

@@ -68,7 +68,7 @@ const AttemptCard = ({ colour, icon, body }) => {
   );
 };
 
-const Statistics = ({appStats}) => {
+const Statistics = () => {
   return (
     <Grid container spacing={2} mt={1} justifyContent={"center"}>
       <Grid container item md={12} mb={1} pb={1} justifyContent={"center"}>
@@ -91,17 +91,17 @@ const Statistics = ({appStats}) => {
       <AttemptCard
         colour={"#a259ff"}
         icon={<TerminalIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.complexity}
+        body={"O(n)"}
       />
       <AttemptCard
         colour={"#ff5a5a"}
         icon={<ScoreIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.score}
+        body={"100"}
       />
       <AttemptCard
         colour={"#87CEEB"}
         icon={<AccessTimeIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.time + " mins"}
+        body={"30  mins"}
       />
       <Typography
         mt={2}

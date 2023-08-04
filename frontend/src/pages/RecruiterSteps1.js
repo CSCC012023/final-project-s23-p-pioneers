@@ -118,20 +118,26 @@ const RecruiterSteps1 = ({ handleNext }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const totalSteps = 4;
 
+  const handleLanguageToggle = (language) => () => {
+    const newSelectedLanguages = selectedLanguages.filter(
+      (selectedLanguage) => selectedLanguage.label !== language.label
+    );
+    setSelectedLanguages(newSelectedLanguages);
+  };
+  const formattedLanguages = selectedLanguages.map(language => language.label);
+
   const navigate = useNavigate();
 
-  const handleContinue = async (event) => {
-    event.preventDefault();
-    const rname = localStorage.getItem("recruitername");
-    fetch('http://localhost:8000/updaterecruiter', {
+  const handleContinue = () => {
+    fetch('http://localhost:8000/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'name',
-        value: company, // Replace with the desired value
+        username: localStorage.getItem("username"),
+        field: 'skills',
+        value: formattedLanguages, // Replace with the desired skills array
       })
     })
       .then(response => response.json())
@@ -144,84 +150,7 @@ const RecruiterSteps1 = ({ handleNext }) => {
         console.error('Error:', error);
       });
 
-    fetch('http://localhost:8000/updaterecruiter', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'description',
-        value: description, // Replace with the desired value
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response data
-        console.log(data);
-      })
-      .catch(error => {
-        // Handle the error
-        console.error('Error:', error);
-      });
 
-      fetch('http://localhost:8000/updaterecruiter', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: localStorage.getItem("recruitername"),
-        field: 'location',
-        value: location, // Replace with the desired value
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response data
-        console.log(data);
-      })
-      .catch(error => {
-        // Handle the error
-        console.error('Error:', error);
-      });
-
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
-
-    const type = "logo";
-    const extension = "png";
-    const {url} = await fetch(`http://localhost:8000/s3Url?username=recruiter${rname}&type=${type}&extension=${extension}`).then(res => res.json());
-    const finalUrl = url.split("?")[0];
-    console.log("frontend", finalUrl)
-
-    await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: file
-    });
-
-    await fetch('http://localhost:8000/updaterecruiter', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: rname,
-        field: "logo",
-        value: finalUrl }) // Replace with actual data
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response data
-        console.log(data);
-      })
-      .catch(error => {
-        // Handle the error
-        console.error('Error:', error);
-      });
     setActiveStep((prevStep) => prevStep + 1);
   };
 
@@ -231,9 +160,6 @@ const RecruiterSteps1 = ({ handleNext }) => {
 
   const handleFinish = () => {
     navigate("/User"); // Navigate to the final page
-  };
-  const handleContinueClick = (event) => {
-    handleContinue(event); // Call handleContinue and pass the event object
   };
 
   const handleInputChange = (event) => {
@@ -411,7 +337,7 @@ const RecruiterSteps1 = ({ handleNext }) => {
                   <input
                     type="file"
                     id="fileInput"
-                    accept="image/jpg, image/png"
+                    accept="application/pdf"
                     style={{ display: "none" }}
                     required
                     capture="user"
@@ -538,7 +464,7 @@ const RecruiterSteps1 = ({ handleNext }) => {
                   variant="contained"
                   color="secondary"
                   fullWidth
-                  onClick={handleContinueClick}
+                  onClick={handleContinue}
                 >
                   Continue
                 </ContinueButton>

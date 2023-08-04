@@ -1,11 +1,10 @@
 import "./App.css";
 import JobPosting from "./pages/JobPosting";
-import HomePage from "./pages/HomePage";
 import Jobs from "./pages/Jobs";
 import Leaderboard from "./pages/Leaderboard";
 import Verification from "./pages/Verification";
 import { Routes, Route } from "react-router-dom";
-import Footer from "./Footer";
+
 import { RequireAuth } from "react-auth-kit";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -15,64 +14,34 @@ import Step1 from "./pages/Step1";
 import UserProfile from "./pages/UserProfile";
 import Signuprecruiter from "./pages/SignupRecrutier";
 import RecruiterSteps1 from "./pages/RecruiterSteps1";
-import Navbar from "./pages/components/Navbar";
-import LoginRecruiter from "./pages/LoginRecruiter";
+
 import { Avatar, Typography, BottomNavigation } from "@mui/material";
+import Logo from "./assets/images/CoBuildLogo.png";
 import UploadAssessment from "./pages/UploadAssessment";
-import LoginPage from "./pages/components/LoginBox";
-import SearchBar from "./pages/components/SearchBar";
-import ViewUser from "./pages/ViewUser";
-import Chat from "./pages/Chat";
-import RecruiterSteps3 from "./pages/RecruiterSteps3"
+
 import Application from "./pages/Application";
-import RecruiterScreen from "./pages/Recruiterscreen";
-import PDFviewer from "./pages/components/ApplicationComponents/PDFviewer";
-import Calendar from "./pages/components/ApplicationComponents/Calendar";
-import ApplicationList from "./pages/ApplicationList";
-import RecruiterChat from "./pages/RecruiterChat";
 
 function App() {
   return (
-  
     <div className="App">
       <Routes>
-
-        <Route path="/" element={<><Navbar userType={""} /></>} />
-        <Route path="/test" element={<><Navbar userType={""} /><LoginPage /></>} />
-        <Route path="/search" element={<><Navbar userType={"user"} /><SearchBar /></>} />
-        <Route path="/viewprofile/:id" element={<ViewUser />} />
-        <Route path="/chat" element={<><Navbar userType={"user"} /><Chat /></>} />
-        <Route path="/loginrecruiter" element={<><Navbar userType={""} /><LoginRecruiter /></>} />
-        <Route path="/recruiterchat" element={<><Navbar userType={"user"} /><RecruiterChat /></>} />
-
-        <Route path="/login" element={<><Navbar userType={""} /><Login /></>} />
-
-        <Route path="/signup" element={<><Navbar userType={""} /><Signup /></>} />
-        <Route path="/leaderboard/:id" element={<><Navbar userType={"user"} /><Leaderboard /></>} />
-        <Route path="/step1" element={<><Navbar userType={"user"} /><Step1 /></>} />
-        <Route path="/User" element={<><Navbar userType={"user"} /><UserProfile /></>} />
-        <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
-        <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
-        <Route path="/recruiterstep3" element={<><Navbar userType={"recruiter"} /><RecruiterSteps3 /></>} />
-        <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
-
-
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/leaderboard/:id" element={<Leaderboard />} />
+        <Route path="/step1" element={<Step1 />} />
+        <Route path="/User" element={<UserProfile />} />
+        <Route path="/signuprecruiter" element={<Signuprecruiter />} />
+        <Route path="/recruiterstep1" element={<RecruiterSteps1 />} />
 
         <Route path="/upload" element={<UploadAssessment />} />
         <Route path="/verfication/:id" element={<Verification />} />
-        <Route path="/application/:id" element={<Application />} />
+        <Route path="/application" element={<Application />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobpost/:id" element={<JobPosting />} />
-        <Route path="/applicants/:id" element={<ApplicationList />} />
         <Route path="/assess/:id" element={<Assessment />} />
         <Route path="/createpost" element={<CreatePost />} />
-        <Route path="/home" element={<RecruiterScreen />} />
-        <Route path="/document" element={<PDFviewer />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/list" element={<ApplicationList />} />
-
       </Routes>
-      {/* { <BottomNavigation
+      {/* <BottomNavigation
         style={{
           background: "#3B3B3B",
           height: "195px",
@@ -171,12 +140,7 @@ function App() {
             &copy; {new Date().getFullYear()} CoBuild. All rights reserved.
           </Typography>
         </div>
-      </BottomNavigation>}
-      </BottomNavigation>  */}
-
-      
-      {/* <Footer /> */}
-
+      </BottomNavigation> */}
     </div>
   );
 }

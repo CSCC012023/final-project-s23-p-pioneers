@@ -13,11 +13,12 @@ const recruiterSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter a email"],
   },
-  bio: {
+  name: {
     type: String,
+    required: [true, "Please enter a name"],
   },
-  profilepic: {
-    type: String,
+  links: {
+    type: [String],
   },
   jobCategories: {
     type: String,
@@ -25,27 +26,6 @@ const recruiterSchema = new mongoose.Schema({
   positionList: {
     type: [String],
   },
-  degrees: {
-    type: [String],
-  },
-  tags: {
-    type: [String],
-  },
-  name: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  location: {
-    type: String,
-  },
-  logo: {
-    type: String,
-  },
-  jobs: {
-    type: [String],
-  }
 });
 
 module.exports = recruiterSchema;

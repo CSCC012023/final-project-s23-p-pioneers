@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { RxOpenInNewWindow } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+
 
 import {
   Container,
@@ -14,8 +12,6 @@ import {
   Button,
   TextField,
   IconButton,
-  ThemeProvider,
-  createTheme,
 } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
 import "./CreatePost.css"; // Import custom CSS file for styling
@@ -75,7 +71,6 @@ const jobsData = [
 
 function JobPosting() {
   const [selectedFile, setSelectedFile] = React.useState(null);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [title, setTitle] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [jobDescription, setJobDescription] = React.useState("");
@@ -108,8 +103,8 @@ function JobPosting() {
     setCompanyName(event.target.value);
   };
 
-  const handleDeadlineChange = (newValue) => {
-    setSelectedDate(newValue);
+  const handleDeadlineChange = (event) => {
+    setDeadline(event.target.value);
   };
 
 
@@ -150,19 +145,14 @@ function JobPosting() {
   };
   const handleSubmit = async (event) => {
     // event.preventDefault();
-    const rname = localStorage.getItem("recruitername");
-    const { name: companyName } = await fetch(`http://localhost:8000/getcompanyname?username=${rname}`).then(res => res.json());
-    const { logo: logo } = await fetch(`http://localhost:8000/getcompanylogo?username=${rname}`).then(res => res.json());
-    console.log(logo);
     const jobData = {
       title,
       location,
       jobDescription,
       companyName,
-      deadline: selectedDate,
+      deadline,
       isAssessmemnt: false,
       skills: ["C++", "Java", "Python", "Test"],
-      companyLogo: logo,
     };
 
     try {
@@ -179,488 +169,444 @@ function JobPosting() {
     }
   };
 
-  const colorTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#c599ff", //light purple
-      },
-      secondary: {
-        main: "#A259FF" // mid-light purple
-      },
-    },
-
-    components: {
-      MuiFormLabel: {
-        styleOverrides: {
-          asterisk: {color: '#d30909'},
-        },
-      },
-    },
-  });
-
   return (
     <Container maxWidth="md">
-      <Box>
-        <Box textAlign="center" marginBottom={2}>
-          <Typography marginTop={(window.innerHeight/8)/32}
-            variant="h2"
-            sx={{ color: "white", }}
-          >
-            Create Post
-          </Typography>
-        </Box>
+      <Box textAlign="center" marginBottom={2}>
+        <Typography
+          variant="h2"
+          sx={{ color: "white", fontFamily: "Work-Sans" }}
+        >
+          Create Post
+        </Typography>
+      </Box>
 
-        <form className="job-form" style={{ background: "transparent" }}>
-          <Grid container spacing={2} >
-            <ThemeProvider theme={colorTheme}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Job Title"
-                  variant="outlined"
-                  value={title}
+      <form className="job-form" style={{ background: "transparent" }}>
+        <Grid container spacing={2} >
+          <Grid item xs={12}>
+          <TextField
+  label="Job Title"
+  variant="outlined"
+  value={title}
 
-                  onChange={handleTitleChange}
-                  required
-                  fullWidth
-                  color="primary"
-                  sx={{
-                    "& .MuiInputLabel-root": {color: 'primary.main'},
-                    "& .MuiOutlinedInput-root": {
-                      "& > fieldset": { borderColor: "primary.main" },
-                    },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  // sx={{
-                  //   background: "transparent",
-                  //   border: "none",
-                  //   "& .MuiInputLabel-root": {
-                  //     display: "block",
-                  //     color: "#000000",
-                  //     backgroundColor: "transparent",
-                  //     borderRadius: "4px",
-                  //     padding: "4px",
-                  //     borderColor: "#4A90E2", // Set border color to blue shade
-                  //   },
-                  //   "& .MuiInputLabel-root.Mui-focused": {
-                  //     backgroundColor: "#FFFFFF",
-                  //   },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                  //     backgroundColor: "#FFFFFF", // White background when shrunk
-                  //   },
-                  //   "& .MuiOutlinedInput-root": {
-                  //     borderRadius: "20px",
-                  //     borderColor: "transparent",
-                  //     backgroundColor: "#FFFFFF",
-                  //     "& fieldset": {
-                  //       borderRadius: "20px",
-                  //       borderColor: "transparent",
-                  //       "&:hover": {
-                  //         borderColor: "#A259FF !important",
-                  //       },
-                  //     },
-                  //     "& input": {
-                  //       color: "#000000",
-                  //     },
-                  //   },
-                  // }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Job Location"
-                  variant="outlined"
-                  value={location}
+  onChange={handleTitleChange}
+  required
+  fullWidth
+  sx={{
+    background: "transparent",
+    border: "none",
+    "& .MuiInputLabel-root": {
+      display: "block",
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+      padding: "4px",
+      borderColor: "#4A90E2", // Set border color to blue shade
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      backgroundColor: "#FFFFFF",
+    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      backgroundColor: "#FFFFFF", // White background when shrunk
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px",
+      borderColor: "transparent",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "transparent",
+        "&:hover": {
+          borderColor: "#A259FF !important",
+        },
+      },
+      "& input": {
+        color: "#000000",
+      },
+    },
+  }}
+/>
 
-                  onChange={handleLocationChange}
-                  required
-                  fullWidth
-                  color="primary"
-                  sx={{
-                    "& .MuiInputLabel-root": {color: 'primary.main'},
-                    "& .MuiOutlinedInput-root": {
-                      "& > fieldset": { borderColor: "primary.main" },
-                    },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  // sx={{
-                  //   background: "transparent",
-                  //   border: "none",
-                  //   "& .MuiInputLabel-root": {
-                  //     display: "block",
-                  //     color: "#000000",
-                  //     backgroundColor: "transparent",
-                  //     borderRadius: "4px",
-                  //     padding: "4px",
-                  //     borderColor: "#4A90E2", // Set border color to blue shade
-                  //   },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                  //     backgroundColor: "#FFFFFF", // White background when shrunk
-                  //   },
-                  //   "& .MuiInputLabel-root.Mui-focused": {
-                  //     backgroundColor: "#FFFFFF",
-                  //   },
-                  //   "& .MuiOutlinedInput-root": {
-                  //     borderRadius: "20px",
-                  //     borderColor: "transparent",
-                  //     backgroundColor: "#FFFFFF",
-                  //     "& fieldset": {
-                  //       borderRadius: "20px",
-                  //       borderColor: "transparent",
-                  //       "&:hover": {
-                  //         borderColor: "#A259FF !important",
-                  //       },
-                  //     },
-                  //     "& input": {
-                  //       color: "#000000",
-                  //     },
-                  //   },
-                  // }}
+
+
+
+
+
+
+
+
+          </Grid>
+          <Grid item xs={12}>
+
+          <TextField
+  label="Job Location"
+  variant="outlined"
+  value={location}
+
+  onChange={handleLocationChange}
+  required
+  fullWidth
+  sx={{
+    background: "transparent",
+    border: "none",
+    "& .MuiInputLabel-root": {
+      display: "block",
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+      padding: "4px",
+      borderColor: "#4A90E2", // Set border color to blue shade
+    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      backgroundColor: "#FFFFFF", // White background when shrunk
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      backgroundColor: "#FFFFFF",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px",
+      borderColor: "transparent",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "transparent",
+        "&:hover": {
+          borderColor: "#A259FF !important",
+        },
+      },
+      "& input": {
+        color: "#000000",
+      },
+    },
+  }}
+/>
+
+          </Grid>
+          <Grid item xs={12}>
+
+          <TextField
+  label="Job Description"
+  variant="outlined"
+  value={jobDescription}
+  onChange={handleDescriptionChange}
+  required
+  multiline
+  fullWidth
+  sx={{
+    background: "transparent",
+    border: "none",
+    "& .MuiInputLabel-root": {
+      display: "block",
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+      padding: "4px",
+      borderColor: "#4A90E2", // Set border color to blue shade
+    },
+    "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      backgroundColor: "#FFFFFF", // White background when shrunk
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      backgroundColor: "#FFFFFF",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px",
+      borderColor: "transparent",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "transparent",
+        "&:hover": {
+          borderColor: "#A259FF !important",
+        },
+      },
+      "& input": {
+        color: "#000000",
+      },
+    },
+  }}
+/>
+          </Grid>
+          <Grid item xs={12}>
+
+          <TextField
+  label="Deadline"
+  variant="outlined"
+  value={deadline}
+
+  onChange={handleDeadlineChange}
+  required
+  fullWidth
+  sx={{
+    background: "transparent",
+    border: "none",
+    "& .MuiInputLabel-root": {
+      display: "block",
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+      padding: "4px",
+      borderColor: "#4A90E2", // Set border color to blue shade
+    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      backgroundColor: "#FFFFFF", // White background when shrunk
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      backgroundColor: "#FFFFFF",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px",
+      borderColor: "transparent",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "transparent",
+        "&:hover": {
+          borderColor: "#A259FF !important",
+        },
+      },
+      "& input": {
+        color: "#000000",
+      },
+    },
+  }}
+/>
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+  label="Company Name"
+  variant="outlined"
+  value={companyName}
+
+  onChange={handleCompanyNameChange}
+  required
+  fullWidth
+  sx={{
+    background: "transparent",
+    border: "none",
+    "& .MuiInputLabel-root": {
+      display: "block",
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+      padding: "4px",
+      borderColor: "#4A90E2", // Set border color to blue shade
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      backgroundColor: "#FFFFFF",
+    },"& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      backgroundColor: "#FFFFFF", // White background when shrunk
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px",
+      borderColor: "transparent",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "transparent",
+        "&:hover": {
+          borderColor: "#A259FF !important",
+        },
+      },
+      "& input": {
+        color: "#000000",
+      },
+    },
+  }}
+/>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <input
+                  accept="*"
+                  style={{ display: "none" }}
+                  id="file-upload"
+                  type="file"
+                  onChange={handleFileChange}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Job Description"
-                  variant="outlined"
-                  value={jobDescription}
-                  onChange={handleDescriptionChange}
-                  required
-                  multiline
-                  fullWidth
-                  color="primary"
-                  sx={{
-                    "& .MuiInputLabel-root": {color: 'primary.main'},
-                    "& .MuiOutlinedInput-root": {
-                      "& > fieldset": { borderColor: "primary.main" },
-                    },
-                  }}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  // sx={{
-                  //   background: "transparent",
-                  //   border: "none",
-                  //   "& .MuiInputLabel-root": {
-                  //     display: "block",
-                  //     color: "#000000",
-                  //     backgroundColor: "transparent",
-                  //     borderRadius: "4px",
-                  //     padding: "4px",
-                  //     borderColor: "#4A90E2", // Set border color to blue shade
-                  //   },
-                  //   "& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                  //     backgroundColor: "#FFFFFF", // White background when shrunk
-                  //   },
-                  //   "& .MuiInputLabel-root.Mui-focused": {
-                  //     backgroundColor: "#FFFFFF",
-                  //   },
-                  //   "& .MuiOutlinedInput-root": {
-                  //     borderRadius: "20px",
-                  //     borderColor: "transparent",
-                  //     backgroundColor: "#FFFFFF",
-                  //     "& fieldset": {
-                  //       borderRadius: "20px",
-                  //       borderColor: "transparent",
-                  //       "&:hover": {
-                  //         borderColor: "#A259FF !important",
-                  //       },
-                  //     },
-                  //     "& input": {
-                  //       color: "#000000",
-                  //     },
-                  //   },
-                  // }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Deadline"
-                value={selectedDate}
-                onChange={handleDeadlineChange}
-                renderInput={(params) => (
+                {/* <label
+                  htmlFor="file-upload"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   <TextField
-                    {...params.inputProps}
-                    fullWidth
+                    label="Upload Files"
                     variant="outlined"
-                    sx={{
-                      // Styles for dark theme with white preview text and better contrast colors
-                      "& .MuiInputLabel-root": {
-                        color: "#FFFFFF", // Set the preview text (label) color to white
-                      },
-                      "& .MuiInputBase-input": {
-                        color: "#FFFFFF", // Set the input text color to white
-                      },
-                      "& .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#FFFFFF", // Set the outline color to white
-                      },
-                      "& .MuiPickersBasePicker-container": {
-                        backgroundColor: "#111111", // Set the background color to black
-                      },
-                      "& .MuiPickersToolbar-toolbar": {
-                        backgroundColor: "#111111", // Set the toolbar background color to black
-                        color: "#FFFFFF", // Set the toolbar text color to white
-                      },
-                      "& .MuiPickersDay-day": {
-                        color: "#FFFFFF", // Set the day text color to white
-                      },
-                      "& .MuiPickersDay-daySelected": {
-                        backgroundColor: "#A259FF", // Set the selected day background color to a contrast color
-                        color: "#FFFFFF", // Set the selected day text color to white
-                      },
-                      "& .MuiPickersDay-dayDisabled": {
-                        color: "#8B8B8B", // Set the disabled day text color to a softer contrast color
-                      },
-                      "& .MuiPickersClock-pin": {
-                        backgroundColor: "#A259FF", // Set the clock pin color to a contrast color
-                      },
-                      "& .MuiPickersClockPointer-thumb": {
-                        backgroundColor: "#A259FF", // Set the clock pointer thumb color to a contrast color
-                      },
-                      "& .MuiPickersClockPointer-noPoint": {
-                        backgroundColor: "#A259FF", // Set the clock pointer no point color to a contrast color
-                      },
-                      "& .MuiPickersClockPointer-pointer": {
-                        backgroundColor: "#A259FF", // Set the clock pointer color to a contrast color
-                      },
-                      "& .MuiPickersCalendarHeaderRoot": {
-                        backgroundColor: "#000000",
-                      },
-                    }}
-                    // sx={{
-                    //   background: "transparent",
-                    //   border: "none",
-                    //   "& .MuiInputLabel-root": {
-                    //     display: "block",
-                    //     color: "#000000",
-                    //     backgroundColor: "transparent",
-                    //     borderRadius: "4px",
-                    //     padding: "4px",
-                    //     borderColor: "#00000", // Set border color to blue shade
-                    //   },
-                    //   "& .MuiInputLabel-root.MuiInputLabel-shrink": {
-                    //     backgroundColor: "#FFFFFF", // White background when shrunk
-                    //   },
-                    //   "& .MuiInputLabel-root.Mui-focused": {
-                    //     backgroundColor: "#FFFFFF",
-                    //   },
-                    //   "& .MuiOutlinedInput-root": {
-                    //     borderRadius: "20px",
-                    //     borderColor: "transparent",
-                    //     backgroundColor: "#FFFFFF",
-                    //     "& fieldset": {
-                    //       borderRadius: "20px",
-                    //       borderColor: "transparent",
-                    //       "&:hover": {
-                    //         borderColor: "#A259FF !important",
-                    //       },
-                    //     },
-                    //     "& input": {
-                    //       color: "#000000",
-                    //     },
-                    //   },
-                    // }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-              </Grid>
-            </ThemeProvider>
-            <Grid item xs={12}>
-              <Grid container spacing={2} alignItems="center">
-                <Grid item>
-                  <input
-                    accept="*"
-                    style={{ display: "none" }}
-                    id="file-upload"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
-                  {/* <label
-                    htmlFor="file-upload"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <TextField
-                      label="Upload Files"
-                      variant="outlined"
-                      value={selectedFile ? selectedFile.name : ""}
-                      fullWidth
-                      disabled
-                      style={{
-                        boxSizing: "border-box",
-                        width: "804px",
-                        height: "160px",
-                        background: "#F3F0FF",
-                        border: "1px dashed #C1B2FA",
-                        borderRadius: "8px",
-                      }}
-                    />
-                  </label> */}
-                  <label
-                    htmlFor="fileInput"
+                    value={selectedFile ? selectedFile.name : ""}
+                    fullWidth
+                    disabled
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "16px", // Add margin bottom to create space
+                      boxSizing: "border-box",
+                      width: "804px",
+                      height: "160px",
+                      background: "#F3F0FF",
+                      border: "1px dashed #C1B2FA",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </label> */}
+                <label
+                  htmlFor="fileInput"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "16px", // Add margin bottom to create space
 
+                  }}
+                >
+                  <span
+                    style={{
+                      boxSizing: "border-box",
+                      width: "850px",
+                      height: "160px",
+                      justifyItems: "center",
+                      background: "#F3F0FF",
+                      border: "2px dashed #7A5FEC", // Adjust border color and thickness
+                      borderRadius: "8px",
+                      transition: "transform 0.3s ease",
+                      transform: "scale(1)",
+                      /* Inside auto layout */
+                      flex: "none",
+                      order: "0",
+                      alignSelf: "stretch",
+                      flexGrow: "0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#7A5FEC",
+                      WebkitTextStrokeWidth: "1px",
+                      fontWeight: "normal",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.animation = "circle 1s infinite linear";
+                      e.target.style.transform = "scale(1.05)"; // Increase the scale on hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.animation = "none";
+                      e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
                     }}
                   >
-                    <span
-                      style={{
-                        boxSizing: "border-box",
-                        width: "850px",
-                        height: "160px",
-                        justifyItems: "center",
-                        background: "#e5e0fc",
-                        border: "2px dashed #7A5FEC", // Adjust border color and thickness
-                        borderRadius: "8px",
-                        transition: "transform 0.3s ease",
-                        transform: "scale(1)",
-                        /* Inside auto layout */
-                        flex: "none",
-                        order: "0",
-                        alignSelf: "stretch",
-                        flexGrow: "0",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#7A5FEC",
-                        WebkitTextStrokeWidth: "1px",
-                        fontWeight: "normal",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.animation = "circle 1s infinite linear";
-                        e.target.style.transform = "scale(1.05)"; // Increase the scale on hover
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.animation = "none";
-                        e.target.style.transform = "scale(1)"; // Reset the scale when not hovered
-                      }}
-                    >
-                      Import Files
-                    </span>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="application/pdf/png/jpeg"
-                      style={{ display: "none" }}
-                      required
-                      capture="user"
-                      onChange={(e) => {
-                        const files = e.target.files;
-                        const updatedFiles = [...uploadedFiles];
+                    Import Files
+                  </span>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="application/pdf/png/jpeg"
+                    style={{ display: "none" }}
+                    required
+                    capture="user"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      const updatedFiles = [...uploadedFiles];
 
-                        for (let i = 0; i < files.length; i++) {
-                          updatedFiles.push(files[i]);
-                        }
+                      for (let i = 0; i < files.length; i++) {
+                        updatedFiles.push(files[i]);
+                      }
 
-                        setUploadedFiles(updatedFiles);
-                      }}
-                    />
-                  </label>
+                      setUploadedFiles(updatedFiles);
+                    }}
+                  />
+                </label>
 
-                  {uploadedFiles.map((file, index) => (
-                  <div key={index} style={{ marginBottom: "8px", backgroundColor: "#575361", padding: "8px", borderRadius: "8px" }}>
-                    <p
-                      style={{
-                        fontFamily: "Inter",
-                        fontStyle: "normal",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        lineHeight: "130%",
-                        color: "#FFFFFF", // Set text color to white
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        margin: 0, // Reset margin to remove any default spacing
-                      }}
-                      title={file.name} // Add the title attribute to display the full name on hover
-                    >
-                      {file.name}
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "'Inter'",
-                        fontStyle: "normal",
-                        fontWeight: "500",
-                        fontSize: "12px",
-                        lineHeight: "130%",
-                        color: "#FFFFFF", // Set text color to white
-                        margin: 0, // Reset margin to remove any default spacing
-                      }}
-                    >
-                      {Math.round(file.size / 1024)} KB
-                    </p>
-                  </div>
-                ))}
-                </Grid>
+                {uploadedFiles.map((file, index) => (
+  <div key={index} style={{ marginBottom: "8px", backgroundColor: "#575361", padding: "8px", borderRadius: "8px" }}>
+    <p
+      style={{
+        fontFamily: "Inter",
+        fontStyle: "normal",
+        fontWeight: 700,
+        fontSize: "14px",
+        lineHeight: "130%",
+        color: "#FFFFFF", // Set text color to white
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        margin: 0, // Reset margin to remove any default spacing
+      }}
+      title={file.name} // Add the title attribute to display the full name on hover
+    >
+      {file.name}
+    </p>
+    <p
+      style={{
+        fontFamily: "'Inter'",
+        fontStyle: "normal",
+        fontWeight: "500",
+        fontSize: "12px",
+        lineHeight: "130%",
+        color: "#FFFFFF", // Set text color to white
+        margin: 0, // Reset margin to remove any default spacing
+      }}
+    >
+      {Math.round(file.size / 1024)} KB
+    </p>
+  </div>
+))}
+
+
               </Grid>
             </Grid>
           </Grid>
-        </form>
+        </Grid>
+      </form>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "20px",
-            gap: "20px",
-          }}
-        >
-          <div className="button-container">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0px 50px",
-                gap: "12px",
-                width: "440px",
-                height: "60px",
-                background: "#A259FF",
-                borderRadius: "20px",
-              }}
-              onClick={handleCreateAssessments}
-            >
-              Create Optional Assessments
-            </Button>
-          </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+          gap: "20px",
+        }}
+      >
+        <div className="button-container">
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 50px",
+              gap: "12px",
+              width: "440px",
+              height: "60px",
+              background: "#A259FF",
+              borderRadius: "20px",
+            }}
+            onClick={handleCreateAssessments}
+          >
+            Create Optional Assessments
+          </Button>
+        </div>
 
-          <div className="button-container">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0px 50px",
-                gap: "12px",
-                width: "235px",
-                height: "60px",
-                background: "#A259FF",
-                borderRadius: "20px",
-              }}
-              onClick={handleSubmit}
-            >
-              Submit Post
-            </Button>
-          </div>
+        <div className="button-container">
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 50px",
+              gap: "12px",
+              width: "235px",
+              height: "60px",
+              background: "#A259FF",
+              borderRadius: "20px",
+            }}
+            onClick={handleSubmit}
+          >
+            Submit Post
+          </Button>
         </div>
-        <div className="more-company-container">
-          <div className="more-company-text">More from this company</div>
-          <button className="go-to-company-button">
-            <RxOpenInNewWindow className="button-icon" />
-            Go to company page
-          </button>
-        </div>
-      </Box> 
+      </div>
+
+      <div className="more-company-container">
+        <div className="more-company-text">More from this company</div>
+        <button className="go-to-company-button">
+          <RxOpenInNewWindow className="button-icon" />
+          Go to company page
+        </button>
+      </div>
 
       <div className="job-grid-container">
         <JobGrid jobs={jobsData} />

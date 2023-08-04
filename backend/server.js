@@ -3,39 +3,32 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const { assesmentAPI, compile } = require("./API/assesments");
-const { followUser, unfollowUser, checkFollowStatus } = require("./API/followaction")
 const getPost = require("./API/getpost");
-const {
-  signUpEmployer,
-  updateParamsRecruiter,
-  setLogoRecruiter,
-  getCompanyName,
-  getCompanyLogo,
-  getRecruiter,
-} = require("./API/signupRecruiter");
+const signUpEmployer = require("./API/signupRecruiter");
 const createPost = require("./API/createPost");
 const verifyEmail = require("./API/postEmailVerification");
-const searchusers = require("./API/searchusers")
+const getSimilarityScore = require("./API/getSimilarity");
 const postBookmarkJob = require("./API/postBookmarkJob");
 const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser");
 
 const getApplication = require("./API/getApplication");
-const getApplicants = require("./API/applicants");
 
 const {
   createAssessmentApi,
   getAssessmentApi,
 } = require("./API/createAssessment");
 
-const { userLogin, recruiterLogin} = require("./API/loginUser");
-
+const userLogin = require("./API/loginUser");
 const {
   signUpRequest,
   setResume,
   setCoverLetter,
   setProfilePic,
   updateParams,
+  addSkillsToUser,
+  addGithubToUser,
+  addLinkedinToUser,
 } = require("./API/signUp.js");
 
 const generateUploadURL = require("./s3.js");
@@ -82,25 +75,12 @@ app.post("/resume", setResume);
 app.post("/coverletter", setCoverLetter);
 app.post("/profilepic", setProfilePic);
 app.post("/update", updateParams);
+app.post("/addskills", addSkillsToUser);
+app.post("/addGithub", addGithubToUser);
+app.post("/addLinkedin", addLinkedinToUser);
 app.post("/signuprecruiter", signUpEmployer);
-app.post("/updaterecruiter", updateParamsRecruiter);
-app.post("/setlogo", setLogoRecruiter);
 app.post("/addcode", addAssessment);
 
-app.get("/getcompanyname", getCompanyName);
-app.get("/getcompanylogo", getCompanyLogo);
-
-app.get("/getrecruiter", getRecruiter);
-
-
-app.post("/loginrecruiter", recruiterLogin);
-
-
-app.post("/search", searchusers);
-app.post("/followuser", followUser)
-app.post("/loginrecruiter", recruiterLogin);
-app.post("/checkfollowstatus",checkFollowStatus)
-app.post("/unfollowuser", unfollowUser)
 app.get("/s3Url", async (req, res) => {
   console.log("hello");
 
@@ -174,6 +154,7 @@ app.post("/compile", compile);
 app.post("/createassesment", assesmentAPI);
 app.post("/createpost", createPost);
 
+app.post("/getSimilarity", getSimilarityScore);
 app.post("/getpost", getPost);
 
 app.post("/login", userLogin);
@@ -188,4 +169,3 @@ app.post("/bookmarkjob", postBookmarkJob);
 app.post("/removebookmarkjob", removeBookmarkJob);
 app.post("/getuser", getUser);
 app.post("/getapplication", getApplication);
-app.post("/getapplicants", getApplicants);

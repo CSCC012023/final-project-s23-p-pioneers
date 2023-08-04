@@ -2,7 +2,6 @@ const applicationSchema = require("../Schemas/applicationSchema");
 const jobSchema = require("../Schemas/post");
 const mongoose = require("mongoose");
 const signUpSchema = require("../Schemas/userSchema");
-const short = require('short-uuid');
 
 const Application = mongoose.model("Application", applicationSchema);
 const Job = mongoose.model("Job", jobSchema);
@@ -63,12 +62,6 @@ const addAssessment = async (req, res) => {
     application.submissionTime = new Date();
     application.codingQuestionStatus = "done";
 
-    application.codingQuestionResultArray.push({
-      code: codingQuestionResult.code,
-      score: codingQuestionResult.score,
-      complexity: complexityValue,
-      time: new Date().toString(),
-    });
     // Extract the complexity from the GPT response
     const complexityRegex = /O\([^\)]+\)/;
     const complexityMatch = complexity.match(complexityRegex);
@@ -107,7 +100,6 @@ const postApplication = async (req, res) => {
     }
     // Create a new application document
     const newApplication = new Application({
-      applicationId: short.generate(),
       job: appliedJob._id,
       jobId: jobID,
       username: username,

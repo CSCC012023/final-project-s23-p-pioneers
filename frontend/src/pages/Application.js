@@ -22,7 +22,6 @@ import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import CodeIcon from "@mui/icons-material/Code";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import { useParams } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -31,18 +30,18 @@ function Application() {
   const [applicationData, setApplicationData] = useState({});
   const [formattedDate, setFormattedDate] = useState("None");
   const [userData, setUserData] = useState({});
-  const { id } = useParams();
 
   const handleItemClick = (itemText) => {
     setSelectedItem(itemText);
   };
 
-  const fetchApplicationData = async () => {
+  const fetchApplicationData = async (username, id) => {
     const req = {
-      applicationId: id,
+      username: username,
+      jobID: id,
     };
+
     try {
-      console.log(req);
       const response = await fetch("http://localhost:8000/getApplication", {
         method: "POST",
         headers: {
@@ -54,11 +53,9 @@ function Application() {
         console.error("Job not found");
         return;
       }
-      console.log("3");
 
       const appData = await response.json();
       setApplicationData(appData);
-      console.log("4");
       console.log(appData);
       const date = new Date(appData.submissionTime);
       const day = date.getDate();
@@ -80,7 +77,6 @@ function Application() {
       const year = date.getFullYear();
       const formattedDate = `${monthName} ${day}, ${year}`;
       setFormattedDate(formattedDate);
-      fetchUser(appData.username);
     } catch (error) {
       console.error(error);
     }
@@ -113,12 +109,12 @@ function Application() {
   };
 
   useEffect(() => {
-    fetchApplicationData();
+    fetchApplicationData("mini", "6wpXhEFnyLxbZjVcyRJzh3");
   }, []);
 
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    fetchUser("mini");
+  }, []);
 
   return (
     <div style={{ display: "flex" }}>
@@ -294,13 +290,13 @@ function Application() {
             case "Graphs":
               return <Graphs />;
             case "Statistics":
-              return <Statistics appStats={applicationData.codingQuestionResult}/>;
+              return <Statistics />;
             case "Code":
               return <Code appCode={applicationData.codingQuestionResult} />;
             case "Resume":
-              return <Resume resume={userData.resume}/>;
+              return <Resume />;
             case "Cover Letter":
-              return <CoverLetter resume={userData.resume} />;
+              return <CoverLetter />;
             default:
               return (
                 <Overview

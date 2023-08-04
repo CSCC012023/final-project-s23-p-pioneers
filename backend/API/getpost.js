@@ -46,7 +46,7 @@ const getJobPost = async (req, res) => {
       if (!jobPost) {
         return res.status(404).json({ error: "Job post not found" });
       }
-      
+
       res.json(jobPost);
     }
     // console.log(jobPost)
