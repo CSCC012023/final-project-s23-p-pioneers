@@ -13,6 +13,7 @@ const removeBookmarkJob = require("./API/removeBookmarkJob");
 const getUser = require("./API/getUser");
 
 const getApplication = require("./API/getApplication");
+const getApplicants = require("./API/applicants");
 
 const {
   createAssessmentApi,
@@ -162,3 +163,4 @@ app.post("/bookmarkjob", postBookmarkJob);
 app.post("/removebookmarkjob", removeBookmarkJob);
 app.post("/getuser", getUser);
 app.post("/getapplication", getApplication);
+app.post("/getapplicants", getApplicants);
