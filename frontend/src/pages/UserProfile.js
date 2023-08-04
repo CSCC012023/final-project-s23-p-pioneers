@@ -31,11 +31,12 @@ const useStyles = makeStyles({
     height: "500px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "30px",
+    gap: "50px",
     flexShrink: 0,
     borderRadius: "20px",
     padding: "20px",
     position: "relative",
+    marginBottom: "25px",
     zIndex: 1,
     margin: "0 auto",
     // background: "#2B2B2B",
@@ -98,6 +99,14 @@ const useStyles = makeStyles({
     borderBottom: "2px solid var(--text, #FFF)",
     background:
       "linear-gradient(180deg, #3B3B3B 0%, rgba(59, 59, 59, 0.00) 100%)",
+  },
+  userLabelsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "100px",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: "10px",
   },
   carouselContent: {
     display: "grid",
@@ -268,8 +277,8 @@ const UserProfile = () => {
         <Button
           style={{
             position: "fixed",
-            top: "20px",
-            left: "20px",
+            top: "10px",
+            left: "10px",
             borderRadius: "20px",
             background: "#A259FF",
             color: "white",
@@ -289,57 +298,141 @@ const UserProfile = () => {
       </div>
       <div className={classes.userProfile}>
         <div className={classes.userDetails}>
-          <Typography variant="h4" className={classes.userLabel}>
-            Name
-          </Typography>
-          <Typography variant="h3" className={classes.userValue}>
-            {name}
-          </Typography>
-          <div style={{ display: "flex", gap: "200px" }}>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                University
+          <div className={classes.userLabelsContainer}>
+            <div
+              style={{
+                background: "#3B3B3B",
+                borderRadius: "20px",
+                padding: "30px 30px 30px 30px",
+                color: "white", // Added white text color
+              }}
+            >
+              <Typography variant="h4" className="userLabel">
+                <span style={{ fontWeight: "bold" }}>Name:</span>
               </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {university}
+              <Typography variant="h6" className="userValue">
+                <span
+                  style={{
+                    fontWeight: "normal",
+                    fontSize: "1.2rem",
+                    marginTop: "3px",
+                  }}
+                >
+                  {name}
+                </span>
               </Typography>
             </div>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                Program
+            <div
+              style={{
+                background: "#3B3B3B",
+                borderRadius: "20px",
+                padding: "30px 50px 30px 30px",
+                color: "white", // Added white text color
+              }}
+            >
+              <Typography variant="h4" className="userLabel">
+                <span style={{ fontWeight: "bold" }}>University:</span>
               </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {program}
+              <Typography variant="h6" className="userValue">
+                <span
+                  style={{
+                    fontWeight: "normal",
+                    fontSize: "1.2rem",
+                    marginTop: "3px",
+                  }}
+                ></span>
               </Typography>
             </div>
-            <div>
-              <Typography variant="h4" className={classes.userLabel}>
-                Email
+            <div
+              style={{
+                background: "#3B3B3B",
+                borderRadius: "20px",
+                padding: "30px 50px 30px 30px",
+                color: "white", // Added white text color
+                // paddingRight: "15px", // Added 15px padding to the right
+              }}
+            >
+              <Typography variant="h4" className="userLabel">
+                <span style={{ fontWeight: "bold" }}>Email:</span>
               </Typography>
-              <Typography variant="h6" className={classes.userValue}>
-                {email}
+              <Typography variant="h6" className="userValue">
+                <span
+                  style={{
+                    fontWeight: "normal",
+                    fontSize: "1.2rem",
+                    marginTop: "3px",
+                  }}
+                >
+                  {email}
+                </span>
               </Typography>
             </div>
           </div>
-          <Typography variant="h4" className={classes.userLabel}>
-            Bio
-          </Typography>
-          <Typography variant="h5" className={classes.userValue}>
-            {bio}
-          </Typography>
-          <Typography variant="h4" className={classes.userLabel}>
-            Links
-          </Typography>
-          <div className={classes.socialMedia}>
-            <GitHubIcon className={classes.socialIcon} />
-            <PictureAsPdfIcon
-              className={classes.socialIcon}
-              onClick={handleResumeClick}
-            />
-            <AllInboxIcon
-              className={classes.socialIcon}
-              onClick={handleTranscriptClick}
-            />
+
+          <div
+            style={{
+              background: "#3B3B3B",
+              borderRadius: "20px",
+              padding: "20px 20px 20px 20px",
+              marginBottom: "15px",
+            }}
+          >
+            <Typography
+              variant="h4"
+              className={classes.userLabel}
+              style={{ color: "white", fontWeight: "bold" }}
+            >
+              Bio
+            </Typography>
+            <div
+              style={{
+                background: "#2B2B2B",
+                borderRadius: "20px",
+                padding: "20px",
+                marginTop: "10px",
+              }}
+            >
+              <Typography
+                variant="h5"
+                className={classes.userValue}
+                style={{ color: "white", fontWeight: "normal" }}
+              >
+                {bio}
+              </Typography>
+            </div>
+          </div>
+          <div
+            style={{
+              background: "#3B3B3B",
+              borderRadius: "20px",
+              width: "275px",
+              padding: "20px 20px 20px 20px",
+              display: "inline-block",
+            }}
+          >
+            <Typography
+              variant="h4"
+              className={classes.userLabel}
+              style={{ color: "white", fontWeight: "bold" }}
+            >
+              Links
+            </Typography>
+            <div className={classes.socialMedia}>
+              <GitHubIcon
+                className={classes.socialIcon}
+                style={{ fontSize: "3rem", marginRight: "25px" }} // Increase the icon size and add right margin
+              />
+              <PictureAsPdfIcon
+                className={classes.socialIcon}
+                onClick={handleResumeClick}
+                style={{ fontSize: "3rem", marginRight: "25px" }} // Increase the icon size and add right margin
+              />
+              <AllInboxIcon
+                className={classes.socialIcon}
+                onClick={handleTranscriptClick}
+                style={{ fontSize: "3rem", marginRight: "25px" }} // Increase the icon size and add right margin
+              />
+            </div>
           </div>
         </div>
       </div>
