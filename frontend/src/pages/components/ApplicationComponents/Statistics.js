@@ -69,6 +69,13 @@ const AttemptCard = ({ colour, icon, body }) => {
 };
 
 const Statistics = ({appStats}) => {
+  console.log(appStats);
+  const ResultData = appStats.codingQuestionResultArray;
+  const AppData = appStats.codingQuestionResult;
+  if (!ResultData) {
+    return <div>Loading...</div>; // Return a loading indicator if data is not available yet
+  }
+  console.log(ResultData);
   return (
     <Grid container spacing={2} mt={1} justifyContent={"center"}>
       <Grid container item md={12} mb={1} pb={1} justifyContent={"center"}>
@@ -91,17 +98,17 @@ const Statistics = ({appStats}) => {
       <AttemptCard
         colour={"#a259ff"}
         icon={<TerminalIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.complexity}
+        body={AppData.complexity}
       />
       <AttemptCard
         colour={"#ff5a5a"}
         icon={<ScoreIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.score}
+        body={AppData.score}
       />
       <AttemptCard
         colour={"#87CEEB"}
         icon={<AccessTimeIcon sx={{ fontSize: "4rem" }} />}
-        body={appStats.time + " mins"}
+        body={AppData.time + " mins"}
       />
       <Typography
         mt={2}
@@ -152,7 +159,7 @@ const Statistics = ({appStats}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {TableData.map((data, index) => (
+              {ResultData.map((data, index) => (
                 <TableRow key={index}>
                   <TableCell sx={{ color: "#fff" }}>{data.attempts}</TableCell>
                   <TableCell sx={{ color: "#fff" }}>

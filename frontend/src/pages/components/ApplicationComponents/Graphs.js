@@ -6,7 +6,7 @@ import LineGraph from "./LineGraph";
 import ComplexityGraph from "./ComplexityGraph";
 import DoughnutChart from "./Doughnut";
 
-const Graphs = () => {
+const Graphs = ({application}) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -50,7 +50,11 @@ const Graphs = () => {
               return (
                 <>
                   <Grid container justifyContent={"center"}>
-                    <LineGraph height={"500px"} />
+                  {application.codingQuestionResultArray ? (
+                  <LineGraph height={"350px"} application={application}/>
+                    ) : (
+                      <div>Loading..</div>
+                    )}
                     <Typography
                       sx={{ color: "#fff", mt: 2, textAlign: "center", p: 2 }}
                     >
@@ -132,7 +136,11 @@ const Graphs = () => {
               return (
                 <>
                   <Grid container justifyContent={"center"}>
-                    <LineGraph height={"500px"} />
+                  {application.codingQuestionResultArray ? (
+                  <LineGraph height={"350px"} application={application}/>
+                    ) : (
+                      <div>Loading..</div>
+                    )}
                     <Typography
                       sx={{ color: "#fff", mt: 2, textAlign: "center", p: 2 }}
                     >

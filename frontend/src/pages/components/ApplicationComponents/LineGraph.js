@@ -2,15 +2,17 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 
-function LineGraph({ height }) {
-  const labels = ["1", "2", "3", "4", "5"];
-
+function LineGraph({ height, application }) {
+  //const labels = ["1", "2", "3", "4", "5"];
+  const ResultData = application.codingQuestionResultArray;
+  const labels = ResultData.map(item => item.attempts);
+  const scores = ResultData.map(item => parseInt(item.score));
   const data = {
-    labels: labels,
+    labels: labels,//attempts.map(attempt => `Attempt ${attempt}`),
     datasets: [
       {
         label: "Assessment Score",
-        data: [20, 50, 40, 80, 95],
+        data: scores,
         fill: false,
         borderColor: "#a259ff",
         tension: 0.1,
