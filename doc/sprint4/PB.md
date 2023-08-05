@@ -35,11 +35,8 @@ __Low:__
 
 
 
-__Completed User Stories for Sprint 3__
+__Completed User Stories for Sprint 4__
 
-![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/104747956/f6bd628e-4b49-4645-9139-94912b3a517b)
+![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/110870107/98f819a9-2bae-45b9-b662-e85ad1219e1f)
 
-
-__Remaining Stories in the backlog__
-![image](https://github.com/CSCC012023/final-project-s23-p-pioneers/assets/104747956/f8f3ea48-46e7-4775-90d3-ac76b3cd09cc)
 
