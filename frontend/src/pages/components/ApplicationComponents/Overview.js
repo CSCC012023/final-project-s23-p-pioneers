@@ -28,6 +28,16 @@ const TableData = [
   { attempts: 5, complexity: "O(log(n))", score: 95, time: "30m" },
 ];
 
+const handleGitHubClick = () => {
+  const githubLink = "https://github.com/andrewaucie"; // Assuming you have a 'github' property in your user object
+
+  if (githubLink === undefined) {
+    alert("GitHub link not available.");
+  } else {
+    window.open(githubLink, "_blank");
+  }
+}
+
 const TestCard = ({ body, width, radius, height }) => {
   return (
     <Paper
@@ -114,7 +124,7 @@ const ProfileCardAttributes = ({ icon, color, type, body }) => {
   );
 };
 
-const BarGraphCard = () => {
+const BarGraphCard = ({application}) => {
   return (
     <Grid
       container
@@ -143,7 +153,12 @@ const BarGraphCard = () => {
         </Grid>
         {/* Actual Graph */}
         <Grid item md={12} ml={"2.5rem"} sx={{ height: "375px" }}>
-          <LineGraph height={"350px"} />
+          {application.codingQuestionResultArray ? (
+          <LineGraph height={"350px"} application={application}/>
+            ) : (
+              <div>Loading..</div>
+            )}
+          {/* <LineGraph height={"350px"} application={application} /> */}
         </Grid>
       </Grid>
     </Grid>
@@ -236,6 +251,7 @@ const ProfileCard = ({ user }) => {
             <Avatar
               children={<GitHubIcon />}
               sx={{ background: "#02040a", cursor: "pointer" }}
+              onClick={handleGitHubClick}
             />
           </Grid>
           <Grid item>
@@ -288,7 +304,8 @@ const ProfileCard = ({ user }) => {
   );
 };
 
-const ResumeParserCard = () => {
+const ResumeParserCard = ({application}) => {
+
   return (
     <Grid
       container
@@ -316,6 +333,7 @@ const ResumeParserCard = () => {
             top={"65%"}
             left={"44%"}
             fontSize={"35px"}
+            application={application}
           />
         </Grid>
         <Grid item md={3} mt={"-4.4rem"}>
@@ -332,7 +350,10 @@ const ResumeParserCard = () => {
   );
 };
 
-const TableCard = () => {
+const TableCard = ({application}) => {
+  const ResultData = application.codingQuestionResultArray;
+  console.log(ResultData)
+  console.log(TableData)
   return (
     <Grid
       container
@@ -367,7 +388,7 @@ const TableCard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {TableData.map((data, index) => (
+            {ResultData.map((data, index) => (
               <TableRow key={index}>
                 <TableCell sx={{ color: "#fff" }}>{data.attempts}</TableCell>
                 <TableCell sx={{ color: "#fff" }}>{data.complexity}</TableCell>
@@ -383,6 +404,7 @@ const TableCard = () => {
 };
 
 const Overview = ({ user, application, date }) => {
+  console.log(application.codingQuestionResultArray);
   return (
     <Container>
       <Grid
@@ -403,12 +425,12 @@ const Overview = ({ user, application, date }) => {
             />
           </Grid>
           {/* Line Graph Card */}
-          <BarGraphCard />
+          <BarGraphCard application={application}/>
         </Grid>
         {/* Profile Card */}
         <ProfileCard user={user} />
         {/* Doughnut Graph Card */}
-        <ResumeParserCard />
+        <ResumeParserCard application={application} />
 
         <Grid
           container
@@ -432,8 +454,11 @@ const Overview = ({ user, application, date }) => {
             <ComplexityGraph width={"575px"} height={"575px"} />
           </Grid>
         </Grid>
-
-        <TableCard />
+          {application.codingQuestionResultArray ? (
+        <TableCard application={application}/>
+          ) : (
+            <div>Loading..</div>
+          )}
       </Grid>
     </Container>
   );

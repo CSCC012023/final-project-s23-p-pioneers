@@ -10,14 +10,17 @@ import {
 
 
 const Navbar = ({ userType }) => {
-
+    const navbarStyle = {
+      borderBottom: "1px solid white",
+    };
 
     if (userType == "user"){
         return (
             <>
+            <div style={navbarStyle}>
               <Nav>
-                <NavLink to="/">
-                  <strong style={{ fontSize: "24px" }}>Cobuild</strong> &nbsp; &nbsp;
+                <NavLink to="/homepage">
+                  <strong style={{ fontSize: "24px" }}>CoBuild</strong> &nbsp; &nbsp;
                   &nbsp;
                   <img
                     src={require("./logo.png")}
@@ -43,14 +46,16 @@ const Navbar = ({ userType }) => {
                   <NavBtnLink to="/">Sign Out</NavBtnLink>
                 </NavBtn>
               </Nav>
+            </div>
             </>
           );
     }else if (userType == "recruiter") {
         return (
             <>
+            <div style={navbarStyle}>
               <Nav>
-                <NavLink to="/">
-                  <strong style={{ fontSize: "24px" }}>Cobuild</strong> &nbsp; &nbsp;
+                <NavLink to="/homepage">
+                  <strong style={{ fontSize: "24px" }}>CoBuild</strong> &nbsp; &nbsp;
                   &nbsp;
                   <img
                     src={require("./logo.png")}
@@ -60,7 +65,7 @@ const Navbar = ({ userType }) => {
                 </NavLink>
                 <Bars />
                 <NavMenu>
-                  <NavLink to="/about" activeStyle>
+                  <NavLink to="/home" activeStyle>
                     Dashboard
                   </NavLink>
                   <NavLink to="/createpost" activeStyle>
@@ -73,14 +78,16 @@ const Navbar = ({ userType }) => {
                   <NavBtnLink to="/">Sign Out</NavBtnLink>
                 </NavBtn>
               </Nav>
+            </div>
             </>
           );
     }else {
         return (
             <>
+            <div style={navbarStyle}>
               <Nav>
-                <NavLink to="/">
-                  <strong style={{ fontSize: "24px" }}>Cobuild</strong> &nbsp; &nbsp;
+                <NavLink to="/homepage">
+                  <strong style={{ fontSize: "24px" }}>CoBuild</strong> &nbsp; &nbsp;
                   &nbsp;
                   <img
                     src={require("./logo.png")}
@@ -89,24 +96,13 @@ const Navbar = ({ userType }) => {
                   />
                 </NavLink>
                 <Bars />
-                <NavMenu>
-                  <NavLink to="/about" activeStyle>
-                    About
-                  </NavLink>
-                  <NavLink to="/services" activeStyle>
-                    Services
-                  </NavLink>
-                  <NavLink to="/contact-us" activeStyle>
-                    Contact Us
-                  </NavLink>
-                  {/* Second Nav */}
-                  {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
-                </NavMenu>
+                
                 <NavBtn>
                   <NavBtnLink to="/login">Sign In</NavBtnLink>
                   
                 </NavBtn>
               </Nav>
+            </div>
             </>
           );
     }

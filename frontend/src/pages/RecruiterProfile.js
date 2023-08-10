@@ -269,7 +269,7 @@ const RecruiterProfile = ({ userData }) => {
                 </span>
               </Typography>
             </div>
-            <div
+            {/* <div
               style={{
                 background: "#3B3B3B",
                 borderRadius: "20px",
@@ -314,7 +314,7 @@ const RecruiterProfile = ({ userData }) => {
                     {description}
                 </span>
               </Typography>
-            </div>
+            </div> */}
             <div
               style={{
                 background: "#3B3B3B",

@@ -60,6 +60,9 @@ const applicationSchema = new mongoose.Schema({
       default: "Unknown",
     },
   }],
+  resumeScore: {
+    type: String,
+  }
 });
 
 module.exports = applicationSchema;

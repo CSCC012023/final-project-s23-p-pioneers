@@ -20,7 +20,7 @@ import CodeIcon from "@mui/icons-material/Code";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-
+import ChatIcon from '@mui/icons-material/Chat';
 
 function RecruiterSideNav(props) {
     // Extract props from the parent component, if needed
@@ -93,6 +93,8 @@ function RecruiterSideNav(props) {
                 { text: "Overview", icon: <DashboardIcon /> },
                 { text: "Events", icon: <CalendarMonthIcon /> },
                 { text: "New Application", icon: <CreateIcon /> },
+                {text: "Chat", icon: <ChatIcon/>}
+
               ].map((item) => (
                 <ListItem
                   key={item.text}
@@ -135,7 +137,6 @@ function RecruiterSideNav(props) {
             />
             <List>
               {[
-                { text: "Statistics", icon: <TextSnippetIcon /> },
                 { text: "Profile", icon: <AccountCircleIcon /> },
               ].map((item) => (
                 <ListItem

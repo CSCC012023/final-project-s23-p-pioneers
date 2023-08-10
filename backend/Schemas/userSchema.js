@@ -100,6 +100,14 @@ const signUpSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
   },
+  github: {
+    type: String,
+    required: false,
+  },
+  linkedin: {
+    type: String,
+    required: false,
+  },
 
   // resume: {
   //   type: String,

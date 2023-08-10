@@ -7,6 +7,14 @@ import {
   ThemeProvider,
   Button,
 } from "@mui/material";
+import {
+  Nav,
+  NavLink,
+  Bars,
+  NavMenu,
+  NavBtn,
+  NavBtnLink,
+} from "./components/NavbarElements";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import SearchIcon from "@mui/icons-material/Search";
@@ -72,12 +80,23 @@ const Home = () => {
               marginTop: "-200px",
             }}
           >
-            <Typography
+             <div>
+                  <strong style={{ fontSize: "60px", fontWeight:"bold" }}>CoBuild</strong> &nbsp; &nbsp;
+                  &nbsp;
+                  <img
+                    src={require("./components/logo.png")}
+                    alt="logo"
+                    style={{ height: "40px" }}
+                    
+                  />
+                </div>
+            {/* <Typography
               variant="h2"
               sx={{ color: "white", fontWeight: "bold" }}
             >
-              WELCOME
+              WELCOME TO COBUILD
             </Typography>
+             */}
             <Typography
               variant="h5"
               sx={{ color: "white", fontWeight: "bold", marginTop: "10px" }}
@@ -428,6 +447,7 @@ const Home = () => {
                     background: "#2B2B2B", // Change the background color on hover
                     color: "white", // Change the text color to white on hover
                   },
+                  marginBottom:"20px",
                 }}
               >
                 Begin Journey

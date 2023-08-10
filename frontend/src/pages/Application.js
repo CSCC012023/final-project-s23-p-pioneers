@@ -149,6 +149,7 @@ function Application() {
         >
           <Avatar
             alt="User Avatar"
+            src={userData.profilepic}
             sx={{ width: 60, height: 60, mt: "2rem" }}
           />
           <div style={{ marginTop: "0.5rem", textAlign: "center" }}>
@@ -292,9 +293,9 @@ function Application() {
                 />
               );
             case "Graphs":
-              return <Graphs />;
+              return <Graphs application={applicationData} />;
             case "Statistics":
-              return <Statistics appStats={applicationData.codingQuestionResult}/>;
+              return <Statistics appStats={applicationData}/>;
             case "Code":
               return <Code appCode={applicationData.codingQuestionResult} />;
             case "Resume":

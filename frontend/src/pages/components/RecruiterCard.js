@@ -16,7 +16,7 @@ function JobPosting(prop) {
 const JobGrid = ({ jobs }) => {
   const navigate = useNavigate();
   const handleClick = (jobId) => {
-    navigate("/jobpost/" + jobId);
+    navigate("/applicants/" + jobId);
   };
   return (
     <Container maxWidth="lg" sx={{ marginTop: "20px" }}>
