@@ -54,15 +54,15 @@ function App() {
         <Route path="/signuprecruiter" element={<><Navbar userType={"recruiter"} /><Signuprecruiter /></>} />
         <Route path="/recruiterstep1" element={<><Navbar userType={"recruiter"} /><RecruiterSteps1 /></>} />
         <Route path="/recruiterstep3" element={<><Navbar userType={"recruiter"} /><RecruiterSteps3 /></>} />
-        <Route path="/homepage" element={<><Navbar userType={"user"} /><HomePage /></>} />
+        <Route path="/homepage" element={<HomePage />} />
 
 
 
         <Route path="/upload" element={<UploadAssessment />} />
         <Route path="/verfication/:id" element={<Verification />} />
         <Route path="/application/:id" element={<Application />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobpost/:id" element={<JobPosting />} />
+        <Route path="/jobs" element={<><Navbar userType={"user"}/><Jobs /></>} />
+        <Route path="/jobpost/:id" element={<><Navbar userType={"user"}/><JobPosting /></>} />
         <Route path="/applicants/:id" element={<ApplicationList />} />
         <Route path="/assess/:id" element={<Assessment />} />
         <Route path="/createpost" element={<CreatePost />} />

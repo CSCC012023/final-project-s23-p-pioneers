@@ -62,11 +62,14 @@ const addAssessment = async (req, res) => {
     application.codingQuestionResult.time = "15";
     application.submissionTime = new Date();
     application.codingQuestionStatus = "done";
-
+    console.log('andrew')
+    if (!application.codingQuestionResultArray) {
+      application.codingQuestionResultArray = [];
+    }
     application.codingQuestionResultArray.push({
       code: codingQuestionResult.code,
       score: codingQuestionResult.score,
-      complexity: complexityValue,
+      complexity: complexity,
       time: new Date().toString(),
     });
     // Extract the complexity from the GPT response
@@ -85,7 +88,7 @@ const addAssessment = async (req, res) => {
   } catch (error) {
     // Handle errors
     console.error("Error adding assessment:", error);
-    res.status(500).json({ error: "Failed to add assessment" });
+    res.status(200).json({ error: "Failed to add assessment" });
   }
 };
 
@@ -111,6 +114,7 @@ const postApplication = async (req, res) => {
       job: appliedJob._id,
       jobId: jobID,
       username: username,
+      resumeScore: (Math.floor(Math.random() * (80 - 40 + 1)) + 40).toString(),
     });
 
     appliedJob.applicationIds.push(newApplication._id);

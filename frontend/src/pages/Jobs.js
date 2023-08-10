@@ -108,7 +108,7 @@ function Jobs() {
   return (
     <div style={{ backgroundColor: "#3B3B3B" }}>
       {/* Render job list or perform actions with jobIds */}
-      <AppBar position="relative" style={{ background: "#2B2B2B", height: "80px" }}>
+      {/* <AppBar position="relative" style={{ background: "#2B2B2B", height: "80px" }}>
         <Toolbar
           style={{
             display: "flex",
@@ -150,7 +150,7 @@ function Jobs() {
             Sign In
           </Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <div style={{ paddingTop: "20px", backgroundColor: "#2B2B2B" }}>
         <div
           style={{

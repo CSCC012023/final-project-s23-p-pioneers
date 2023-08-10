@@ -1,14 +1,16 @@
 const stringSimilarity = require('string-similarity');
 const mongoose = require("mongoose");
 const jobSchema = require("../Schemas/post");
-const Job = mongoose.model("Job", jobSchema);
+const applicationSchema = require("../Schemas/applicationSchema");
+const Application = mongoose.model("Application", applicationSchema);
 
 const getSimilarityScore = async (req, res) => {
-  const { jobid, text } = req.body;
+  const { applicationId } = req.body;
   try {
-    const jobPost = await Job.findOne({ jobId: jobid });
 
-    if (!jobPost) {
+    const app = await Application.findOne({ applicationId: applicationId });
+
+    if (!app) {
       return res.status(404).json({ error: "Job post not found" });
     }
 

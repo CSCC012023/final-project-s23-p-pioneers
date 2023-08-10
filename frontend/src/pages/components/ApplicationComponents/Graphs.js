@@ -80,6 +80,7 @@ const Graphs = ({application}) => {
                     top={"65%"}
                     left={"50%"}
                     fontSize={"55px"}
+                    application={application}
                   />
                   <Grid
                     container

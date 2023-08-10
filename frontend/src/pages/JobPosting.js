@@ -112,6 +112,7 @@ function JobPosting() {
   const [positionName, setPositionName] = useState();
   const [companyName, setCompanyName] = useState();
   const [createdDate, setCreatedDate] = useState();
+  const [companyLogo, setLogo] = useState();
   const [location, setLocation] = useState();
   const [description, setDescription] = useState();
   const [tags, setTags] = useState([]);
@@ -166,6 +167,7 @@ function JobPosting() {
         setTags(jobPostData[0].skills);
         setTargetDate(jobPostData[0].deadline);
         setIsAssessmemnt(jobPostData[0].isAssessment);
+        setLogo(jobPostData[0].companyLogo);
 
         const bookmarked = localStorage.getItem("bookmark_" + id);
         if (bookmarked === "true") {
@@ -230,6 +232,7 @@ function JobPosting() {
     navigate("/assess/" + id)
 
   };
+  const descriptionHeight = description ? description.split('\n').length * 20 : 0; // Adjust the factor (20) based on your design
 
   return (
     <div className="subcontent">
@@ -284,6 +287,14 @@ function JobPosting() {
           </button>
         </div>
         <div className="temp">
+        <div>
+            {companyLogo && (
+              <img
+                src={companyLogo}
+                style={{ height : "200px", marginBottom: "40px" }}
+              />
+              )}
+          </div>
           <div className="position">{positionName}</div>
           <div className="company">{companyName}</div>
           <div className="date">Created on {formatDate(createdDate)}</div>
@@ -295,8 +306,9 @@ function JobPosting() {
         </div>
 
         <div className="descriptionTitle">Description</div>
-        <div className="descriptionText">{description}</div>
-
+        <div className="descriptionText">
+          {description}
+        </div>
         <div className="tags">Tags</div>
         <div className="tagelements">
           {tags.map((name) => (

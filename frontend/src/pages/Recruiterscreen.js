@@ -11,6 +11,7 @@ import Calendar from "./components/ApplicationComponents/Calendar";
 import RecruiterDashboard from "./RecruiterDashboard";
 import UserProfile from "./UserProfile"; 
 import RecruiterProfile from "./RecruiterProfile";
+import RecruiterChat from "./RecruiterChat";
 import { useState } from "react";
 
 function RecruiterScreen() {
@@ -88,6 +89,8 @@ function RecruiterScreen() {
               return <Statistics />;
             case "New Application":
               return <CreatePost />;
+            case "Chat":
+                return <RecruiterChat userData={userData} />;
             case "Profile":
               return <RecruiterProfile userData={userData}/>;
             default:

@@ -89,6 +89,7 @@ function Login() {
   };
 
   return (
+    
     <div
       style={{
         background: "#2B2B2B",
@@ -96,7 +97,8 @@ function Login() {
         display: "flex",
         justifyContent: "center", // Horizontally center the content
         alignItems: "center", // Vertically center the content
-        height: "100vh", // Set the height to fill the entire screen
+        height: "100%", // Set the height to fill the entire screen
+        marginTop:"50px",
       }}
     >
       <main style={{ display: "flex" }}>
@@ -104,29 +106,14 @@ function Login() {
           style={{
             flex: 1,
             display: "flex",
-            justifyContent: "flex-start",
-            maxHeight: "800px",
-          }}
-        >
-          <img
-            alt="Image"
-            src={loginImage}
-            style={{
-              width: "100%",
-              objectFit: "cover",
-              height: "100%",
-            }}
-          />
-        </div>
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "flex-start", // Align to the left (from the image's right)
             padding: "0 30px",
             maxWidth: "500px", // Limit the maximum width of the centered content
+            border: "2px solid #A259FF", // Add border around the box
+          borderRadius: "20px", // Add border radius to match other styles
+          padding: "20px", // Add padding to create spacing between content and border
+      
           }}
         >
           <h1
@@ -134,8 +121,10 @@ function Login() {
               color: "white",
               fontSize: "51px",
               fontWeight: 600,
+              textAlign: "center",
+              justifyContent: "center",
               lineHeight: "110%",
-              marginTop: "-10px",
+              marginBottom:"10px",
             }}
           >
             Sign In
@@ -160,7 +149,7 @@ function Login() {
               {loginError}
             </Typography>
           )}
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", display:"flex"}}>
             <TextField
               label="Username"
               value={username}
@@ -171,6 +160,8 @@ function Login() {
                 backgroundColor: "white",
                 borderRadius: "20px",
                 width: "330px",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
               InputProps={{
                 disableUnderline: true,
@@ -190,9 +181,12 @@ function Login() {
               variant="filled"
               type="password"
               style={{
+                display: "flex",
                 backgroundColor: "white",
                 borderRadius: "20px",
                 width: "330px",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
               InputProps={{ disableUnderline: true }}
             />
@@ -206,10 +200,34 @@ function Login() {
               color: "white",
               marginTop: "30px",
               fontFamily: "work sans",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+              display:"flex",
             }}
             onClick={handleLoginFormSubmit}
           >
             Sign In
+          </Button>
+          <Button
+            style={{
+              background: "white",
+              width: "330px",
+              height: "46px",
+              borderRadius: "20px",
+              color: "#A259FF",
+              marginTop: "30px",
+              fontFamily: "work sans",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+              display:"flex",
+            }}
+            onClick={() => {navigate("/loginrecruiter")}}
+          >
+            Sign In As Recruiter
           </Button>
           <Typography
             variant="caption"
@@ -223,6 +241,7 @@ function Login() {
               fontFamily: "work sans",
               textDecorationLine: "underline",
               textTransform: "capitalize",
+
             }}
           >
             <Link to="/signup" style={{ color: "white" }}>

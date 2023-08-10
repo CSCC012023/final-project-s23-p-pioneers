@@ -193,8 +193,7 @@
 }
 
 .descriptionText{
-    width: 605px;
-height: 490px;
+
 
 font-family: 'Work Sans';
 font-style: normal;
@@ -215,6 +214,9 @@ flex: none;
 order: 1;
 align-self: stretch;
 flex-grow: 0;
+
+max-width: 605px; /* Limit the width to match the surrounding elements */
+margin-bottom: 30px;
 }
 
 .tags {
@@ -398,7 +400,7 @@ height: 60px;
 }
 
 .temp {
-    margin-top: 7%;
+    margin-top: 2%;
 
 }
 

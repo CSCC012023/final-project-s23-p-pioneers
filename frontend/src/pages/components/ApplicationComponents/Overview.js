@@ -28,6 +28,16 @@ const TableData = [
   { attempts: 5, complexity: "O(log(n))", score: 95, time: "30m" },
 ];
 
+const handleGitHubClick = () => {
+  const githubLink = "https://github.com/andrewaucie"; // Assuming you have a 'github' property in your user object
+
+  if (githubLink === undefined) {
+    alert("GitHub link not available.");
+  } else {
+    window.open(githubLink, "_blank");
+  }
+}
+
 const TestCard = ({ body, width, radius, height }) => {
   return (
     <Paper
@@ -241,6 +251,7 @@ const ProfileCard = ({ user }) => {
             <Avatar
               children={<GitHubIcon />}
               sx={{ background: "#02040a", cursor: "pointer" }}
+              onClick={handleGitHubClick}
             />
           </Grid>
           <Grid item>
@@ -293,7 +304,8 @@ const ProfileCard = ({ user }) => {
   );
 };
 
-const ResumeParserCard = () => {
+const ResumeParserCard = ({application}) => {
+
   return (
     <Grid
       container
@@ -321,6 +333,7 @@ const ResumeParserCard = () => {
             top={"65%"}
             left={"44%"}
             fontSize={"35px"}
+            application={application}
           />
         </Grid>
         <Grid item md={3} mt={"-4.4rem"}>
@@ -417,7 +430,7 @@ const Overview = ({ user, application, date }) => {
         {/* Profile Card */}
         <ProfileCard user={user} />
         {/* Doughnut Graph Card */}
-        <ResumeParserCard />
+        <ResumeParserCard application={application} />
 
         <Grid
           container

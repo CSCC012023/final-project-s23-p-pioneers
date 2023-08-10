@@ -388,8 +388,7 @@ function SignUp() {
                       flexGrow: "0",
                     }}
                   >
-                    Choose a wallet you want to connect. There are several wallet
-                    providers.
+                    Enter your account details.
                   </p>
                 </div>
               </div>

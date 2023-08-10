@@ -14,7 +14,10 @@ const data = {
   ],
 };
 
-const DoughnutChart = ({ height, width, top, left, fontSize }) => {
+const DoughnutChart = ({ height, width, top, left, fontSize, application }) => {
+  if (!application) {
+    return <div> Loading... </div>;
+  }
   return (
     <div style={{ position: "relative", width: width, height: height }}>
       <Doughnut
@@ -44,7 +47,7 @@ const DoughnutChart = ({ height, width, top, left, fontSize }) => {
           justifyContent: "center",
         }}
       >
-        <div style={{ fontSize: fontSize }}>100%</div>
+        <div style={{ fontSize: fontSize }}>{application.resumeScore}%</div>
       </div>
     </div>
   );
