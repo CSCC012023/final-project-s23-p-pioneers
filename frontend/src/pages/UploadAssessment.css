@@ -1,0 +1,27 @@
+.connectorActive {
+    stroke: #8e24aa !important;
+  }
+  
+  .connectorCompleted {
+    stroke: #8e24aa !important;
+  }
+  
+  .connectorLine {
+    stroke: #8e24aa !important;
+  }
+  
+  .completedIcon {
+    color: #8e24aa !important;
+  }
+  
+  .active {
+    color: #8e24aa !important;
+  }
+  
+  .editor-wrapper {
+    border: 1px solid #ccc;
+    padding: 5px;
+    height: 200px; /* Adjust the height as needed */
+    overflow-y: auto;
+  }
+  

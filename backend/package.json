@@ -1,0 +1,38 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "react-scripts build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mui/lab": "^5.0.0-alpha.137",
+    "@mui/x-date-pickers": "^6.10.2",
+    "aws-sdk": "^2.1412.0",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.2.0",
+    "express": "^4.18.2",
+    "html2canvas": "^1.4.1",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "mailgen": "^2.0.27",
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.2.2",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^2.0.22",
+    "openai": "^3.3.0",
+    "python-shell": "^5.0.0",
+    "react-scripts": "^5.0.1",
+    "short-uuid": "^4.2.2",
+    "string-similarity": "^4.0.4",
+    "uuid": "^9.0.0"
+  }
+}
