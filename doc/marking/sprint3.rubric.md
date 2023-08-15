@@ -14,9 +14,11 @@
     there is no clear evidence which user story will be completed or task breakdown is unclear or incomplete
     - 0 marks = No meeting document submitted or the submitted document contains no relevant information to the sprint 1
  
-    Your Mark: 2 
+    Your Mark: 1
+
+  > has to be .md. PDF not ideal submission (you cannot edit easily)
  
-  Planning Meetings Total Mark: 2 / 2
+  Planning Meetings Total Mark: 1 / 2
  
  
 ## Sprint Review (sprint-(n-1)review.md) (max 2 marks)
@@ -25,11 +27,12 @@
   - 1 mark  = Meeting is documented, participants are not recorded or the majority has not participated, not enough analysis has been done
   - 0 marks = No meeting document submitted or the submitted document contains no relevant information
   
-  Your Mark: 2
+  Your Mark: 1
+
+> has to be .md. PDF not ideal submission (you cannot edit easily)
 
     
- 
-Sprint Review Total Mark: 2 / 2
+Sprint Review Total Mark: 1 / 2
  
  
 ---
@@ -43,8 +46,10 @@ Sprint Review Total Mark: 2 / 2
     - 0 mark  = At least 2 group members or more have not sent their updates or is low-quality
  
  
-  Daily Stand-ups Total Mark: 10 / 10
+  Daily Stand-ups Total Mark: 5 / 10
  
+ > Standups not posted by each team member & 
+ > Not of good quality (must follow standup template)
  
 ---
 ## User Stories (Tracked in JIRA) (max 10 marks) 
@@ -135,7 +140,7 @@ Your Mark: 5
     - 0 marks = majority of commit message do not begin with the ticket number of the task followed by a short description of commit changes
     
     
-Your Mark: 2
+Your Mark: 0
     
   - Tasks Distribution (max 3 marks)
     - 3 marks = every team member had at least one task assigned and completed
@@ -150,14 +155,14 @@ Your Mark: 2
     - 1 mark  = at least one branch is not named after the associated single ticket number
     - 0 marks = most branch names are not named after the associated single ticket number
     
-    Your Mark: 2
+    Your Mark: 0
  
  - Burndown chart (max 2 marks)
     - 2 marks = burndown chart present, matched JIRA chart, and explanations are adequate.
     - 1 mark  = burndown chart present, matches JIRA chart, but no explanations provided, or explanations are not adequate.
     - 0 marks = document not available or not containing a valid burndown chart
     
-    Your Mark: 2
+    Your Mark: 1
  
  
   - Schedule (max 2 marks)
@@ -167,7 +172,7 @@ Your Mark: 2
  
  Your Mark: 2
  
-Tracking on JIRA Total Mark: 24 / 24
+Tracking on JIRA Total Mark: 19 / 24
  
  
 ---
@@ -210,9 +215,10 @@ Tracking on JIRA Total Mark: 24 / 24
     - 1 mark  = The Architecture Diagram is present, it is not formatted well, and it is unclear what Architecture it follows. There is no web link or other reference lending support to the presented diagram.
     - 0 marks = No diagram present or the presented document does not look like a software architecture diagram
  
-    Your Mark: 4
+    Your Mark: 2
 
-System Design Total Mark: 10 / 10
+System Design Total Mark: 8 / 10
+
  
 ## Documentation (max 3 mark)
   
@@ -220,8 +226,9 @@ System Design Total Mark: 10 / 10
   - 2 mark = documentation is updated partially.
   - 0 marks = documentation has not been updated or is unclear & not maintained properly
    
-  Your Mark: 3 / 3
- 
+  Your Mark: 0 / 3
+  
+Unsure if document has been updated or not.
  
 ## Sprint Demo (Max 14 marks) 
   - Attendance (max 2 marks)
@@ -249,4 +256,4 @@ System Design Total Mark: 10 / 10
  
 ## Total Mark
  
-95 / 95
+78 / 95
